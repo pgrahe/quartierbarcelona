@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { SLOGAN, SLOGAN_ROTATIONS } from '../i18n/translations'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { SLOGAN, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
@@ -11,13 +11,27 @@ import './Hero.css'
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  *
- * The slogan cycles MORE THAN A NIGHT. → MOMENT. → CLUB. with Salient’s
- * Sutton-style masked vertical wipe (overflow clip + translateY), not a fade.
+ * The slogan cycles MORE THAN A NIGHT. → A MOMENT. → A CLUB.
+ *
+ * The rotation is Salient's `nectar-rotating-words-title` reveal, as used on
+ * suttonbarcelona.com, read off the live site rather than approximated:
+ *
+ *   .dynamic-words > span        { overflow:hidden; translate3d(-100%,0,0) }
+ *   .dynamic-words > span span   { translate3d(100%,0,0) }
+ *   .active, .active span span   { translate3d(0,0,0); transition-delay:.4s }
+ *   transition: transform .8s cubic-bezier(.2,1,.3,1)
+ *   .dynamic-words               { transition: width .8s cubic-bezier(.2,1,.3,1) }
+ *
+ * The two layers move in opposite directions by exactly their own width, so
+ * the word is *uncovered* left-to-right instead of sliding across — and the
+ * container's width eases between words of different lengths. Both are what
+ * make the effect read the way it does; a plain translate loses it.
+ *
+ * Timings are Sutton's shape, slowed down: .8s→1.2s, .4s→.5s delay, and a
+ * 2.5s→4.6s cycle so each phrase is allowed to land.
  */
-
-/* Sutton uses data-rotation="2500"; we hold longer so each line can land. */
-const ROTATION_MS = 4800
-const ENTER_DELAY_MS = 400
+const ROTATION_MS = 4600
+const ENTER_DELAY_MS = 550
 
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable. `?v=3` busts older encodes. */
@@ -47,6 +61,33 @@ export default function Hero() {
   const [active, setActive] = useState(0)
   const [entered, setEntered] = useState(false)
   const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
+
+  // Sutton sets the rotator's width in JS to the active word's own width and
+  // lets CSS ease between values. Measuring is the only way to get that: the
+  // words are absolutely positioned, so the box has no natural width.
+  const rotatorRef = useRef(null)
+  const wordRefs = useRef([])
+  const [widths, setWidths] = useState([])
+
+  const measure = useCallback(() => {
+    const next = wordRefs.current.map((el) => (el ? el.getBoundingClientRect().width : 0))
+    setWidths((prev) =>
+      prev.length === next.length && prev.every((w, i) => Math.abs(w - next[i]) < 0.5) ? prev : next,
+    )
+  }, [])
+
+  useLayoutEffect(() => {
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (rotatorRef.current) ro.observe(rotatorRef.current)
+    window.addEventListener('resize', measure)
+    // Re-measure once webfonts settle — an Athena Bold drop-in changes widths.
+    document.fonts?.ready?.then(measure).catch(() => {})
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [measure])
 
   useEffect(() => {
     setSrc(heroSrc())
@@ -158,25 +199,36 @@ export default function Hero() {
       </div>
 
       <div className="hero__body">
+        {/* aria-label states the slogan once; the moving parts are hidden from
+            assistive tech so it is not read as three shuffling fragments. */}
         <h1 className="hero__slogan" data-entered={entered} aria-label={SLOGAN}>
-          {SLOGAN_ROTATIONS.map((slogan, i) => (
-            <span
-              key={slogan.id}
-              className="hero__slogan-frame"
-              data-active={i === active && entered}
-              aria-hidden={i === active ? undefined : true}
-            >
-              <span className="hero__slogan-mask">
-                <span className="hero__slogan-inner">
-                  {slogan.lines.map((line) => (
-                    <span key={line} className="hero__slogan-line">
-                      {line}
-                    </span>
-                  ))}
+          <span className="hero__slogan-lead" aria-hidden="true">
+            <span>{SLOGAN_LEAD}</span>
+          </span>
+
+          <span
+            className="hero__slogan-rotator"
+            ref={rotatorRef}
+            aria-hidden="true"
+            style={widths[active] ? { width: `${widths[active]}px` } : undefined}
+          >
+            {SLOGAN_ROTATIONS.map((slogan, i) => (
+              <span
+                key={slogan.id}
+                className="hero__slogan-wrap"
+                data-active={i === active && entered}
+              >
+                <span
+                  className="hero__slogan-word"
+                  ref={(el) => {
+                    wordRefs.current[i] = el
+                  }}
+                >
+                  {slogan.word}
                 </span>
               </span>
-            </span>
-          ))}
+            ))}
+          </span>
         </h1>
       </div>
     </section>

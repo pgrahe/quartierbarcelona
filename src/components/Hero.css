@@ -83,10 +83,16 @@
 }
 
 /* ---- Slogan ----
- * Calqued from Salient’s rotating-words on suttonbarcelona.com
- * (element_stagger_words): overflow mask + translateY wipe,
- * 1.2s cubic-bezier(0.25, 1, 0.5, 1).
- */
+ *
+ * Salient's rotating-words reveal as used on suttonbarcelona.com, measured off
+ * the live site. Two layers move in OPPOSITE directions by exactly their own
+ * width: the mask goes -100%, the text inside goes +100%. Net result — the
+ * glyphs stay put on screen and the mask sweeps off them, so the word is
+ * uncovered left-to-right rather than sliding in. Losing the counter-move
+ * turns it into an ordinary slide, which is the whole difference.
+ *
+ * Sutton: .8s / .4s delay / 2.5s cycle. Here: 1.2s / .5s / 4.6s.
+ * -------------------------------------------------------------------------- */
 .hero__body {
   z-index: 2;
   align-self: center;
@@ -100,70 +106,85 @@
 }
 
 .hero__slogan {
-  --hero-slogan-size: clamp(1.65rem, 3.8vw, 3.75rem);
-  --hero-slogan-lh: 0.96;
-  --hero-slogan-ease: cubic-bezier(0.25, 1, 0.5, 1);
-  --hero-slogan-dur: 1.2s;
+  --hero-slogan-size: clamp(1.35rem, 2.9vw, 2.75rem);
+  --hero-slogan-lh: 1.08;
+  /* Sutton's rotation curve, verbatim. */
+  --hero-ease: cubic-bezier(0.2, 1, 0.3, 1);
+  --hero-dur: 1.2s;
+  --hero-delay: 0.5s;
 
-  position: relative;
   display: grid;
   justify-items: center;
-  /* Reserve two-line height so rotation never reflows the hero. */
-  min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
   font-family: var(--font-display);
   font-weight: var(--w-bold);
   font-size: var(--hero-slogan-size);
   line-height: var(--hero-slogan-lh);
   letter-spacing: 0.005em;
+  /* Lowercase is a presentation choice — the strings stay uppercase in
+     translations.js so the brand text and the aria-label read normally. */
+  text-transform: lowercase;
   text-align: center;
   color: var(--stone);
 }
 
-.hero__slogan-frame {
-  grid-area: 1 / 1;
-  display: grid;
-  justify-items: center;
-  pointer-events: none;
-}
-
-.hero__slogan-frame:not([data-active='true']) {
-  position: absolute;
-  inset: 0 auto auto 50%;
-  translate: -50% 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.hero__slogan-frame[data-active='true'] {
-  position: relative;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.hero__slogan-mask {
+/* ---- Line one: static, rises once on load ---- */
+.hero__slogan-lead {
   display: block;
   overflow: hidden;
 }
 
-.hero__slogan-inner {
-  display: grid;
-  justify-items: center;
-  transform: translate3d(0, 1.15em, 0);
-  transition: transform var(--hero-slogan-dur) var(--hero-slogan-ease);
+.hero__slogan-lead > span {
+  display: block;
+  transform: translate3d(0, 1.2em, 0);
+  /* Sutton's entrance curve, which is a different one from the rotation. */
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.hero__slogan-frame:not([data-active='true']) .hero__slogan-inner {
-  /* Snap back under the mask so the next entrance always wipes up. */
-  transition: none;
-  transform: translate3d(0, 1.15em, 0);
-}
-
-.hero__slogan-frame[data-active='true'] .hero__slogan-inner {
+.hero__slogan[data-entered='true'] .hero__slogan-lead > span {
   transform: translate3d(0, 0, 0);
 }
 
-.hero__slogan-line {
+/* ---- Line two: the rotator ---- */
+.hero__slogan-rotator {
+  position: relative;
+  display: block;
+  height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh));
+  width: 0;
+  /* The width eases between words of different lengths — the other half of
+     the Sutton effect, and the reason the box never jumps. */
+  transition: width var(--hero-dur) var(--hero-ease);
+}
+
+.hero__slogan-wrap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  overflow: hidden;
   white-space: nowrap;
+  opacity: 0;
+  /* -50% centres it; the -100% of its own width is the mask sweep. */
+  transform: translate3d(-150%, 0, 0);
+  transition:
+    transform var(--hero-dur) var(--hero-ease),
+    opacity var(--hero-dur) var(--hero-ease);
+}
+
+.hero__slogan-word {
+  display: block;
+  transform: translate3d(100%, 0, 0);
+  transition: transform var(--hero-dur) var(--hero-ease);
+}
+
+.hero__slogan-wrap[data-active='true'] {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0);
+  transition-delay: var(--hero-delay);
+}
+
+.hero__slogan-wrap[data-active='true'] .hero__slogan-word {
+  transform: translate3d(0, 0, 0);
+  transition-delay: var(--hero-delay);
 }
 
 /* -------------------------------------------------------------------------
@@ -175,10 +196,9 @@
   }
 
   .hero__slogan {
-    /* Sized for the widest second line ("A MOMENT.") so nothing wraps. */
-    --hero-slogan-size: min(calc((100vw - 3rem) / 10.5), 2.65rem);
-    --hero-slogan-lh: 0.98;
-    min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
+    /* Sized off the widest rotating line ("A MOMENT.") so it never wraps. */
+    --hero-slogan-size: min(calc((100vw - 3rem) / 12), 2rem);
+    --hero-slogan-lh: 1.1;
   }
 
   .hero__body {
@@ -198,22 +218,28 @@
 
 @media (max-width: 900px) and (max-height: 520px) {
   .hero__slogan {
-    --hero-slogan-size: clamp(1.5rem, 6vw, 2.25rem);
-    min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
+    --hero-slogan-size: clamp(1.15rem, 4.4vw, 1.6rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__slogan-inner {
-    transition: none;
+  .hero__slogan-lead > span,
+  .hero__slogan-word,
+  .hero__slogan-rotator {
     transform: none;
+    transition: none;
   }
 
-  .hero__slogan-frame:not([data-active='true']) {
+  .hero__slogan-wrap {
+    transition: none;
+  }
+
+  .hero__slogan-wrap:not([data-active='true']) {
     display: none;
   }
 
-  .hero__slogan-frame[data-active='true'] {
+  .hero__slogan-wrap[data-active='true'] {
     opacity: 1;
+    transform: translate3d(-50%, 0, 0);
   }
 }

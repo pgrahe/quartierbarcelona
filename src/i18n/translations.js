@@ -20,13 +20,18 @@ export const DEFAULT_LANGUAGE = 'es'
 export const SLOGAN = 'MORE THAN A CLUB'
 
 /**
- * Hero rotations. Same cadence as a Sutton-style lockup: "MORE THAN" holds,
- * the second line cycles. Never translated.
+ * Hero rotation. "MORE THAN" holds on line one; line two cycles.
+ *
+ * Written uppercase because that is the brand string — the hero renders it
+ * lowercase via `text-transform`, so changing the case is a CSS decision, not
+ * a content edit. Never translated.
  */
+export const SLOGAN_LEAD = 'MORE THAN'
+
 export const SLOGAN_ROTATIONS = [
-  { id: 'night', lines: ['MORE THAN', 'A NIGHT.'], label: 'MORE THAN A NIGHT.' },
-  { id: 'moment', lines: ['MORE THAN', 'A MOMENT.'], label: 'MORE THAN A MOMENT.' },
-  { id: 'club', lines: ['MORE THAN', 'A CLUB.'], label: 'MORE THAN A CLUB.' },
+  { id: 'night', word: 'A NIGHT.', label: 'MORE THAN A NIGHT.' },
+  { id: 'moment', word: 'A MOMENT.', label: 'MORE THAN A MOMENT.' },
+  { id: 'club', word: 'A CLUB.', label: 'MORE THAN A CLUB.' },
 ]
 
 export const translations = {
