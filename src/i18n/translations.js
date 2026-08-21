@@ -107,6 +107,7 @@ export const translations = {
       navTitle: 'NAVEGACIÓN',
       contactTitle: 'CONTACTO',
       rights: 'QUARTIER BARCELONA',
+      partners: 'PARTNERS',
     },
   },
 
@@ -180,6 +181,7 @@ export const translations = {
       navTitle: 'NAVIGATION',
       contactTitle: 'CONTACT',
       rights: 'QUARTIER BARCELONA',
+      partners: 'PARTNERS',
     },
   },
 
@@ -253,6 +255,7 @@ export const translations = {
       navTitle: 'NAVIGATION',
       contactTitle: 'CONTACT',
       rights: 'QUARTIER BARCELONA',
+      partners: 'PARTENAIRES',
     },
   },
 
@@ -326,6 +329,7 @@ export const translations = {
       navTitle: 'NAVIGATION',
       contactTitle: 'KONTAKT',
       rights: 'QUARTIER BARCELONA',
+      partners: 'PARTNER',
     },
   },
 }

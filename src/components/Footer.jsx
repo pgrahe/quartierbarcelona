@@ -72,6 +72,42 @@ export default function Footer() {
 
         <hr className="rule foot__rule" />
 
+        <div className="foot__partners">
+          <p className="eyebrow foot__partners-label">{t.footer.partners}</p>
+          <ul className="foot__partners-list">
+            <li>
+              <img
+                src="/brand/partners/schweppes.png"
+                alt="Schweppes"
+                width="640"
+                height="213"
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+            <li>
+              <img
+                src="/brand/partners/grey-goose.png"
+                alt="Grey Goose"
+                width="640"
+                height="426"
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+            <li>
+              <img
+                src="/brand/partners/pepsi.png"
+                alt="Pepsi"
+                width="640"
+                height="629"
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+          </ul>
+        </div>
+
         <div className="foot__bottom">
           <p className="foot__copy">
             © {year} {t.footer.rights}

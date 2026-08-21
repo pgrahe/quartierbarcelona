@@ -39,13 +39,13 @@ export default function PrivateEvents() {
         </figure>
 
         <div className="pev__text">
-          <p className="eyebrow pev__eyebrow" data-reveal>
+          <h2 className="pev__title" id="pev-title" data-reveal>
             {pe.eyebrow}
-          </p>
-
-          <h2 className="pev__title" id="pev-title" data-reveal style={{ '--reveal-delay': '80ms' }}>
-            {pe.title}
           </h2>
+
+          <p className="pev__subtitle" data-reveal style={{ '--reveal-delay': '80ms' }}>
+            {pe.title}
+          </p>
 
           <p className="pev__body" data-reveal style={{ '--reveal-delay': '160ms' }}>
             {pe.body}

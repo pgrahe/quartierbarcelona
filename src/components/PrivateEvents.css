@@ -31,21 +31,24 @@
 }
 
 /* ---- Type ---- */
-.pev__eyebrow {
-  color: var(--bordeaux);
-  /* The render is already a wall of red; the eyebrow needs to stay legible
-     against ink rather than compete with it. */
-  filter: brightness(1.9);
-}
-
 .pev__title {
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
   font-family: var(--font-body);
   font-size: var(--fs-display);
   font-weight: var(--w-bold);
   font-style: normal;
   line-height: 0.98;
   letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.pev__subtitle {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-size: var(--fs-title);
+  font-weight: var(--w-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--stone);
 }
