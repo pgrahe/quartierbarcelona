@@ -82,7 +82,11 @@
   letter-spacing: 0.08em;
 }
 
-/* ---- Slogan ---- */
+/* ---- Slogan ----
+ * Calqued from Salient’s rotating-words on suttonbarcelona.com
+ * (element_stagger_words): overflow mask + translateY wipe,
+ * 1.2s cubic-bezier(0.25, 1, 0.5, 1).
+ */
 .hero__body {
   z-index: 2;
   align-self: center;
@@ -96,15 +100,20 @@
 }
 
 .hero__slogan {
+  --hero-slogan-size: clamp(1.65rem, 3.8vw, 3.75rem);
+  --hero-slogan-lh: 0.96;
+  --hero-slogan-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --hero-slogan-dur: 1.2s;
+
   position: relative;
   display: grid;
   justify-items: center;
   /* Reserve two-line height so rotation never reflows the hero. */
-  min-height: calc(var(--fs-slogan) * 0.94 * 2);
+  min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
   font-family: var(--font-display);
   font-weight: var(--w-bold);
-  font-size: var(--fs-slogan);
-  line-height: 0.94;
+  font-size: var(--hero-slogan-size);
+  line-height: var(--hero-slogan-lh);
   letter-spacing: 0.005em;
   text-align: center;
   color: var(--stone);
@@ -114,18 +123,43 @@
   grid-area: 1 / 1;
   display: grid;
   justify-items: center;
-  opacity: 0;
-  translate: 0 18px;
-  transition:
-    opacity 700ms var(--ease-out),
-    translate 700ms var(--ease-out);
   pointer-events: none;
 }
 
-.hero__slogan[data-entered='true'] .hero__slogan-frame[data-active='true'] {
+.hero__slogan-frame:not([data-active='true']) {
+  position: absolute;
+  inset: 0 auto auto 50%;
+  translate: -50% 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero__slogan-frame[data-active='true'] {
+  position: relative;
   opacity: 1;
-  translate: 0 0;
   pointer-events: auto;
+}
+
+.hero__slogan-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__slogan-inner {
+  display: grid;
+  justify-items: center;
+  transform: translate3d(0, 1.15em, 0);
+  transition: transform var(--hero-slogan-dur) var(--hero-slogan-ease);
+}
+
+.hero__slogan-frame:not([data-active='true']) .hero__slogan-inner {
+  /* Snap back under the mask so the next entrance always wipes up. */
+  transition: none;
+  transform: translate3d(0, 1.15em, 0);
+}
+
+.hero__slogan-frame[data-active='true'] .hero__slogan-inner {
+  transform: translate3d(0, 0, 0);
 }
 
 .hero__slogan-line {
@@ -142,9 +176,9 @@
 
   .hero__slogan {
     /* Sized for the widest second line ("A MOMENT.") so nothing wraps. */
-    font-size: min(calc((100vw - 3rem) / 9), 3.25rem);
-    line-height: 0.98;
-    min-height: calc(min(calc((100vw - 3rem) / 9), 3.25rem) * 0.98 * 2);
+    --hero-slogan-size: min(calc((100vw - 3rem) / 10.5), 2.65rem);
+    --hero-slogan-lh: 0.98;
+    min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
   }
 
   .hero__body {
@@ -164,18 +198,22 @@
 
 @media (max-width: 900px) and (max-height: 520px) {
   .hero__slogan {
-    font-size: clamp(2rem, 7vw, 3rem);
-    min-height: calc(clamp(2rem, 7vw, 3rem) * 0.98 * 2);
+    --hero-slogan-size: clamp(1.5rem, 6vw, 2.25rem);
+    min-height: calc(var(--hero-slogan-size) * var(--hero-slogan-lh) * 2);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__slogan-frame {
+  .hero__slogan-inner {
     transition: none;
-    translate: none;
+    transform: none;
   }
 
-  .hero__slogan[data-entered='true'] .hero__slogan-frame[data-active='true'] {
+  .hero__slogan-frame:not([data-active='true']) {
+    display: none;
+  }
+
+  .hero__slogan-frame[data-active='true'] {
     opacity: 1;
   }
 }

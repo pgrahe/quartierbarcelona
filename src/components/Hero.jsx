@@ -11,12 +11,13 @@ import './Hero.css'
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  *
- * The slogan cycles MORE THAN A NIGHT. → MOMENT. → CLUB. in a soft crossfade,
- * Sutton-style. Reduced motion holds on the brand line only.
+ * The slogan cycles MORE THAN A NIGHT. → MOMENT. → CLUB. with Salient’s
+ * Sutton-style masked vertical wipe (overflow clip + translateY), not a fade.
  */
 
-const HOLD_MS = 3200
-const FADE_MS = 700
+/* Sutton uses data-rotation="2500"; we hold longer so each line can land. */
+const ROTATION_MS = 4800
+const ENTER_DELAY_MS = 400
 
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable. `?v=3` busts older encodes. */
@@ -60,10 +61,10 @@ export default function Hero() {
       return
     }
 
-    const enter = window.setTimeout(() => setEntered(true), 280)
+    const enter = window.setTimeout(() => setEntered(true), ENTER_DELAY_MS)
     const tick = window.setInterval(() => {
       setActive((i) => (i + 1) % SLOGAN_ROTATIONS.length)
-    }, HOLD_MS + FADE_MS)
+    }, ROTATION_MS)
 
     return () => {
       window.clearTimeout(enter)
@@ -162,14 +163,18 @@ export default function Hero() {
             <span
               key={slogan.id}
               className="hero__slogan-frame"
-              data-active={i === active}
+              data-active={i === active && entered}
               aria-hidden={i === active ? undefined : true}
             >
-              {slogan.lines.map((line) => (
-                <span key={line} className="hero__slogan-line">
-                  {line}
+              <span className="hero__slogan-mask">
+                <span className="hero__slogan-inner">
+                  {slogan.lines.map((line) => (
+                    <span key={line} className="hero__slogan-line">
+                      {line}
+                    </span>
+                  ))}
                 </span>
-              ))}
+              </span>
             </span>
           ))}
         </h1>
