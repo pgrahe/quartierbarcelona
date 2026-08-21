@@ -18,27 +18,38 @@ import './Hero.css'
 const HOLD_MS = 3200
 const FADE_MS = 700
 
-/** Phones only. `<source media>` is unreliable across browsers — many ignore
- *  it and always take the first file, which made desktop play the soft 720 cut.
- *  `?v=2` busts the previous over-compressed encodes cached on CDN/browsers. */
+/** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
+ *  because `<source media>` is unreliable. `?v=3` busts older encodes. */
+const HERO_DESKTOP = '/video/hero-1080.mp4?v=3'
+const HERO_MOBILE = '/video/hero-vertical.mp4?v=3'
+const POSTER_DESKTOP = '/video/hero-poster.jpg?v=3'
+const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=3'
+
+function isMobileHero() {
+  return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
+}
+
 function heroSrc() {
-  if (typeof window === 'undefined') return '/video/hero-1080.mp4?v=2'
-  return window.matchMedia('(max-width: 600px)').matches
-    ? '/video/hero-720.mp4?v=2'
-    : '/video/hero-1080.mp4?v=2'
+  return isMobileHero() ? HERO_MOBILE : HERO_DESKTOP
+}
+
+function heroPoster() {
+  return isMobileHero() ? POSTER_MOBILE : POSTER_DESKTOP
 }
 
 export default function Hero() {
   const { t } = useLanguage()
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
-  const [src, setSrc] = useState('/video/hero-1080.mp4?v=2')
+  const [src, setSrc] = useState(HERO_DESKTOP)
+  const [poster, setPoster] = useState(POSTER_DESKTOP)
   const [active, setActive] = useState(0)
   const [entered, setEntered] = useState(false)
   const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
 
   useEffect(() => {
     setSrc(heroSrc())
+    setPoster(heroPoster())
   }, [])
 
   useEffect(() => {
@@ -111,17 +122,17 @@ export default function Hero() {
       <div className="hero__media" data-playing={playing}>
         <img
           className="hero__poster"
-          src="/video/hero-poster.jpg?v=2"
+          src={poster}
           alt=""
-          width="1920"
-          height="1080"
+          width={poster.includes('vertical') ? 1080 : 1920}
+          height={poster.includes('vertical') ? 1920 : 1080}
         />
         <video
           key={src}
           ref={videoRef}
           className="hero__video"
           src={src}
-          poster="/video/hero-poster.jpg?v=2"
+          poster={poster}
           autoPlay
           muted
           loop
