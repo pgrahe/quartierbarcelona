@@ -82,7 +82,7 @@ export const translations = {
       // About title — it is brand, not copy.
       title: 'Make it yours.',
       body:
-        'Quartier también es un espacio único para celebrar eventos privados, corporativos y ocasiones especiales en Pedralbes.',
+        'Un espacio único para eventos privados, corporativos y celebraciones en Pedralbes.',
       tagline: 'Un espacio. Una experiencia. A tu medida.',
       cta: 'SOLICITAR INFORMACIÓN',
       whatsappMessage: 'Hola, me gustaría recibir información sobre eventos privados en Quartier Barcelona.',
@@ -156,7 +156,7 @@ export const translations = {
       eyebrow: 'PRIVATE EVENTS',
       title: 'Make it yours.',
       body:
-        'Quartier is also a singular space for private events, corporate occasions and celebrations in Pedralbes.',
+        'A singular space for private events, corporate occasions and celebrations in Pedralbes.',
       tagline: 'One space. One experience. Made yours.',
       cta: 'REQUEST INFORMATION',
       whatsappMessage: 'Hello, I would like information about private events at Quartier Barcelona.',
@@ -230,7 +230,7 @@ export const translations = {
       eyebrow: 'PRIVATE EVENTS',
       title: 'Make it yours.',
       body:
-        'Quartier est aussi un lieu singulier pour vos événements privés, vos rendez-vous d’entreprise et vos grandes occasions à Pedralbes.',
+        'Un lieu singulier pour vos événements privés, vos rendez-vous d’entreprise et vos célébrations à Pedralbes.',
       tagline: 'Un lieu. Une expérience. À votre mesure.',
       cta: 'DEMANDER DES INFORMATIONS',
       whatsappMessage: 'Bonjour, je souhaiterais des informations sur les événements privés au Quartier Barcelona.',
@@ -304,7 +304,7 @@ export const translations = {
       eyebrow: 'PRIVATE EVENTS',
       title: 'Make it yours.',
       body:
-        'Quartier ist auch ein besonderer Ort für private Feiern, Firmenevents und grosse Anlässe in Pedralbes.',
+        'Ein besonderer Ort für private Feiern, Firmenevents und Feierlichkeiten in Pedralbes.',
       tagline: 'Ein Raum. Ein Erlebnis. Ganz nach Ihnen.',
       cta: 'INFORMATIONEN ANFRAGEN',
       whatsappMessage: 'Hallo, ich hätte gerne Informationen zu privaten Events im Quartier Barcelona.',
