@@ -47,6 +47,10 @@ export const LOCATION = {
   city: 'Barcelona',
   postalCode: '08034',
   country: 'España',
+  // OpenStreetMap / Nominatim pin for this street number.
+  lat: 41.3900488,
+  lng: 2.1105701,
+  zoom: 16,
 }
 
 /** Address as one line — used for the map query and link. */
@@ -61,13 +65,9 @@ export function addressLines() {
   return [LOCATION.street, `${LOCATION.postalCode} ${LOCATION.city}`.trim()].filter(Boolean)
 }
 
-/** Query string used by both the embedded map and the "get directions" link. */
+/** Query string used by the "get directions" link. */
 export function mapQuery() {
   return ['Quartier Barcelona', formattedAddress(), LOCATION.country].filter(Boolean).join(', ')
-}
-
-export function mapEmbedUrl() {
-  return `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery())}&t=&z=15&ie=UTF8&iwloc=&output=embed`
 }
 
 export function mapDirectionsUrl() {

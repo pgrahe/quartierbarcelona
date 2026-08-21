@@ -11,6 +11,9 @@ import './Hero.css'
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  *
+ * Mobile intro: the wordmark holds in the slogan position for 2s, then docks
+ * up into the top-left bar (FLIP), and only then the rotating slogan enters.
+ *
  * The slogan cycles MORE THAN A NIGHT. → A MOMENT. → A CLUB.
  * "MORE THAN" and "A" stay fixed; only NIGHT / MOMENT / CLUB rotate (in italic).
  *
@@ -23,24 +26,22 @@ import './Hero.css'
  *   transition: transform .8s cubic-bezier(.2,1,.3,1)
  *   .dynamic-words               { transition: width .8s cubic-bezier(.2,1,.3,1) }
  *
- * The two layers move in opposite directions by exactly their own width, so
- * the word is *uncovered* left-to-right instead of sliding across — and the
- * container's width eases between words of different lengths. Both are what
- * make the effect read the way it does; a plain translate loses it.
- *
  * Timings are Sutton's shape, slowed down: .8s→1.2s, .4s→.5s delay, and a
  * 2.5s→4.6s cycle so each phrase is allowed to land.
  */
 const ROTATION_MS = 4600
 const ENTER_DELAY_MS = 550
+const LOGO_HOLD_MS = 2000
+const LOGO_DOCK_MS = 900
 
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable.
  *
- *  Both files are trimmed to start 1.0s into the source: it opens on a
- *  near-static wide shot of the street, so the first second of playback looked
- *  frozen even once it was running. The trim starts on the interior cut, which
- *  moves immediately.
+ *  Both files are trimmed to start 2.3s into the source. The clip opens on a
+ *  near-static wide shot of the street, so the first seconds read as frozen
+ *  even once playing. 2.3s is a scene cut into the dancefloor — deliberately
+ *  not 2.0s, where the frame is blown out (luminance ~230/255) and the hero
+ *  would flash near-white a moment after load.
  *
  *  The mobile file stays at the source's native 1080x1920. An earlier pass cut
  *  it to 900x1600/crf33 to speed up loading, which was a mistake: a phone
@@ -51,14 +52,18 @@ const ENTER_DELAY_MS = 550
  *  Load time is bought back from `heroSrc()` being resolved on first render
  *  (see below), not from starving the encode.
  *
- *  `?v=5` busts caches still holding the old encodes. */
-const HERO_DESKTOP = '/video/hero-1080.mp4?v=5'
-const HERO_MOBILE = '/video/hero-vertical.mp4?v=5'
-const POSTER_DESKTOP = '/video/hero-poster.jpg?v=5'
-const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=5'
+ *  `?v=6` busts caches still holding the old encodes. */
+const HERO_DESKTOP = '/video/hero-1080.mp4?v=6'
+const HERO_MOBILE = '/video/hero-vertical.mp4?v=6'
+const POSTER_DESKTOP = '/video/hero-poster.jpg?v=6'
+const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=6'
 
 function isMobileHero() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
+}
+
+function prefersReducedMotion() {
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 function heroSrc() {
@@ -67,6 +72,12 @@ function heroSrc() {
 
 function heroPoster() {
   return isMobileHero() ? POSTER_MOBILE : POSTER_DESKTOP
+}
+
+function initialIntro() {
+  if (typeof window === 'undefined') return 'done'
+  if (prefersReducedMotion() || !isMobileHero()) return 'done'
+  return 'hold'
 }
 
 export default function Hero() {
@@ -83,7 +94,12 @@ export default function Hero() {
   const [poster, setPoster] = useState(heroPoster)
   const [active, setActive] = useState(0)
   const [entered, setEntered] = useState(false)
+  // Mobile-only logo intro: hold (centre) → move (FLIP to bar) → done.
+  const [intro, setIntro] = useState(initialIntro)
   const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
+
+  const brandRef = useRef(null)
+  const logoSlotRef = useRef(null)
 
   // Sutton sets the rotator's width in JS to the active word's own width and
   // lets CSS ease between values. Measuring is the only way to get that: the
@@ -119,20 +135,88 @@ export default function Hero() {
     const sync = () => {
       setSrc(heroSrc())
       setPoster(heroPoster())
+      // Leaving mobile mid-intro: snap to the settled chrome.
+      if (!mq.matches && intro !== 'done') {
+        setIntro('done')
+        setEntered(true)
+      }
     }
     mq.addEventListener('change', sync)
     return () => mq.removeEventListener('change', sync)
-  }, [])
+  }, [intro])
 
+  // Hold the centred mark, then kick off the dock animation.
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (intro !== 'hold') return
+    const hold = window.setTimeout(() => setIntro('move'), LOGO_HOLD_MS)
+    return () => window.clearTimeout(hold)
+  }, [intro])
+
+  // FLIP the centred brand into the top-left bar slot via CSS variables.
+  // (Imperative style.transform was getting clobbered mid-frame on mobile
+  // Safari / Chromium; custom properties + a docking class are stable.)
+  useLayoutEffect(() => {
+    if (intro !== 'move') return
+
+    const brand = brandRef.current
+    const slot = logoSlotRef.current
+    if (!brand || !slot) {
+      setIntro('done')
+      return
+    }
+
+    const from = brand.getBoundingClientRect()
+    const to = slot.getBoundingClientRect()
+    const dx = to.left + to.width / 2 - (from.left + from.width / 2)
+    const dy = to.top + to.height / 2 - (from.top + from.height / 2)
+    const scale = to.width / Math.max(from.width, 1)
+
+    brand.style.setProperty('--dock-x', `${dx}px`)
+    brand.style.setProperty('--dock-y', `${dy}px`)
+    brand.style.setProperty('--dock-s', String(scale))
+
+    let settled = false
+    const finish = (event) => {
+      // Ignore opacity's twin transitionend — only transform completes the dock.
+      if (event && event.propertyName && event.propertyName !== 'transform') return
+      if (settled) return
+      settled = true
+      setIntro('done')
+    }
+
+    let raf2 = 0
+    const raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(() => {
+        brand.classList.add('is-docking')
+      })
+    })
+
+    const safety = window.setTimeout(() => finish(), LOGO_DOCK_MS + 120)
+    brand.addEventListener('transitionend', finish)
+
+    return () => {
+      window.cancelAnimationFrame(raf1)
+      window.cancelAnimationFrame(raf2)
+      window.clearTimeout(safety)
+      brand.removeEventListener('transitionend', finish)
+    }
+  }, [intro])
+
+  // Slogan entrance + rotation — only after the intro has settled (desktop
+  // starts as 'done'; mobile waits for the dock).
+  useEffect(() => {
+    if (intro !== 'done') return
+
+    const reduced = prefersReducedMotion()
     if (reduced) {
       setActive(clubIndex >= 0 ? clubIndex : 0)
       setEntered(true)
       return
     }
 
-    const enter = window.setTimeout(() => setEntered(true), ENTER_DELAY_MS)
+    // Mobile already waited 2s + dock; desktop still gets the short rise delay.
+    const enterDelay = isMobileHero() ? 40 : ENTER_DELAY_MS
+    const enter = window.setTimeout(() => setEntered(true), enterDelay)
     const tick = window.setInterval(() => {
       setActive((i) => (i + 1) % SLOGAN_ROTATIONS.length)
     }, ROTATION_MS)
@@ -141,7 +225,7 @@ export default function Hero() {
       window.clearTimeout(enter)
       window.clearInterval(tick)
     }
-  }, [clubIndex])
+  }, [intro, clubIndex])
 
   useEffect(() => {
     const v = videoRef.current
@@ -189,8 +273,10 @@ export default function Hero() {
     }
   }, [src])
 
+  const introActive = intro === 'hold' || intro === 'move'
+
   return (
-    <section id="inicio" className="hero" aria-label="Quartier Barcelona">
+    <section id="inicio" className="hero" data-intro={intro} aria-label="Quartier Barcelona">
       <div className="hero__media" data-playing={playing}>
         <img
           className="hero__poster"
@@ -222,16 +308,35 @@ export default function Hero() {
 
       {/* Mobile-only chrome: logo left, CTA right. Nothing else above the fold. */}
       <div className="hero__bar">
-        <a href="#inicio" className="hero__logo" aria-label="Quartier Barcelona">
+        <a
+          ref={logoSlotRef}
+          href="#inicio"
+          className="hero__logo"
+          aria-label="Quartier Barcelona"
+          tabIndex={introActive ? -1 : undefined}
+          aria-hidden={introActive ? true : undefined}
+        >
           <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
         </a>
         <TicketsCta className="hero__cta" />
       </div>
 
       <div className="hero__body">
+        {/* Mobile intro mark — lives in the slogan slot, then docks to the bar. */}
+        {introActive && (
+          <div className="hero__brand" ref={brandRef} aria-hidden="true">
+            <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
+          </div>
+        )}
+
         {/* aria-label states the slogan once; the moving parts are hidden from
             assistive tech so it is not read as three shuffling fragments. */}
-        <h1 className="hero__slogan" data-entered={entered} aria-label={SLOGAN}>
+        <h1
+          className="hero__slogan"
+          data-entered={entered}
+          data-ready={intro === 'done'}
+          aria-label={SLOGAN}
+        >
           <span className="hero__slogan-lead" aria-hidden="true">
             <span>{SLOGAN_LEAD}</span>
           </span>

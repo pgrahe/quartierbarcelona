@@ -1,14 +1,13 @@
-import { addressLines, mapDirectionsUrl, mapEmbedUrl } from '../config/site'
+import { addressLines, mapDirectionsUrl } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
+import VenueMap from './VenueMap'
 import './LocationMap.css'
 
 /**
  * Location.
  *
- * A beige type panel and the map sit in one grid, so the map reads as part of
- * the page rather than as a pasted iframe. The map itself is desaturated in
- * CSS to keep it inside the three-colour palette — a light touch that stops
- * well short of making it unreadable.
+ * A beige type panel and a monochrome Leaflet map sit in one grid, so the map
+ * reads as part of the page rather than as a pasted Google iframe.
  *
  * Address, map pin and directions link all derive from LOCATION in
  * src/config/site.js.
@@ -52,13 +51,7 @@ export default function LocationMap() {
         </div>
 
         <div className="loc__map" data-reveal="mask" style={{ '--reveal-delay': '120ms' }}>
-          <iframe
-            src={mapEmbedUrl()}
-            title={t.location.mapLabel}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
+          <VenueMap title={t.location.mapLabel} />
         </div>
       </div>
     </section>
