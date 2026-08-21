@@ -110,7 +110,8 @@
 }
 
 .foot__legal-sep {
-  color: var(--stone-22);
+  color: var(--bordeaux);
+  opacity: 0.7;
 }
 
 .foot__legal-link {

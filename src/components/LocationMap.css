@@ -22,8 +22,8 @@
 }
 
 .loc__eyebrow {
-  color: var(--black);
-  opacity: 0.42;
+  color: var(--bordeaux);
+  opacity: 1;
 }
 
 .loc__title {
@@ -96,7 +96,7 @@
   height: 14px;
   margin: 2px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--bordeaux);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.92);
 }
 

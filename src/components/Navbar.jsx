@@ -18,6 +18,8 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
   const links = [
     { id: 'inicio', label: t.nav.home },
     { id: 'sobre-nosotros', label: t.nav.about },
+    // Short label here only: the full one overflows the bar around 900–1024px.
+    { id: 'eventos-privados', label: t.nav.privateEventsShort },
     { id: 'contacto', label: t.nav.contact },
   ]
 

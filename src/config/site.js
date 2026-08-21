@@ -34,6 +34,27 @@ export const CONTACT = {
   phoneHref: '+34625266105',
 }
 
+/* -------------------------------------------------------------------------
+ * WhatsApp — private events enquiries
+ *
+ * Derived from CONTACT.phoneHref so there is only ever one phone number in
+ * the project. If events should go to a different line, set
+ * WHATSAPP_NUMBER to that number instead of pointing it at CONTACT.
+ * ---------------------------------------------------------------------- */
+
+/** wa.me wants digits only — no "+", no spaces. */
+export const WHATSAPP_NUMBER = CONTACT.phoneHref.replace(/\D/g, '')
+
+/**
+ * Opens WhatsApp with the message already typed, so the enquiry arrives with
+ * context instead of an empty "Hola". The text is translated per language —
+ * see `privateEvents.whatsappMessage` in src/i18n/translations.js.
+ */
+export function whatsappUrl(message) {
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base
+}
+
 /**
  * Venue address. Verified against OpenStreetMap, which places this street
  * number in Pedralbes (les Corts), 08034 — matching the brand.

@@ -1,0 +1,104 @@
+.pev {
+  background: var(--black);
+  color: var(--stone);
+}
+
+.pev__grid {
+  display: grid;
+  /* Image-led: the render is the argument, the type just frames it. */
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+/* ---- Photograph ---- */
+.pev__figure {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.pev__figure img {
+  width: 100%;
+  height: auto;
+  /* Settles as the mask lifts, same as the About portrait. */
+  scale: 1.05;
+  transition: scale 1.6s var(--ease-out);
+}
+
+.pev__figure[data-revealed='true'] img {
+  scale: 1;
+}
+
+/* ---- Type ---- */
+.pev__eyebrow {
+  color: var(--bordeaux);
+  /* The render is already a wall of red; the eyebrow needs to stay legible
+     against ink rather than compete with it. */
+  filter: brightness(1.9);
+}
+
+.pev__title {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: var(--w-bold);
+  font-style: italic;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--stone);
+}
+
+.pev__body {
+  max-width: 36ch;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: var(--fs-body);
+  line-height: 1.72;
+  color: var(--stone-70);
+  text-wrap: pretty;
+}
+
+.pev__tagline {
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: var(--fs-lead);
+  font-weight: var(--w-bold);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--stone);
+}
+
+.pev__cta-row {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.pev__cta {
+  /* Secondary by design — never the solid beige fill, which belongs to
+     TICKETS Y MESAS VIP alone. */
+  width: fit-content;
+}
+
+/* -------------------------------------------------------------------------
+ * Mobile — photo first, then the pitch.
+ * ---------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .pev__grid {
+    grid-template-columns: 1fr;
+    gap: clamp(2.25rem, 8vw, 3rem);
+    align-items: start;
+  }
+
+  .pev__body {
+    max-width: none;
+  }
+
+  .pev__cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pev__figure img {
+    scale: 1;
+    transition: none;
+  }
+}

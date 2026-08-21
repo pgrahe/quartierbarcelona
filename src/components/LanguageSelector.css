@@ -13,7 +13,8 @@
 
 .langs__sep {
   padding-inline: 0.45em;
-  opacity: 0.28;
+  color: var(--bordeaux);
+  opacity: 0.85;
 }
 
 .langs__btn {

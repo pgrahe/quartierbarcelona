@@ -1,8 +1,7 @@
 /* -------------------------------------------------------------------------
  * QUARTIER BARCELONA — design tokens
  *
- * Three colours. Nothing else. Every other value in the system is one of
- * these three at some opacity.
+ * Four colours. Black, ink, stone — and Quartier Bordeaux as a sparse accent.
  * ---------------------------------------------------------------------- */
 
 @import '/fonts/montserrat.css';
@@ -42,10 +41,12 @@
 */
 
 :root {
-  /* ---- Palette: three colours, full stop ---- */
+  /* ---- Palette ---- */
   --black: #000000;
   --ink: #161616;
   --stone: #e7e1d6;
+  /* Brand accent — Quartier Bordeaux. Used sparingly on marks and labels. */
+  --bordeaux: #5a1820;
 
   /* ---- Derived tones (opacity only, no new hues) ---- */
   --stone-90: rgba(231, 225, 214, 0.9);
@@ -61,6 +62,10 @@
   --black-40: rgba(0, 0, 0, 0.4);
   --black-22: rgba(0, 0, 0, 0.22);
   --black-12: rgba(0, 0, 0, 0.12);
+
+  --bordeaux-90: rgba(90, 24, 32, 0.9);
+  --bordeaux-70: rgba(90, 24, 32, 0.7);
+  --bordeaux-40: rgba(90, 24, 32, 0.4);
 
   /* ---- Type ---- */
   --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,

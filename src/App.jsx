@@ -8,6 +8,7 @@ import MobileMenu from './components/MobileMenu'
 import Hero from './components/Hero'
 import About from './components/About'
 import BrandMoment from './components/BrandMoment'
+import PrivateEvents from './components/PrivateEvents'
 import Contact from './components/Contact'
 import LocationMap from './components/LocationMap'
 import Footer from './components/Footer'
@@ -47,6 +48,7 @@ export default function App() {
         <Hero />
         <About />
         <BrandMoment />
+        <PrivateEvents />
         <Contact />
         <LocationMap />
       </main>

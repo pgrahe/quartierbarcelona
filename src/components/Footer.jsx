@@ -13,6 +13,7 @@ export default function Footer() {
   const links = [
     { id: 'inicio', label: t.nav.home },
     { id: 'sobre-nosotros', label: t.nav.about },
+    { id: 'eventos-privados', label: t.nav.privateEvents },
     { id: 'contacto', label: t.nav.contact },
   ]
 

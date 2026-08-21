@@ -7,6 +7,11 @@
   overflow: clip;
 }
 
+.moment__stack {
+  display: grid;
+  gap: clamp(0.65rem, 1.4vw, 1rem);
+}
+
 .moment__frame {
   position: relative;
   /* Tracks the 2:1 desktop crop, so the photograph is shown rather than

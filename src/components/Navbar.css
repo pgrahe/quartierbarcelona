@@ -150,6 +150,37 @@
 }
 
 /* -------------------------------------------------------------------------
+ * Narrow desktop
+ *
+ * Between the mobile breakpoint and ~1200px the bar carries four links, the
+ * language selector and the CTA. Measured at 901px it overflowed by 121px, so
+ * the spacing tightens here rather than letting items collide. Paired with the
+ * shortened "EVENTOS" label the Navbar uses (see Navbar.jsx).
+ * ---------------------------------------------------------------------- */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .nav__inner {
+    gap: 1.25rem;
+    padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .nav__links {
+    gap: 1.15rem;
+  }
+
+  .nav__end {
+    gap: 1rem;
+  }
+
+  .nav__logo img {
+    width: 96px;
+  }
+
+  .nav__cta {
+    padding-inline: 1rem;
+  }
+}
+
+/* -------------------------------------------------------------------------
  * Mobile
  *
  * During the hero the bar is empty: the hero carries its own logo + CTA. Once

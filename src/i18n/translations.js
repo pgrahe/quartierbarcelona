@@ -42,6 +42,9 @@ export const translations = {
       home: 'INICIO',
       about: 'SOBRE NOSOTROS',
       contact: 'CONTACTO',
+      privateEvents: 'EVENTOS PRIVADOS',
+      // Navbar only — the full label overflows the bar on narrow laptops.
+      privateEventsShort: 'EVENTOS',
       tickets: 'TICKETS Y MESAS VIP',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
@@ -70,6 +73,20 @@ export const translations = {
     brand: {
       caption: 'LA NOCHE, A NUESTRA MANERA',
       imageAlt: 'Ambiente nocturno en la pista de Quartier Barcelona',
+      imageAlt2: 'Grupo de amigos en una noche en Quartier Barcelona',
+      imageAlt3: 'Invitada celebrando en Quartier Barcelona',
+    },
+    privateEvents: {
+      eyebrow: 'PRIVATE EVENTS',
+      // Headline stays English in every language, like the hero slogan and the
+      // About title — it is brand, not copy.
+      title: 'Make it yours.',
+      body:
+        'Quartier también es un espacio único para celebrar eventos privados, corporativos y ocasiones especiales en Pedralbes.',
+      tagline: 'Un espacio. Una experiencia. A tu medida.',
+      cta: 'SOLICITAR INFORMACIÓN',
+      whatsappMessage: 'Hola, me gustaría recibir información sobre eventos privados en Quartier Barcelona.',
+      imageAlt: 'Reservado de Quartier Barcelona',
     },
     contact: {
       eyebrow: 'HABLEMOS',
@@ -102,6 +119,8 @@ export const translations = {
       home: 'HOME',
       about: 'ABOUT',
       contact: 'CONTACT',
+      privateEvents: 'PRIVATE EVENTS',
+      privateEventsShort: 'EVENTS',
       tickets: 'TICKETS & VIP TABLES',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
@@ -129,6 +148,18 @@ export const translations = {
     brand: {
       caption: 'THE NIGHT, OUR WAY',
       imageAlt: 'Night atmosphere on the Quartier Barcelona dancefloor',
+      imageAlt2: 'Friends together on a night at Quartier Barcelona',
+      imageAlt3: 'Guest celebrating at Quartier Barcelona',
+    },
+    privateEvents: {
+      eyebrow: 'PRIVATE EVENTS',
+      title: 'Make it yours.',
+      body:
+        'Quartier is also a singular space for private events, corporate occasions and celebrations in Pedralbes.',
+      tagline: 'One space. One experience. Made yours.',
+      cta: 'REQUEST INFORMATION',
+      whatsappMessage: 'Hello, I would like information about private events at Quartier Barcelona.',
+      imageAlt: 'Private booth at Quartier Barcelona',
     },
     contact: {
       eyebrow: "LET'S TALK",
@@ -161,6 +192,8 @@ export const translations = {
       home: 'ACCUEIL',
       about: 'À PROPOS',
       contact: 'CONTACT',
+      privateEvents: 'ÉVÉNEMENTS PRIVÉS',
+      privateEventsShort: 'ÉVÉNEMENTS',
       tickets: 'TICKETS ET TABLES VIP',
       openMenu: 'Ouvrir le menu',
       closeMenu: 'Fermer le menu',
@@ -188,6 +221,18 @@ export const translations = {
     brand: {
       caption: 'LA NUIT, À NOTRE FAÇON',
       imageAlt: 'Ambiance nocturne sur la piste du Quartier Barcelona',
+      imageAlt2: 'Groupe d’amis lors d’une nuit au Quartier Barcelona',
+      imageAlt3: 'Invitée célébrant au Quartier Barcelona',
+    },
+    privateEvents: {
+      eyebrow: 'PRIVATE EVENTS',
+      title: 'Make it yours.',
+      body:
+        'Quartier est aussi un lieu singulier pour vos événements privés, vos rendez-vous d’entreprise et vos grandes occasions à Pedralbes.',
+      tagline: 'Un lieu. Une expérience. À votre mesure.',
+      cta: 'DEMANDER DES INFORMATIONS',
+      whatsappMessage: 'Bonjour, je souhaiterais des informations sur les événements privés au Quartier Barcelona.',
+      imageAlt: 'Espace privatif du Quartier Barcelona',
     },
     contact: {
       eyebrow: 'PARLONS-EN',
@@ -220,6 +265,8 @@ export const translations = {
       home: 'START',
       about: 'ÜBER UNS',
       contact: 'KONTAKT',
+      privateEvents: 'PRIVATE EVENTS',
+      privateEventsShort: 'EVENTS',
       tickets: 'TICKETS UND VIP-TISCHE',
       openMenu: 'Menü öffnen',
       closeMenu: 'Menü schließen',
@@ -247,6 +294,18 @@ export const translations = {
     brand: {
       caption: 'DIE NACHT, AUF UNSERE ART',
       imageAlt: 'Nachtatmosphäre auf der Tanzfläche des Quartier Barcelona',
+      imageAlt2: 'Freundesgruppe an einem Abend im Quartier Barcelona',
+      imageAlt3: 'Gast feiert im Quartier Barcelona',
+    },
+    privateEvents: {
+      eyebrow: 'PRIVATE EVENTS',
+      title: 'Make it yours.',
+      body:
+        'Quartier ist auch ein besonderer Ort für private Feiern, Firmenevents und grosse Anlässe in Pedralbes.',
+      tagline: 'Ein Raum. Ein Erlebnis. Ganz nach Ihnen.',
+      cta: 'INFORMATIONEN ANFRAGEN',
+      whatsappMessage: 'Hallo, ich hätte gerne Informationen zu privaten Events im Quartier Barcelona.',
+      imageAlt: 'Privater Bereich im Quartier Barcelona',
     },
     contact: {
       eyebrow: 'SPRECHEN WIR',

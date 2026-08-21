@@ -17,8 +17,8 @@
 }
 
 .about__eyebrow {
-  color: var(--black);
-  opacity: 0.42;
+  color: var(--bordeaux);
+  opacity: 1;
 }
 
 .about__title {
