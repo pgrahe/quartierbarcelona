@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { SLOGAN, SLOGAN_LINES } from '../i18n/translations'
+import { SLOGAN, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
@@ -10,7 +10,13 @@ import './Hero.css'
  * The poster frame is the video's own frame 0, so the swap to playing video is
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
+ *
+ * The slogan cycles MORE THAN A NIGHT. → MOMENT. → CLUB. in a soft crossfade,
+ * Sutton-style. Reduced motion holds on the brand line only.
  */
+
+const HOLD_MS = 3200
+const FADE_MS = 700
 
 /** Phones only. `<source media>` is unreliable across browsers — many ignore
  *  it and always take the first file, which made desktop play the soft 720 cut.
@@ -27,10 +33,32 @@ export default function Hero() {
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [src, setSrc] = useState('/video/hero-1080.mp4?v=2')
+  const [active, setActive] = useState(0)
+  const [entered, setEntered] = useState(false)
+  const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
 
   useEffect(() => {
     setSrc(heroSrc())
   }, [])
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      setActive(clubIndex >= 0 ? clubIndex : 0)
+      setEntered(true)
+      return
+    }
+
+    const enter = window.setTimeout(() => setEntered(true), 280)
+    const tick = window.setInterval(() => {
+      setActive((i) => (i + 1) % SLOGAN_ROTATIONS.length)
+    }, HOLD_MS + FADE_MS)
+
+    return () => {
+      window.clearTimeout(enter)
+      window.clearInterval(tick)
+    }
+  }, [clubIndex])
 
   useEffect(() => {
     const v = videoRef.current
@@ -118,12 +146,19 @@ export default function Hero() {
       </div>
 
       <div className="hero__body">
-        {/* aria-label carries the slogan as one phrase; the spans only control
-            where it breaks. */}
-        <h1 className="hero__slogan" aria-label={SLOGAN}>
-          {SLOGAN_LINES.map((line) => (
-            <span key={line} aria-hidden="true">
-              {line}
+        <h1 className="hero__slogan" data-entered={entered} aria-label={SLOGAN}>
+          {SLOGAN_ROTATIONS.map((slogan, i) => (
+            <span
+              key={slogan.id}
+              className="hero__slogan-frame"
+              data-active={i === active}
+              aria-hidden={i === active ? undefined : true}
+            >
+              {slogan.lines.map((line) => (
+                <span key={line} className="hero__slogan-line">
+                  {line}
+                </span>
+              ))}
             </span>
           ))}
         </h1>

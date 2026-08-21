@@ -19,10 +19,15 @@ export const DEFAULT_LANGUAGE = 'es'
 /** Never translated — the slogan is brand, not copy. */
 export const SLOGAN = 'MORE THAN A CLUB'
 
-/** The slogan set as a fixed two-line lockup, so the break is designed rather
- *  than left to the wrapping algorithm (which splits it three ways on a
- *  narrow phone). Read together they are exactly SLOGAN. */
-export const SLOGAN_LINES = ['MORE THAN', 'A CLUB']
+/**
+ * Hero rotations. Same cadence as a Sutton-style lockup: "MORE THAN" holds,
+ * the second line cycles. Never translated.
+ */
+export const SLOGAN_ROTATIONS = [
+  { id: 'night', lines: ['MORE THAN', 'A NIGHT.'], label: 'MORE THAN A NIGHT.' },
+  { id: 'moment', lines: ['MORE THAN', 'A MOMENT.'], label: 'MORE THAN A MOMENT.' },
+  { id: 'club', lines: ['MORE THAN', 'A CLUB.'], label: 'MORE THAN A CLUB.' },
+]
 
 export const translations = {
   es: {
@@ -48,7 +53,7 @@ export const translations = {
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
-      title: 'MORE THAN\nA NIGHT OUT.',
+      title: 'A NEW\nCHAPTER',
       // The first entry is set as a lead, the last as a closing line.
       body: [
         'Hay lugares a los que vas una noche. Y hay lugares que se convierten en parte de ella.',
@@ -108,7 +113,7 @@ export const translations = {
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
-      title: 'MORE THAN\nA NIGHT OUT.',
+      title: 'A NEW\nCHAPTER',
       body: [
         'There are places you go to for a night. And places that become part of it.',
         "For decades, this space has been part of Barcelona's nights. Today that story moves on as Quartier. A completely renovated space, a new design and a new identity for a new generation.",
@@ -167,7 +172,7 @@ export const translations = {
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
-      title: 'MORE THAN\nA NIGHT OUT.',
+      title: 'A NEW\nCHAPTER',
       body: [
         "Il y a des lieux où l'on va le temps d'une nuit. Et des lieux qui en deviennent une partie.",
         "Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd'hui, cette histoire évolue avec Quartier. Un espace entièrement rénové, un nouveau design et une nouvelle identité pour une nouvelle génération.",
@@ -226,7 +231,7 @@ export const translations = {
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
-      title: 'MORE THAN\nA NIGHT OUT.',
+      title: 'A NEW\nCHAPTER',
       body: [
         'Es gibt Orte, an die man für eine Nacht geht. Und Orte, die zu einem Teil von ihr werden.',
         'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute entwickelt sich diese Geschichte als Quartier weiter. Ein vollständig erneuerter Raum, ein neues Design und eine neue Identität für eine neue Generation.',

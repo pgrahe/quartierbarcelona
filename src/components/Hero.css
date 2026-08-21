@@ -96,8 +96,11 @@
 }
 
 .hero__slogan {
+  position: relative;
   display: grid;
   justify-items: center;
+  /* Reserve two-line height so rotation never reflows the hero. */
+  min-height: calc(var(--fs-slogan) * 0.94 * 2);
   font-family: var(--font-display);
   font-weight: var(--w-bold);
   font-size: var(--fs-slogan);
@@ -107,30 +110,26 @@
   color: var(--stone);
 }
 
-/* Each line is one unbreakable unit — the lockup is fixed, so the type is
-   sized to fit the line rather than the line reflowed to fit the type. */
-.hero__slogan > span {
-  white-space: nowrap;
-
-  /* Arrives once, on load; the second line follows a beat behind. */
+.hero__slogan-frame {
+  grid-area: 1 / 1;
+  display: grid;
+  justify-items: center;
   opacity: 0;
-  translate: 0 26px;
-  animation: hero-in 1.35s var(--ease-out) forwards;
+  translate: 0 18px;
+  transition:
+    opacity 700ms var(--ease-out),
+    translate 700ms var(--ease-out);
+  pointer-events: none;
 }
 
-.hero__slogan > span:nth-child(1) {
-  animation-delay: 260ms;
+.hero__slogan[data-entered='true'] .hero__slogan-frame[data-active='true'] {
+  opacity: 1;
+  translate: 0 0;
+  pointer-events: auto;
 }
 
-.hero__slogan > span:nth-child(2) {
-  animation-delay: 400ms;
-}
-
-@keyframes hero-in {
-  to {
-    opacity: 1;
-    translate: 0 0;
-  }
+.hero__slogan-line {
+  white-space: nowrap;
 }
 
 /* -------------------------------------------------------------------------
@@ -142,14 +141,10 @@
   }
 
   .hero__slogan {
-    /* Measured, not eyeballed. "MORE THAN" is the widest line: 6.52em in
-       Didot, 6.81em in Georgia — the widest fallback in the stack. Dividing
-       the available width (viewport minus the 1.5rem gutters) by 9 keeps it on
-       one line in every fallback down to 320px and still leaves real margin at
-       the sides. Anything below ~7.2 would start touching the edges; raise it
-       further to make the lockup smaller. */
+    /* Sized for the widest second line ("A MOMENT.") so nothing wraps. */
     font-size: min(calc((100vw - 3rem) / 9), 3.25rem);
     line-height: 0.98;
+    min-height: calc(min(calc((100vw - 3rem) / 9), 3.25rem) * 0.98 * 2);
   }
 
   .hero__body {
@@ -170,13 +165,17 @@
 @media (max-width: 900px) and (max-height: 520px) {
   .hero__slogan {
     font-size: clamp(2rem, 7vw, 3rem);
+    min-height: calc(clamp(2rem, 7vw, 3rem) * 0.98 * 2);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__slogan > span {
-    opacity: 1;
+  .hero__slogan-frame {
+    transition: none;
     translate: none;
-    animation: none;
+  }
+
+  .hero__slogan[data-entered='true'] .hero__slogan-frame[data-active='true'] {
+    opacity: 1;
   }
 }
