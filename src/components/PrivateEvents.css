@@ -40,18 +40,19 @@
 
 .pev__title {
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: var(--fs-display);
   font-weight: var(--w-bold);
-  font-style: italic;
+  font-style: normal;
   line-height: 0.98;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
   color: var(--stone);
 }
 
 .pev__body {
-  max-width: 36ch;
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: var(--measure);
+  margin-top: clamp(2rem, 4vw, 3.25rem);
   font-size: var(--fs-body);
   line-height: 1.72;
   color: var(--stone-70);
