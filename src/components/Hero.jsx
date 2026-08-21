@@ -11,10 +11,26 @@ import './Hero.css'
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  */
+
+/** Phones only. `<source media>` is unreliable across browsers — many ignore
+ *  it and always take the first file, which made desktop play the soft 720 cut.
+ *  `?v=2` busts the previous over-compressed encodes cached on CDN/browsers. */
+function heroSrc() {
+  if (typeof window === 'undefined') return '/video/hero-1080.mp4?v=2'
+  return window.matchMedia('(max-width: 600px)').matches
+    ? '/video/hero-720.mp4?v=2'
+    : '/video/hero-1080.mp4?v=2'
+}
+
 export default function Hero() {
   const { t } = useLanguage()
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
+  const [src, setSrc] = useState('/video/hero-1080.mp4?v=2')
+
+  useEffect(() => {
+    setSrc(heroSrc())
+  }, [])
 
   useEffect(() => {
     const v = videoRef.current
@@ -60,37 +76,33 @@ export default function Hero() {
       document.removeEventListener('visibilitychange', onVisible)
       document.removeEventListener('pointerdown', attempt)
     }
-  }, [])
+  }, [src])
 
   return (
     <section id="inicio" className="hero" aria-label="Quartier Barcelona">
       <div className="hero__media" data-playing={playing}>
         <img
           className="hero__poster"
-          src="/video/hero-poster.jpg"
+          src="/video/hero-poster.jpg?v=2"
           alt=""
           width="1920"
           height="1080"
         />
         <video
+          key={src}
           ref={videoRef}
           className="hero__video"
-          poster="/video/hero-poster.jpg"
+          src={src}
+          poster="/video/hero-poster.jpg?v=2"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           disablePictureInPicture
           aria-label={t.hero.videoLabel}
           tabIndex={-1}
-        >
-          {/* Phones get the lighter cut. The cutoff is 600px, not the 900px
-              layout breakpoint: a tablet is wide enough — and dense enough —
-              that 720p would visibly soften. */}
-          <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 600px)" />
-          <source src="/video/hero-1080.mp4" type="video/mp4" />
-        </video>
+        />
       </div>
 
       {/* Two very soft blacks: a flat wash for overall legibility and a
