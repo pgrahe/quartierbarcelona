@@ -165,7 +165,12 @@
     display: grid;
   }
 
-  /* Hero state: nothing painted, nothing shown. */
+  /* Hero state: nothing painted, nothing shown — and the empty bar must not
+     steal taps from the hero's own logo + CTA sitting underneath (z-index 3). */
+  .nav:not([data-solid='true']):not([data-menu-open='true']) {
+    pointer-events: none;
+  }
+
   .nav:not([data-solid='true']):not([data-menu-open='true']) .nav__logo,
   .nav:not([data-solid='true']):not([data-menu-open='true']) .nav__burger {
     opacity: 0;

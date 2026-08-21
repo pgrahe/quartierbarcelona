@@ -119,14 +119,18 @@
   --hero-delay: 0.5s;
 
   display: grid;
+  /* Each line is centred on the same axis. Because the rotator's width eases
+     between words, the second line re-centres smoothly as NIGHT./MOMENT./CLUB.
+     swap rather than snapping to a new position. */
   justify-items: center;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
   font-family: var(--font-display);
   font-weight: var(--w-bold);
   font-size: var(--hero-slogan-size);
   line-height: var(--hero-slogan-lh);
   letter-spacing: 0.005em;
-  /* Lowercase is a presentation choice — the strings stay uppercase in
-     translations.js so the brand text and the aria-label read normally. */
   text-transform: uppercase;
   text-align: center;
   color: var(--stone);
@@ -138,18 +142,34 @@
   overflow: hidden;
 }
 
-.hero__slogan-lead > span {
+.hero__slogan-lead > span,
+.hero__slogan-article > span {
   display: block;
   transform: translate3d(0, 1.2em, 0);
   /* Sutton's entrance curve, which is a different one from the rotation. */
   transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.hero__slogan[data-entered='true'] .hero__slogan-lead > span {
+.hero__slogan[data-entered='true'] .hero__slogan-lead > span,
+.hero__slogan[data-entered='true'] .hero__slogan-article > span {
   transform: translate3d(0, 0, 0);
 }
 
-/* ---- Line two: the rotator ---- */
+/* ---- Line two: fixed "A" + rotating italic word ---- */
+.hero__slogan-tail {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.28em;
+}
+
+.hero__slogan-article {
+  display: block;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+/* ---- Rotator ---- */
 .hero__slogan-rotator {
   position: relative;
   display: block;
@@ -160,16 +180,23 @@
   transition: width var(--hero-dur) var(--hero-ease);
 }
 
+/* Sits in normal flow purely to give the rotator a baseline. Zero-width
+   content, so it costs no space — must stay `display: inline`, since an
+   inline-block would hand back its bottom edge as the baseline again. */
+.hero__slogan-strut {
+  display: inline;
+}
+
 .hero__slogan-wrap {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0;
   display: block;
   overflow: hidden;
   white-space: nowrap;
   opacity: 0;
-  /* -50% centres it; the -100% of its own width is the mask sweep. */
-  transform: translate3d(-150%, 0, 0);
+  /* Sutton mask sweep: the wrap itself starts shifted left by its own width. */
+  transform: translate3d(-100%, 0, 0);
   transition:
     transform var(--hero-dur) var(--hero-ease),
     opacity var(--hero-dur) var(--hero-ease);
@@ -177,13 +204,14 @@
 
 .hero__slogan-word {
   display: block;
+  font-style: italic;
   transform: translate3d(100%, 0, 0);
   transition: transform var(--hero-dur) var(--hero-ease);
 }
 
 .hero__slogan-wrap[data-active='true'] {
   opacity: 1;
-  transform: translate3d(-50%, 0, 0);
+  transform: translate3d(0, 0, 0);
   transition-delay: var(--hero-delay);
 }
 
@@ -201,7 +229,7 @@
   }
 
   .hero__slogan {
-    /* Sized off the widest rotating line ("A MOMENT.") so it never wraps. */
+    /* Sized off the widest rotating word ("MOMENT.") so it never wraps. */
     --hero-slogan-size: min(calc((100vw - 3rem) / 12), 2rem);
     --hero-slogan-lh: 1.1;
   }
@@ -229,6 +257,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero__slogan-lead > span,
+  .hero__slogan-article > span,
   .hero__slogan-word,
   .hero__slogan-rotator {
     transform: none;
@@ -245,6 +274,6 @@
 
   .hero__slogan-wrap[data-active='true'] {
     opacity: 1;
-    transform: translate3d(-50%, 0, 0);
+    transform: none;
   }
 }

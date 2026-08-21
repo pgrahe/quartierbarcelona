@@ -20,15 +20,16 @@ export const DEFAULT_LANGUAGE = 'es'
 export const SLOGAN = 'MORE THAN A CLUB'
 
 /**
- * Hero rotation. "MORE THAN" holds on line one; line two cycles.
+ * Hero rotation. "MORE THAN" and "A" hold; only NIGHT / MOMENT / CLUB cycle.
  * Never translated — brand English, rendered uppercase in the hero.
  */
 export const SLOGAN_LEAD = 'MORE THAN'
+export const SLOGAN_ARTICLE = 'A'
 
 export const SLOGAN_ROTATIONS = [
-  { id: 'night', word: 'A NIGHT.', label: 'MORE THAN A NIGHT.' },
-  { id: 'moment', word: 'A MOMENT.', label: 'MORE THAN A MOMENT.' },
-  { id: 'club', word: 'A CLUB.', label: 'MORE THAN A CLUB.' },
+  { id: 'night', word: 'NIGHT.', label: 'MORE THAN A NIGHT.' },
+  { id: 'moment', word: 'MOMENT.', label: 'MORE THAN A MOMENT.' },
+  { id: 'club', word: 'CLUB.', label: 'MORE THAN A CLUB.' },
 ]
 
 export const translations = {

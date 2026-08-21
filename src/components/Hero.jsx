@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { SLOGAN, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
+import { SLOGAN, SLOGAN_ARTICLE, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
@@ -12,6 +12,7 @@ import './Hero.css'
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  *
  * The slogan cycles MORE THAN A NIGHT. → A MOMENT. → A CLUB.
+ * "MORE THAN" and "A" stay fixed; only NIGHT / MOMENT / CLUB rotate (in italic).
  *
  * The rotation is Salient's `nectar-rotating-words-title` reveal, as used on
  * suttonbarcelona.com, read off the live site rather than approximated:
@@ -36,20 +37,25 @@ const ENTER_DELAY_MS = 550
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable.
  *
- *  Both files are trimmed to start 1.0s into the source. The hero used to read
- *  as frozen for the first second on phones, from two causes stacked on top of
- *  each other: the mobile file was 18MB at 8.3Mbps so the poster sat there
- *  while it buffered, AND the source opens on a near-static wide shot of the
- *  street, so even once playing almost nothing moved. Trimming to the interior
- *  cut fixes the second; re-encoding at 900x1600 / ~1.4Mbps (2.8MB) fixes the
- *  first, since time-to-first-frame scales with bitrate. Under the hero scrim
- *  the quality difference is not visible.
+ *  Both files are trimmed to start 1.0s into the source: it opens on a
+ *  near-static wide shot of the street, so the first second of playback looked
+ *  frozen even once it was running. The trim starts on the interior cut, which
+ *  moves immediately.
  *
- *  `?v=4` busts caches still holding the old encodes. */
-const HERO_DESKTOP = '/video/hero-1080.mp4?v=4'
-const HERO_MOBILE = '/video/hero-vertical.mp4?v=4'
-const POSTER_DESKTOP = '/video/hero-poster.jpg?v=4'
-const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=4'
+ *  The mobile file stays at the source's native 1080x1920. An earlier pass cut
+ *  it to 900x1600/crf33 to speed up loading, which was a mistake: a phone
+ *  renders this hero at ~1170px (390pt x3), so that was upscaled AND heavily
+ *  quantised — mushy hair, no grain, plastic skin. It is encoded at crf27 with
+ *  aq-mode=3 instead, which keeps detail in the dark areas the scrim sits over.
+ *
+ *  Load time is bought back from `heroSrc()` being resolved on first render
+ *  (see below), not from starving the encode.
+ *
+ *  `?v=5` busts caches still holding the old encodes. */
+const HERO_DESKTOP = '/video/hero-1080.mp4?v=5'
+const HERO_MOBILE = '/video/hero-vertical.mp4?v=5'
+const POSTER_DESKTOP = '/video/hero-poster.jpg?v=5'
+const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=5'
 
 function isMobileHero() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
@@ -69,9 +75,10 @@ export default function Hero() {
   const [playing, setPlaying] = useState(false)
   // Resolved lazily on the FIRST render, not in an effect afterwards. Starting
   // from the desktop value meant a phone put <video src="hero-1080.mp4"> into
-  // the DOM with preload="auto", began pulling 7.6MB, and only then swapped to
-  // the 2.8MB vertical — burning bandwidth and delaying the frame it actually
-  // needed. This is the largest single cause of the hero looking frozen.
+  // the DOM with preload="auto", began pulling the 7.6MB landscape file, and
+  // only then swapped to the vertical one — downloading two heavy videos and
+  // delaying the frame it actually needed. This was the single largest cause
+  // of the hero appearing frozen on mobile.
   const [src, setSrc] = useState(heroSrc)
   const [poster, setPoster] = useState(heroPoster)
   const [active, setActive] = useState(0)
@@ -229,28 +236,42 @@ export default function Hero() {
             <span>{SLOGAN_LEAD}</span>
           </span>
 
-          <span
-            className="hero__slogan-rotator"
-            ref={rotatorRef}
-            aria-hidden="true"
-            style={widths[active] ? { width: `${widths[active]}px` } : undefined}
-          >
-            {SLOGAN_ROTATIONS.map((slogan, i) => (
-              <span
-                key={slogan.id}
-                className="hero__slogan-wrap"
-                data-active={i === active && entered}
-              >
-                <span
-                  className="hero__slogan-word"
-                  ref={(el) => {
-                    wordRefs.current[i] = el
-                  }}
-                >
-                  {slogan.word}
-                </span>
+          <span className="hero__slogan-tail" aria-hidden="true">
+            <span className="hero__slogan-article">
+              <span>{SLOGAN_ARTICLE}</span>
+            </span>
+
+            <span
+              className="hero__slogan-rotator"
+              ref={rotatorRef}
+              style={widths[active] ? { width: `${widths[active]}px` } : undefined}
+            >
+              {/* Baseline strut. Every rotating word is absolutely positioned,
+                  which leaves this box with no baseline of its own — flexbox
+                  then synthesises one from its bottom edge and the fixed "A"
+                  ends up sitting ~9px below the word. A zero-width character
+                  in normal flow gives the box a real text baseline, so
+                  `align-items: baseline` lines the two up properly. */}
+              <span className="hero__slogan-strut" aria-hidden="true">
+                {'​'}
               </span>
-            ))}
+              {SLOGAN_ROTATIONS.map((slogan, i) => (
+                <span
+                  key={slogan.id}
+                  className="hero__slogan-wrap"
+                  data-active={i === active && entered}
+                >
+                  <span
+                    className="hero__slogan-word"
+                    ref={(el) => {
+                      wordRefs.current[i] = el
+                    }}
+                  >
+                    {slogan.word}
+                  </span>
+                </span>
+              ))}
+            </span>
           </span>
         </h1>
       </div>
