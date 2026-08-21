@@ -27,10 +27,15 @@
 }
 
 /* Poster stays visible until the file is actually playing. Opacity on the
-   <video> also hides its poster attribute, so the still lives in a real <img>. */
+   <video> also hides its poster attribute, so the still lives in a real <img>.
+
+   The fade is short on purpose: the poster IS the video's first frame, so the
+   two images are the same picture and a long cross-fade only prolongs the
+   stretch where nothing appears to move. 220ms is enough to hide the
+   difference between an upscaled JPEG and the decoded frame. */
 .hero__video {
   opacity: 0;
-  transition: opacity 700ms var(--ease);
+  transition: opacity 220ms var(--ease);
 }
 
 .hero__media[data-playing='true'] .hero__video {
@@ -122,7 +127,7 @@
   letter-spacing: 0.005em;
   /* Lowercase is a presentation choice — the strings stay uppercase in
      translations.js so the brand text and the aria-label read normally. */
-  text-transform: lowercase;
+  text-transform: uppercase;
   text-align: center;
   color: var(--stone);
 }

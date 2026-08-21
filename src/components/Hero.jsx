@@ -34,11 +34,22 @@ const ROTATION_MS = 4600
 const ENTER_DELAY_MS = 550
 
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
- *  because `<source media>` is unreliable. `?v=3` busts older encodes. */
-const HERO_DESKTOP = '/video/hero-1080.mp4?v=3'
-const HERO_MOBILE = '/video/hero-vertical.mp4?v=3'
-const POSTER_DESKTOP = '/video/hero-poster.jpg?v=3'
-const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=3'
+ *  because `<source media>` is unreliable.
+ *
+ *  Both files are trimmed to start 1.0s into the source. The hero used to read
+ *  as frozen for the first second on phones, from two causes stacked on top of
+ *  each other: the mobile file was 18MB at 8.3Mbps so the poster sat there
+ *  while it buffered, AND the source opens on a near-static wide shot of the
+ *  street, so even once playing almost nothing moved. Trimming to the interior
+ *  cut fixes the second; re-encoding at 900x1600 / ~1.4Mbps (2.8MB) fixes the
+ *  first, since time-to-first-frame scales with bitrate. Under the hero scrim
+ *  the quality difference is not visible.
+ *
+ *  `?v=4` busts caches still holding the old encodes. */
+const HERO_DESKTOP = '/video/hero-1080.mp4?v=4'
+const HERO_MOBILE = '/video/hero-vertical.mp4?v=4'
+const POSTER_DESKTOP = '/video/hero-poster.jpg?v=4'
+const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=4'
 
 function isMobileHero() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
@@ -56,8 +67,13 @@ export default function Hero() {
   const { t } = useLanguage()
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
-  const [src, setSrc] = useState(HERO_DESKTOP)
-  const [poster, setPoster] = useState(POSTER_DESKTOP)
+  // Resolved lazily on the FIRST render, not in an effect afterwards. Starting
+  // from the desktop value meant a phone put <video src="hero-1080.mp4"> into
+  // the DOM with preload="auto", began pulling 7.6MB, and only then swapped to
+  // the 2.8MB vertical — burning bandwidth and delaying the frame it actually
+  // needed. This is the largest single cause of the hero looking frozen.
+  const [src, setSrc] = useState(heroSrc)
+  const [poster, setPoster] = useState(heroPoster)
   const [active, setActive] = useState(0)
   const [entered, setEntered] = useState(false)
   const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
@@ -89,9 +105,16 @@ export default function Hero() {
     }
   }, [measure])
 
+  // Only needed for a viewport that crosses the breakpoint after load
+  // (rotation, desktop resize) — the initial choice is already correct.
   useEffect(() => {
-    setSrc(heroSrc())
-    setPoster(heroPoster())
+    const mq = window.matchMedia('(max-width: 900px)')
+    const sync = () => {
+      setSrc(heroSrc())
+      setPoster(heroPoster())
+    }
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
   }, [])
 
   useEffect(() => {
