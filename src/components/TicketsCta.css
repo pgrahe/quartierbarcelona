@@ -1,7 +1,7 @@
 .cta {
-  --cta-fg: var(--black);
-  --cta-bg: var(--stone);
-  --cta-bd: var(--stone);
+  --cta-fg: var(--black-80);
+  --cta-bg: var(--stone-90);
+  --cta-bd: var(--stone-70);
 
   position: relative;
   display: inline-flex;
@@ -58,8 +58,9 @@
 
 /* ---- outline: beige hairline, fills upward ---- */
 .cta--outline {
-  --cta-fg: var(--stone);
-  color: var(--stone);
+  --cta-fg: var(--stone-90);
+  --cta-bd: var(--stone-70);
+  color: var(--cta-fg);
 }
 
 .cta--outline::before {
