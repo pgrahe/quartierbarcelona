@@ -17,10 +17,24 @@
 }
 
 .langs__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.25rem 0;
   color: var(--stone);
   opacity: 0.45;
   transition: opacity var(--t-fast) var(--ease);
+}
+
+/* Touch devices get real tap targets. Scoped to `pointer: coarse` so the
+   desktop navbar keeps its tight typographic spacing — with a mouse these
+   codes are easy to hit at their natural size, with a thumb they are not. */
+@media (pointer: coarse) {
+  .langs__btn {
+    min-width: 2.25rem;
+    min-height: 2.75rem;
+    padding-block: 0;
+  }
 }
 
 .langs__btn[data-active='true'] {

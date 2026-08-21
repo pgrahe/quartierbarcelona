@@ -18,9 +18,9 @@ is CSS transitions.
 
 | What | Where |
 | --- | --- |
-| **Tickets / VIP tables URL** | `src/config/site.js` → `TICKETS_VIP_URL` |
-| **Exact address (map + address line)** | `src/config/site.js` → `LOCATION.street` and `.postalCode` |
-| **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` (×4 languages) |
+| **Ticketing account** | `src/config/site.js` → `FOURVENUES_SLUG` (`quartier-club`) |
+| **Address (map + address line)** | `src/config/site.js` → `LOCATION` |
+| **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` (×4 languages) |
 
 Each is defined once and consumed everywhere — no duplicated strings.
 
@@ -28,21 +28,19 @@ Each is defined once and consumed everywhere — no duplicated strings.
 
 ## Still placeholder
 
-- **Tickets URL** — no ticketing link existed in the project material, so
-  `TICKETS_VIP_URL` currently points at a `mailto:`. Swap in the real URL and
-  every placement (navbar, mobile hero, mobile menu, contact, footer) follows.
-  The `TICKETS_VIP_IS_EXTERNAL` flag flips automatically and starts opening the
-  link in a new tab.
-- **Street address** — the assets confirm Pedralbes, Barcelona but contain no
-  street address, so none was invented. Until `LOCATION.street` is filled the
-  location section reads "Pedralbes, Barcelona" with a small "dirección exacta
-  próximamente" line, and the map searches for "Quartier Barcelona, Pedralbes,
-  Barcelona" (which Google already resolves to the right pin).
-- **About copy** — provisional in all four languages, structured so it can be
-  replaced without touching layout.
 - **Legal pages** — `PRIVACIDAD` / `AVISO LEGAL` link to `#` (`LEGAL` in
   `src/config/site.js`). The pages themselves aren't built.
 - **Athena Bold** — not present in the project. See `public/fonts/README.md`.
+
+## Ticketing
+
+"TICKETS Y MESAS VIP" opens a full-screen overlay containing Fourvenues'
+official calendar widget for `quartier-club`, so visitors book without leaving
+the site. The third-party script is injected on first open, never at page load.
+
+The CTA is still a real link to `site.fourvenues.com/es/quartier-club`, so
+cmd-click, middle-click and "open in new tab" behave normally and it degrades
+gracefully without JavaScript.
 
 ## Languages
 

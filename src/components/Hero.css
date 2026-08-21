@@ -73,10 +73,13 @@
   height: auto;
 }
 
+/* 10px is the floor for this label — below that an uppercase tracked string
+   stops being comfortably legible on a phone. Width is bought back with
+   tighter tracking and padding rather than smaller type. */
 .hero__cta {
-  padding: 0.7rem 0.95rem;
-  font-size: 0.5625rem;
-  letter-spacing: 0.1em;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
 }
 
 /* ---- Slogan ---- */
@@ -159,9 +162,8 @@
     width: 104px;
   }
   .hero__cta {
-    padding: 0.6rem 0.7rem;
-    font-size: 0.5rem;
-    letter-spacing: 0.06em;
+    padding: 0.7rem 0.6rem;
+    letter-spacing: 0.03em;
   }
 }
 

@@ -85,9 +85,10 @@ export default function Hero() {
           aria-label={t.hero.videoLabel}
           tabIndex={-1}
         >
-          {/* Phones get the lighter cut; the 1080 file is only fetched on
-              viewports wide enough to show the difference. */}
-          <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+          {/* Phones get the lighter cut. The cutoff is 600px, not the 900px
+              layout breakpoint: a tablet is wide enough — and dense enough —
+              that 720p would visibly soften. */}
+          <source src="/video/hero-720.mp4" type="video/mp4" media="(max-width: 600px)" />
           <source src="/video/hero-1080.mp4" type="video/mp4" />
         </video>
       </div>
