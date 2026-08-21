@@ -10,7 +10,7 @@
   isolation: isolate;
   overflow: hidden;
   border: 1px solid var(--cta-bd);
-  border-radius: var(--radius);
+  border-radius: 999px;
   color: var(--cta-fg);
   font-weight: var(--w-bold);
   font-size: var(--fs-nav);
