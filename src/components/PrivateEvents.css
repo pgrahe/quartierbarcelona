@@ -1,27 +1,28 @@
 .pev {
+  position: relative;
   background: var(--black);
-  color: var(--stone);
 }
 
 .pev__grid {
   display: grid;
-  /* Image-led: the render is the argument, the type just frames it. */
+  /* Image-led, type on stone — same family as Location, mirrored weight. */
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
+  min-height: clamp(32rem, 78vh, 48rem);
 }
 
 /* ---- Photograph ---- */
 .pev__figure {
   position: relative;
+  min-height: clamp(22rem, 50vh, 34rem);
   overflow: hidden;
   background: var(--black);
 }
 
 .pev__figure img {
   width: 100%;
-  height: auto;
-  /* Settles as the mask lifts, same as the About portrait. */
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   scale: 1.05;
   transition: scale 1.6s var(--ease-out);
 }
@@ -30,45 +31,69 @@
   scale: 1;
 }
 
-/* ---- Type ---- */
+/* Hairline seam where the photo meets the panel. */
+.pev__figure::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px var(--stone-06);
+}
+
+/* ---- Stone type panel ---- */
+.pev__panel {
+  display: grid;
+  align-items: center;
+  background: var(--stone);
+  color: var(--black);
+}
+
+.pev__panel-inner {
+  padding: clamp(3.5rem, 7vw, 6rem) clamp(1.75rem, 4.5vw, 5rem);
+}
+
 .pev__title {
   font-family: var(--font-body);
-  font-size: var(--fs-display);
+  font-size: clamp(1.875rem, 3.6vw, 3.25rem);
   font-weight: var(--w-bold);
-  font-style: normal;
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+  line-height: 1;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: var(--black);
 }
 
 .pev__subtitle {
-  margin-top: clamp(1rem, 2vw, 1.5rem);
+  margin-top: clamp(0.85rem, 1.8vw, 1.25rem);
   font-family: var(--font-body);
-  font-size: var(--fs-title);
+  font-size: var(--fs-lead);
   font-weight: var(--w-bold);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: rgba(0, 0, 0, 0.42);
+}
+
+.pev__copy {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(2.25rem, 4vw, 3.25rem);
+  max-width: 36ch;
 }
 
 .pev__body {
-  max-width: var(--measure);
-  margin-top: clamp(2rem, 4vw, 3.25rem);
   font-size: var(--fs-body);
   line-height: 1.72;
-  color: var(--stone-70);
+  color: rgba(0, 0, 0, 0.66);
   text-wrap: pretty;
 }
 
 .pev__tagline {
-  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
   font-size: var(--fs-lead);
   font-weight: var(--w-bold);
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--stone);
+  color: var(--black);
+  text-wrap: balance;
 }
 
 .pev__cta-row {
@@ -76,22 +101,28 @@
 }
 
 .pev__cta {
-  /* Secondary by design — never the solid beige fill, which belongs to
-     TICKETS Y MESAS VIP alone. */
   width: fit-content;
 }
 
 /* -------------------------------------------------------------------------
- * Mobile — photo first, then the pitch.
+ * Mobile — photo first, then the stone pitch.
  * ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .pev__grid {
     grid-template-columns: 1fr;
-    gap: clamp(2.25rem, 8vw, 3rem);
-    align-items: start;
+    min-height: 0;
   }
 
-  .pev__body {
+  .pev__figure {
+    min-height: 0;
+    height: clamp(16rem, 52vw, 22rem);
+  }
+
+  .pev__panel-inner {
+    padding: clamp(3rem, 10vw, 4rem) var(--gutter);
+  }
+
+  .pev__copy {
     max-width: none;
   }
 

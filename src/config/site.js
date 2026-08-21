@@ -30,7 +30,7 @@ export const TICKETS_VIP_URL = `https://site.fourvenues.com/es/${FOURVENUES_SLUG
 export const CONTACT = {
   email: 'info@quartierbarcelona.com',
   // Displayed as written; the tel: href uses the international form.
-  phoneDisplay: '625 266 105',
+  phoneDisplay: '+34 625 266 105',
   phoneHref: '+34625266105',
 }
 
