@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "quartierbarcelona"
+    }
+  ],
+  "settings": {
+    "git.openRepositoryInParentFolders": "never",
+    "git.autoRepositoryDetection": true
+  }
+}
