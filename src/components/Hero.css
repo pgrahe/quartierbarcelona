@@ -73,21 +73,31 @@
   padding: calc(1.25rem + env(safe-area-inset-top)) var(--gutter) 0;
 }
 
+.hero__logo {
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 .hero__logo img {
   width: 124px;
   height: auto;
   display: block;
 }
 
-/* While the centred mark is flying into place, keep the bar slot invisible
-   but sized — that reserves the CTA on the right and gives FLIP a target. */
-.hero[data-intro='hold'] .hero__logo,
-.hero[data-intro='move'] .hero__logo {
-  visibility: hidden;
-  pointer-events: none;
+/* After the centre mark fades, the bar logo eases in where it lives. */
+.hero[data-intro='done'] .hero__logo {
+  opacity: 1;
 }
 
-/* Centred intro wordmark (mobile only — see the max-width block). */
+/* No fade-in while the centre mark is still on screen. */
+.hero[data-intro='hold'] .hero__logo,
+.hero[data-intro='fade'] .hero__logo {
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
+/* Large centred intro mark (mobile only). */
 .hero__brand {
   display: none;
 }
@@ -256,15 +266,10 @@
   }
 
   .hero__brand {
-    --dock-x: 0px;
-    --dock-y: 0px;
-    --dock-s: 1;
     display: block;
     width: min(68vw, 15.5rem);
-    transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
-    transform-origin: center center;
-    will-change: transform, opacity;
+    transition: opacity 900ms cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1;
   }
 
@@ -274,22 +279,18 @@
     height: auto;
   }
 
-  .hero__brand.is-docking {
-    transform: translate3d(var(--dock-x), var(--dock-y), 0) scale(var(--dock-s));
+  .hero[data-intro='fade'] .hero__brand {
     opacity: 0;
-    transition:
-      transform 900ms cubic-bezier(0.25, 1, 0.5, 1),
-      opacity 900ms cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   .hero__slogan {
     /* Sized off the widest rotating word ("MOMENT.") so it never wraps. */
     --hero-slogan-size: min(calc((100vw - 3rem) / 12), 2rem);
     --hero-slogan-lh: 1.1;
-    transition: opacity 320ms var(--ease);
+    transition: opacity 480ms var(--ease);
   }
 
-  /* Hold the slogan invisible until the mark has docked. */
+  /* Hold the slogan invisible until the centre mark has faded. */
   .hero__slogan:not([data-ready='true']) {
     opacity: 0;
     pointer-events: none;

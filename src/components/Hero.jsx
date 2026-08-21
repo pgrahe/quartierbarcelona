@@ -11,8 +11,9 @@ import './Hero.css'
  * invisible. On mobile the bar above the fold is deliberately empty — the hero
  * carries its own logo (top-left) and CTA (top-right) and nothing else.
  *
- * Mobile intro: the wordmark holds in the slogan position for 2s, then docks
- * up into the top-left bar (FLIP), and only then the rotating slogan enters.
+ * Mobile intro: large centred wordmark holds 2s, fades out in place, then the
+ * rotating slogan enters while the small bar logo fades in top-left — no fly
+ * / diagonal move, only opacity.
  *
  * The slogan cycles MORE THAN A NIGHT. → A MOMENT. → A CLUB.
  * "MORE THAN" and "A" stay fixed; only NIGHT / MOMENT / CLUB rotate (in italic).
@@ -32,7 +33,7 @@ import './Hero.css'
 const ROTATION_MS = 4600
 const ENTER_DELAY_MS = 550
 const LOGO_HOLD_MS = 2000
-const LOGO_DOCK_MS = 900
+const LOGO_FADE_MS = 900
 
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable.
@@ -94,12 +95,9 @@ export default function Hero() {
   const [poster, setPoster] = useState(heroPoster)
   const [active, setActive] = useState(0)
   const [entered, setEntered] = useState(false)
-  // Mobile-only logo intro: hold (centre) → move (FLIP to bar) → done.
+  // Mobile-only: hold (centre) → fade (out in place) → done (slogan + bar logo).
   const [intro, setIntro] = useState(initialIntro)
   const clubIndex = SLOGAN_ROTATIONS.findIndex((s) => s.id === 'club')
-
-  const brandRef = useRef(null)
-  const logoSlotRef = useRef(null)
 
   // Sutton sets the rotator's width in JS to the active word's own width and
   // lets CSS ease between values. Measuring is the only way to get that: the
@@ -145,65 +143,20 @@ export default function Hero() {
     return () => mq.removeEventListener('change', sync)
   }, [intro])
 
-  // Hold the centred mark, then kick off the dock animation.
+  // hold → fade → done
   useEffect(() => {
-    if (intro !== 'hold') return
-    const hold = window.setTimeout(() => setIntro('move'), LOGO_HOLD_MS)
-    return () => window.clearTimeout(hold)
-  }, [intro])
-
-  // FLIP the centred brand into the top-left bar slot via CSS variables.
-  // (Imperative style.transform was getting clobbered mid-frame on mobile
-  // Safari / Chromium; custom properties + a docking class are stable.)
-  useLayoutEffect(() => {
-    if (intro !== 'move') return
-
-    const brand = brandRef.current
-    const slot = logoSlotRef.current
-    if (!brand || !slot) {
-      setIntro('done')
-      return
+    if (intro === 'hold') {
+      const hold = window.setTimeout(() => setIntro('fade'), LOGO_HOLD_MS)
+      return () => window.clearTimeout(hold)
     }
-
-    const from = brand.getBoundingClientRect()
-    const to = slot.getBoundingClientRect()
-    const dx = to.left + to.width / 2 - (from.left + from.width / 2)
-    const dy = to.top + to.height / 2 - (from.top + from.height / 2)
-    const scale = to.width / Math.max(from.width, 1)
-
-    brand.style.setProperty('--dock-x', `${dx}px`)
-    brand.style.setProperty('--dock-y', `${dy}px`)
-    brand.style.setProperty('--dock-s', String(scale))
-
-    let settled = false
-    const finish = (event) => {
-      // Ignore opacity's twin transitionend — only transform completes the dock.
-      if (event && event.propertyName && event.propertyName !== 'transform') return
-      if (settled) return
-      settled = true
-      setIntro('done')
-    }
-
-    let raf2 = 0
-    const raf1 = window.requestAnimationFrame(() => {
-      raf2 = window.requestAnimationFrame(() => {
-        brand.classList.add('is-docking')
-      })
-    })
-
-    const safety = window.setTimeout(() => finish(), LOGO_DOCK_MS + 120)
-    brand.addEventListener('transitionend', finish)
-
-    return () => {
-      window.cancelAnimationFrame(raf1)
-      window.cancelAnimationFrame(raf2)
-      window.clearTimeout(safety)
-      brand.removeEventListener('transitionend', finish)
+    if (intro === 'fade') {
+      const fade = window.setTimeout(() => setIntro('done'), LOGO_FADE_MS)
+      return () => window.clearTimeout(fade)
     }
   }, [intro])
 
   // Slogan entrance + rotation — only after the intro has settled (desktop
-  // starts as 'done'; mobile waits for the dock).
+  // starts as 'done'; mobile waits for the centre fade).
   useEffect(() => {
     if (intro !== 'done') return
 
@@ -214,7 +167,7 @@ export default function Hero() {
       return
     }
 
-    // Mobile already waited 2s + dock; desktop still gets the short rise delay.
+    // Mobile already waited through the brand beat; desktop still gets the rise.
     const enterDelay = isMobileHero() ? 40 : ENTER_DELAY_MS
     const enter = window.setTimeout(() => setEntered(true), enterDelay)
     const tick = window.setInterval(() => {
@@ -273,7 +226,7 @@ export default function Hero() {
     }
   }, [src])
 
-  const introActive = intro === 'hold' || intro === 'move'
+  const showCentreBrand = intro === 'hold' || intro === 'fade'
 
   return (
     <section id="inicio" className="hero" data-intro={intro} aria-label="Quartier Barcelona">
@@ -308,23 +261,16 @@ export default function Hero() {
 
       {/* Mobile-only chrome: logo left, CTA right. Nothing else above the fold. */}
       <div className="hero__bar">
-        <a
-          ref={logoSlotRef}
-          href="#inicio"
-          className="hero__logo"
-          aria-label="Quartier Barcelona"
-          tabIndex={introActive ? -1 : undefined}
-          aria-hidden={introActive ? true : undefined}
-        >
+        <a href="#inicio" className="hero__logo" aria-label="Quartier Barcelona">
           <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
         </a>
         <TicketsCta className="hero__cta" />
       </div>
 
       <div className="hero__body">
-        {/* Mobile intro mark — lives in the slogan slot, then docks to the bar. */}
-        {introActive && (
-          <div className="hero__brand" ref={brandRef} aria-hidden="true">
+        {/* Large centred mark — fades out in place; the bar logo fades in separately. */}
+        {showCentreBrand && (
+          <div className="hero__brand" aria-hidden="true">
             <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
           </div>
         )}
