@@ -1,0 +1,290 @@
+/* -------------------------------------------------------------------------
+ * Reset + shared primitives
+ * ---------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Anchor jumps clear the fixed navbar. */
+  scroll-padding-top: var(--nav-h);
+  -webkit-text-size-adjust: 100%;
+  background: var(--black);
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  background: var(--black);
+  color: var(--stone);
+  font-family: var(--font-body);
+  font-weight: var(--w-medium);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* The single most effective guard against horizontal overflow on mobile. */
+  overflow-x: hidden;
+}
+
+/* Locks the page behind the fullscreen mobile menu without the iOS
+   scroll-position jump that `position: fixed` causes. */
+body.is-locked {
+  overflow: hidden;
+}
+
+img,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: var(--w-bold);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--stone);
+  color: var(--black);
+}
+
+/* ---- Focus: invisible for mouse users, unmistakable for keyboard users ---- */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 1px solid var(--stone);
+  outline-offset: 4px;
+}
+
+.on-stone :focus-visible {
+  outline-color: var(--black);
+}
+
+/* ---- Scrollbar: present, barely ---- */
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--stone-12);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--stone-22);
+  }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--stone-12) var(--black);
+}
+
+/* -------------------------------------------------------------------------
+ * Primitives
+ * ---------------------------------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+  overflow: clip;
+}
+
+.eyebrow {
+  font-size: var(--fs-label);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.rule {
+  height: 1px;
+  border: 0;
+  background: var(--stone-12);
+}
+
+.on-stone .rule {
+  background: var(--black-12);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 200;
+  translate: -50% -140%;
+  padding: 0.9rem 1.6rem;
+  background: var(--stone);
+  color: var(--black);
+  font-size: var(--fs-label);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-label);
+  transition: translate var(--t-base) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  translate: -50% 0;
+}
+
+/* -------------------------------------------------------------------------
+ * Velvet
+ *
+ * A 256px seamless tile of anisotropic noise — short vertical pile plus a
+ * broad low-frequency sheen. Used sparingly: About and Contact only.
+ *
+ * Two variants, because one blend mode cannot serve both grounds:
+ *
+ *  - Dark sections screen a near-black tile (values 3–19). Screen over #000
+ *    lands the texture between #000 and roughly #161616 — the two palette
+ *    darks, so no fourth colour enters. `soft-light` would be pointless here:
+ *    over pure black it returns pure black and the texture disappears.
+ *  - The beige section soft-lights a mid-grey tile, which is exactly what
+ *    soft-light is good at — modulating a light ground without tinting it.
+ * ---------------------------------------------------------------------- */
+.velvet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/img/velvet-dark.png');
+  background-size: 256px 256px;
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+
+.velvet.on-stone::before {
+  background-image: url('/img/velvet.png');
+  mix-blend-mode: soft-light;
+  opacity: 0.12;
+}
+
+.velvet > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------
+ * Reveal on scroll
+ *
+ * One mechanism for the whole site: an IntersectionObserver flips
+ * `data-revealed`, CSS does the rest. `--reveal-delay` drives the stagger.
+ * ---------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  translate: 0 18px;
+  transition:
+    opacity var(--t-slow) var(--ease-out),
+    translate var(--t-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, translate;
+}
+
+/* The mask variant clips the element's CHILD, never the observed element
+   itself — a clip-path on the target zeroes out its intersection rect, so the
+   observer would never fire and the reveal would never run. */
+[data-reveal='mask'] {
+  translate: 0 0;
+  opacity: 1;
+}
+
+[data-reveal='mask'] > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.25s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal='mask'][data-revealed='true'] > * {
+  clip-path: inset(0 0 0 0);
+}
+
+[data-revealed='true'] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* -------------------------------------------------------------------------
+ * Reduced motion — honour it everywhere, not just here.
+ * ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+
+  [data-reveal='mask'] > * {
+    clip-path: none;
+  }
+}

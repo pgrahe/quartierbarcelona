@@ -1,0 +1,148 @@
+.tickets {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--t-base) var(--ease),
+    visibility 0s linear var(--t-base);
+}
+
+.tickets[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--t-base) var(--ease),
+    visibility 0s;
+}
+
+/* ---- Bar ---- */
+.tickets__bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+  padding: calc(1.15rem + env(safe-area-inset-top)) var(--gutter) 1.15rem;
+  border-bottom: 1px solid var(--stone-12);
+}
+
+.tickets__logo {
+  width: clamp(104px, 11vw, 150px);
+  height: auto;
+}
+
+.tickets__title {
+  margin-inline: auto;
+  color: var(--stone-40);
+}
+
+.tickets__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  flex: 0 0 auto;
+}
+
+.tickets__close-x {
+  display: grid;
+  width: 20px;
+  transition: rotate var(--t-base) var(--ease-out);
+}
+
+.tickets__close-x i {
+  grid-area: 1 / 1;
+  height: 1px;
+  background: var(--stone);
+}
+
+.tickets__close-x i:first-child {
+  rotate: 45deg;
+}
+
+.tickets__close-x i:last-child {
+  rotate: -45deg;
+}
+
+@media (hover: hover) {
+  .tickets__close:hover .tickets__close-x {
+    rotate: 90deg;
+  }
+}
+
+/* ---- Scroll area ---- */
+.tickets__scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 3vw, 2.5rem) var(--gutter) calc(2.5rem + env(safe-area-inset-bottom));
+}
+
+/* The Fourvenues widget renders on its own light ground, so it sits on a
+   stone sheet rather than straight on black — the seam then reads as part of
+   the palette instead of as a white box dropped on the page. */
+.tickets__sheet {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: clamp(0.5rem, 1.6vw, 1.25rem);
+  background: var(--stone);
+  border-radius: var(--radius);
+}
+
+.tickets__sheet iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+.tickets__fallback {
+  max-width: 1120px;
+  margin: 1.5rem auto 0;
+  text-align: center;
+}
+
+.tickets__fallback a {
+  font-size: var(--fs-nav);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
+  color: var(--stone-40);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.25rem;
+  transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .tickets__fallback a:hover {
+    color: var(--stone);
+    border-bottom-color: var(--stone-22);
+  }
+}
+
+@media (max-width: 600px) {
+  /* The bar keeps the logo and the close control; the label would crowd them. */
+  .tickets__title {
+    display: none;
+  }
+
+  .tickets__close {
+    margin-left: auto;
+  }
+
+  .tickets__sheet {
+    padding: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tickets,
+  .tickets__close-x {
+    transition: none;
+  }
+}

@@ -1,0 +1,121 @@
+.mmenu {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  background: var(--black);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--t-base) var(--ease),
+    visibility 0s linear var(--t-base);
+}
+
+.mmenu[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--t-base) var(--ease),
+    visibility 0s;
+}
+
+.mmenu__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: calc(var(--nav-h) + env(safe-area-inset-top) + 3.5rem) var(--gutter)
+    calc(2.5rem + env(safe-area-inset-bottom));
+}
+
+/* ---- Links ---- */
+.mmenu__links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.5rem, 2.2vh, 1.25rem);
+}
+
+.mmenu__link {
+  font-size: clamp(2rem, 10vw, 3.25rem);
+  font-weight: var(--w-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--stone);
+  opacity: 0;
+  translate: 0 22px;
+}
+
+/* Each link arrives a beat after the one above it. */
+.mmenu[data-open='true'] .mmenu__link {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 520ms var(--ease-out),
+    translate 520ms var(--ease-out);
+  transition-delay: calc(90ms + var(--i) * 60ms);
+}
+
+.mmenu__link:active {
+  opacity: 0.6;
+}
+
+/* ---- Foot ---- */
+.mmenu__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.75rem;
+  opacity: 0;
+  translate: 0 14px;
+}
+
+.mmenu[data-open='true'] .mmenu__foot {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity 520ms var(--ease-out) 300ms,
+    translate 520ms var(--ease-out) 300ms;
+}
+
+.mmenu__cta {
+  width: 100%;
+}
+
+.mmenu__rule {
+  width: 100%;
+}
+
+.mmenu__langs {
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .mmenu {
+    display: block;
+  }
+}
+
+/* Landscape phones: the links have to give up some air. */
+@media (max-width: 900px) and (max-height: 520px) {
+  .mmenu__link {
+    font-size: 1.5rem;
+  }
+  .mmenu__inner {
+    padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + 1.25rem);
+  }
+  .mmenu__foot {
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mmenu__link,
+  .mmenu__foot,
+  .mmenu[data-open='true'] .mmenu__link,
+  .mmenu[data-open='true'] .mmenu__foot {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}

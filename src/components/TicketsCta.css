@@ -1,0 +1,99 @@
+.cta {
+  --cta-fg: var(--black);
+  --cta-bg: var(--stone);
+  --cta-bd: var(--stone);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--cta-bd);
+  border-radius: var(--radius);
+  color: var(--cta-fg);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-nav);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+}
+
+/* The fill is a pseudo-element that wipes upward on hover, rather than a
+   background colour cross-fade — it reads as deliberate rather than as a
+   default button state. */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--cta-bg);
+  transform-origin: bottom;
+  transition: scale var(--t-base) var(--ease-out);
+}
+
+.cta--sm {
+  padding: 0.85rem 1.35rem;
+}
+
+.cta--md {
+  padding: 1.15rem 2rem;
+  font-size: clamp(0.6875rem, 1.6vw, 0.8125rem);
+}
+
+/* ---- solid: beige fill, wipes away to a beige hairline ---- */
+.cta--solid::before {
+  scale: 1 1;
+}
+
+@media (hover: hover) {
+  .cta--solid:hover {
+    color: var(--stone);
+  }
+  .cta--solid:hover::before {
+    scale: 1 0;
+  }
+}
+
+/* ---- outline: beige hairline, fills upward ---- */
+.cta--outline {
+  --cta-fg: var(--stone);
+  color: var(--stone);
+}
+
+.cta--outline::before {
+  scale: 1 0;
+}
+
+@media (hover: hover) {
+  .cta--outline:hover {
+    color: var(--black);
+  }
+  .cta--outline:hover::before {
+    scale: 1 1;
+  }
+}
+
+/* On a beige section the polarity flips. */
+.on-stone .cta--outline {
+  --cta-fg: var(--black);
+  --cta-bg: var(--black);
+  --cta-bd: var(--black);
+}
+
+@media (hover: hover) {
+  .on-stone .cta--outline:hover {
+    color: var(--stone);
+  }
+}
+
+.cta:active {
+  translate: 0 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta::before {
+    transition: none;
+  }
+}

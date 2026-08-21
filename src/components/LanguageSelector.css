@@ -1,0 +1,51 @@
+.langs {
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-nav);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.1em;
+}
+
+.langs__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.langs__sep {
+  padding-inline: 0.45em;
+  opacity: 0.28;
+}
+
+.langs__btn {
+  padding: 0.25rem 0;
+  color: var(--stone);
+  opacity: 0.45;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.langs__btn[data-active='true'] {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .langs__btn:hover {
+    opacity: 0.85;
+  }
+  .langs__btn[data-active='true']:hover {
+    opacity: 1;
+  }
+}
+
+/* Larger variant for the mobile menu and the footer. */
+.langs--md {
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+}
+
+.langs--md .langs__btn {
+  padding: 0.5rem 0;
+}
+
+.on-stone .langs__btn {
+  color: var(--black);
+}

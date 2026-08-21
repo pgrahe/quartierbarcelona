@@ -1,0 +1,77 @@
+.moment {
+  position: relative;
+  background: var(--ink);
+  /* The top padding is what lets the beige above resolve into ink before the
+     photograph starts — without it the two grounds collide edge to edge. */
+  padding-block: clamp(4rem, 9vw, 8rem) clamp(2.5rem, 6vw, 5rem);
+  overflow: clip;
+}
+
+.moment__frame {
+  position: relative;
+  /* Tracks the 2:1 desktop crop, so the photograph is shown rather than
+     sliced; capped by viewport height so it always sits in one screen. */
+  height: min(86vh, 52vw);
+  min-height: 26rem;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.moment__frame > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.moment__img {
+  width: 100%;
+  /* Overscanned so the parallax shift never exposes an edge. */
+  height: 114%;
+  margin-top: -7%;
+  object-fit: cover;
+  object-position: center 42%;
+  translate: 0 var(--shift, 0%);
+  will-change: translate;
+}
+
+@media (max-width: 900px) {
+  .moment__img {
+    object-position: center 30%;
+  }
+}
+
+/* Keeps the photograph sitting inside the section rather than on top of it:
+   a whisper of ink at both edges so it dissolves into the background. */
+.moment__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, var(--ink) 0%, rgba(22, 22, 22, 0) 14%),
+    linear-gradient(to top, var(--ink) 0%, rgba(22, 22, 22, 0) 18%);
+}
+
+.moment__caption {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: clamp(2rem, 4vw, 3.25rem) var(--gutter) 0;
+  color: var(--stone-40);
+}
+
+@media (max-width: 900px) {
+  .moment__frame {
+    /* Portrait source below this breakpoint — a tall frame suits it. */
+    height: clamp(26rem, 76vh, 40rem);
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moment__img {
+    height: 100%;
+    margin-top: 0;
+    translate: none;
+    will-change: auto;
+  }
+}

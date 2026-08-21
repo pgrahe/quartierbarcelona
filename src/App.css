@@ -1,0 +1,54 @@
+/* -------------------------------------------------------------------------
+ * Section-to-section transitions
+ *
+ * The page moves black → beige → ink → black → beige/black → black. Left as
+ * plain adjacent blocks those changes read as stacked <div>s, so each seam
+ * gets one deliberate treatment: a short gradient that lets one ground bleed
+ * into the next, plus the About portrait physically overlapping the section
+ * below it (see About.css).
+ * ---------------------------------------------------------------------- */
+
+main {
+  display: block;
+}
+
+/* These use ::after, not ::before — ::before belongs to .velvet, and a second
+   rule on the same pseudo-element would silently replace the texture. */
+
+/* Hero → About: deliberately NO overlay strip here. One used to sit above the
+   About section to soften the change of ground, but it painted over the last
+   ~140px of the hero and cropped the video. The hero's own bottom scrim
+   already carries the eye down; the beige then starts clean. */
+
+/* About → BrandMoment: beige settles into ink. */
+.moment::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(3rem, 7vw, 6rem);
+  background: linear-gradient(to bottom, var(--stone) 0%, rgba(231, 225, 214, 0) 100%);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* BrandMoment → Contact: ink resolves into black. */
+.contact::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(4rem, 9vw, 7rem);
+  background: linear-gradient(to bottom, var(--ink) 0%, rgba(22, 22, 22, 0) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Location → Footer: the beige panel's edge softened from below. */
+.loc::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--stone-06);
+  pointer-events: none;
+}
