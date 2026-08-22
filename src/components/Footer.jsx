@@ -114,16 +114,32 @@ export default function Footer() {
           </p>
 
           <div className="foot__legal">
-            {/* Legal pages are not built yet — see LEGAL in src/config/site.js */}
-            <a href={LEGAL.privacy} className="foot__legal-link">
-              {t.footer.legalPrivacy}
-            </a>
+            {/* The legal pages do not exist yet. Rendering them as dead
+                `href="#"` anchors would give crawlers links that go nowhere
+                and invite indexing of a phantom URL, so until LEGAL holds real
+                paths they render as plain text. Set the paths in
+                src/config/site.js and they become links automatically. */}
+            {LEGAL.privacy && LEGAL.privacy !== '#' ? (
+              <a href={LEGAL.privacy} className="foot__legal-link">
+                {t.footer.legalPrivacy}
+              </a>
+            ) : (
+              <span className="foot__legal-link foot__legal-link--pending">
+                {t.footer.legalPrivacy}
+              </span>
+            )}
             <span className="foot__legal-sep" aria-hidden="true">
               ·
             </span>
-            <a href={LEGAL.notice} className="foot__legal-link">
-              {t.footer.legalNotice}
-            </a>
+            {LEGAL.notice && LEGAL.notice !== '#' ? (
+              <a href={LEGAL.notice} className="foot__legal-link">
+                {t.footer.legalNotice}
+              </a>
+            ) : (
+              <span className="foot__legal-link foot__legal-link--pending">
+                {t.footer.legalNotice}
+              </span>
+            )}
           </div>
 
           <LanguageSelector className="foot__langs" />

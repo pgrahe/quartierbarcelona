@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+
 import { SLOGAN, SLOGAN_ARTICLE, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
+
+/* useLayoutEffect has no meaning on the server and React warns about it during
+   the prerender pass. The measurement it guards is client-only anyway. */
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 /**
  * Full-viewport cinematic hero.
@@ -113,7 +118,7 @@ export default function Hero() {
     )
   }, [])
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     measure()
     const ro = new ResizeObserver(measure)
     if (rotatorRef.current) ro.observe(rotatorRef.current)
@@ -275,14 +280,18 @@ export default function Hero() {
           </div>
         )}
 
-        {/* aria-label states the slogan once; the moving parts are hidden from
-            assistive tech so it is not read as three shuffling fragments. */}
-        <h1
-          className="hero__slogan"
-          data-entered={entered}
-          data-ready={intro === 'done'}
-          aria-label={SLOGAN}
-        >
+        {/* The page's single H1. Visually it is only the slogan, but a bare
+            "MORE THAN A CLUB" tells a search engine nothing about who this
+            is. The brand name leads the heading in the document and in the
+            accessible name; the slogan keeps the visual stage.
+
+            This is not hidden keyword text: it is the business's own name,
+            it matches the <title>, and it is what a screen reader announces.
+            The moving fragments below are aria-hidden so the heading is not
+            read out as three shuffling pieces. */}
+        <h1 className="hero__slogan" data-entered={entered} data-ready={intro === 'done'}>
+          <span className="visually-hidden">Quartier Barcelona — {SLOGAN}</span>
+
           <span className="hero__slogan-lead" aria-hidden="true">
             <span>{SLOGAN_LEAD}</span>
           </span>

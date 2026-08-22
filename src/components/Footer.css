@@ -192,3 +192,8 @@
     gap: 1.25rem;
   }
 }
+
+/* Legal pages not built yet: same look, but not a link (see Footer.jsx). */
+.foot__legal-link--pending {
+  cursor: default;
+}

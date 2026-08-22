@@ -7,6 +7,56 @@
  * ---------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------
+ * Site identity — canonical URL, languages, business data.
+ *
+ * SITE_URL is the single place the production domain is written. Canonical
+ * tags, hreflang, the sitemap, robots.txt, Open Graph and JSON-LD all derive
+ * from it, so pointing the site at a different domain is a one-line change.
+ * ---------------------------------------------------------------------- */
+
+/** No trailing slash. */
+export const SITE_URL = 'https://quartierbarcelona.com'
+
+/**
+ * URL-addressable languages. Spanish lives at the root and is also the
+ * x-default; the rest get a path prefix. There is deliberately no /es/ —
+ * it would duplicate / with no way to redirect from a static host.
+ */
+export const LOCALES = [
+  { code: 'es', path: '/', hreflang: 'es', ogLocale: 'es_ES', isDefault: true },
+  { code: 'en', path: '/en/', hreflang: 'en', ogLocale: 'en_GB' },
+  { code: 'fr', path: '/fr/', hreflang: 'fr', ogLocale: 'fr_FR' },
+  { code: 'de', path: '/de/', hreflang: 'de', ogLocale: 'de_DE' },
+]
+
+export function localeFor(code) {
+  return LOCALES.find((l) => l.code === code) || LOCALES[0]
+}
+
+export function absoluteUrl(path = '/') {
+  return SITE_URL + (path.startsWith('/') ? path : `/${path}`)
+}
+
+/**
+ * ⚠️ PENDING — no social profiles were found anywhere in the project, so this
+ * is empty rather than guessed. Add the real profile URLs and they flow
+ * straight into the JSON-LD `sameAs`, which is how Google ties the site to
+ * the Business Profile.
+ */
+export const SOCIAL = []
+
+/**
+ * ⚠️ PENDING — Google Search Console verification token.
+ * Paste the content value of the meta tag Search Console gives you; it is
+ * injected into every prerendered page. Left empty the tag is omitted.
+ */
+export const GSC_VERIFICATION = ''
+
+/** The image used when the site is shared. 1200x630, the size every platform
+ *  crops toward. */
+export const OG_IMAGE = '/img/og-quartier-barcelona.jpg'
+
+/* -------------------------------------------------------------------------
  * Ticketing — Fourvenues
  *
  * Clicking "TICKETS Y MESAS VIP" opens the event calendar in a full-screen

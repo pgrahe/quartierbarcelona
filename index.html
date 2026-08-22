@@ -11,50 +11,32 @@
       html, body, #root { margin: 0; min-height: 100%; background: #000; color: #e7e1d6; }
     </style>
 
-    <title>Quartier Barcelona | More Than A Club</title>
-    <meta
-      name="description"
-      content="Quartier Barcelona. A nightlife destination in Pedralbes, Barcelona. More Than A Club."
-    />
-
-    <link rel="canonical" href="https://quartierbarcelona.com/" />
+    <!-- Title, description, canonical, hreflang, Open Graph, Twitter and
+         JSON-LD are written per language by scripts/prerender.mjs. During
+         `vite dev` this placeholder is simply left as-is, and the runtime
+         head sync in LanguageContext keeps the tab title correct. -->
+    <!--seo-head-->
+    <title>Quartier Barcelona | Club en Pedralbes</title>
 
     <!-- Favicon / app icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=2" />
     <link rel="icon" type="image/png" sizes="512x512" href="/brand/favicon-512.png?v=2" />
     <link rel="apple-touch-icon" href="/brand/favicon-180.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Quartier Barcelona" />
-    <meta property="og:title" content="Quartier Barcelona | More Than A Club" />
-    <meta
-      property="og:description"
-      content="Quartier Barcelona. A nightlife destination in Pedralbes, Barcelona. More Than A Club."
-    />
-    <meta property="og:url" content="https://quartierbarcelona.com/" />
-    <meta property="og:image" content="https://quartierbarcelona.com/img/brand-moment-1600.jpg" />
-    <meta property="og:locale" content="es_ES" />
-    <meta property="og:locale:alternate" content="en_GB" />
-    <meta property="og:locale:alternate" content="fr_FR" />
-    <meta property="og:locale:alternate" content="de_DE" />
+    <!-- Self-hosted type: no third-party font requests. Deliberately NOT
+         preloaded. The @font-face rules now live in the bundled, render-
+         blocking stylesheet, so the browser discovers them almost as early as
+         a preload would — while a preload would compete for bandwidth with the
+         hero poster, which is the actual LCP element. font-display: swap means
+         text is never invisible in the meantime. -->
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Quartier Barcelona | More Than A Club" />
-    <meta
-      name="twitter:description"
-      content="Quartier Barcelona. A nightlife destination in Pedralbes, Barcelona. More Than A Club."
-    />
-    <meta name="twitter:image" content="https://quartierbarcelona.com/img/brand-moment-1600.jpg" />
-
-    <!-- Self-hosted type: no third-party font requests. -->
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/montserrat-500-latin.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/montserrat-700-latin.woff2" crossorigin />
+    <!-- The hero poster is the LCP candidate on both layouts. -->
     <link rel="preload" as="image" href="/video/hero-poster.jpg?v=6" fetchpriority="high" media="(min-width: 901px)" />
     <link rel="preload" as="image" href="/video/hero-poster-vertical.jpg?v=6" fetchpriority="high" media="(max-width: 900px)" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

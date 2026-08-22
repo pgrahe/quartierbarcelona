@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "UV_THREADPOOL_SIZE=64 vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "build:client": "vite build"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

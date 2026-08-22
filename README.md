@@ -42,6 +42,39 @@ The CTA is still a real link to `site.fourvenues.com/es/quartier-club`, so
 cmd-click, middle-click and "open in new tab" behave normally and it degrades
 gracefully without JavaScript.
 
+
+## SEO
+
+Four indexable, prerendered pages — `/` (Spanish, canonical + x-default),
+`/en/`, `/fr/`, `/de/`. `npm run build` renders each one to real HTML with its
+own title, description, canonical, hreflang set, Open Graph, Twitter card and
+`NightClub` JSON-LD, then writes `sitemap.xml` and `robots.txt` from the same
+config. Nothing is hand-maintained.
+
+**The URL decides the language, and nothing else** — not localStorage, not the
+browser's language. Serving French at `/` because of a stored preference would
+put content and canonical in disagreement, which is the fastest way to confuse
+Google about which page is which.
+
+Everything derives from `SITE_URL` in `src/config/site.js`; point it at another
+domain and canonicals, hreflang, sitemap, robots and JSON-LD all follow.
+
+### Hosting requirement
+
+The four pages are real files (`dist/index.html`, `dist/en/index.html`, …).
+**Do not add a catch-all SPA rewrite** (`/* → /index.html`) on Vercel/Netlify:
+it would serve the Spanish document at `/en/`, `/fr/` and `/de/`, breaking both
+the language and the canonical. Static-file-first — the default on both hosts —
+is what this needs.
+
+### Still to add
+
+- `SOCIAL` in `src/config/site.js` — empty; fills JSON-LD `sameAs`.
+- `GSC_VERIFICATION` in the same file — Search Console's meta token.
+- `LEGAL` paths — until they are real paths the footer renders them as plain
+  text rather than dead `#` links.
+- Opening hours — deliberately absent from the JSON-LD rather than guessed.
+
 ## Languages
 
 ES (default) · EN · FR · DE, in `src/i18n/translations.js`. One HTML document;
