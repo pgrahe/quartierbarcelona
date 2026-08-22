@@ -42,17 +42,24 @@
   font-size: clamp(0.6875rem, 1.6vw, 0.8125rem);
 }
 
-/* ---- solid: beige fill, wipes away to a beige hairline ---- */
+/* ---- solid: ghost on dark — hairline only, fill on hover ---- */
+.cta--solid {
+  --cta-fg: var(--stone);
+  --cta-bd: var(--stone-70);
+  color: var(--cta-fg);
+}
+
 .cta--solid::before {
-  scale: 1 1;
+  scale: 1 0;
 }
 
 @media (hover: hover) {
   .cta--solid:hover {
-    color: var(--stone);
+    color: var(--black);
+    border-color: var(--stone);
   }
   .cta--solid:hover::before {
-    scale: 1 0;
+    scale: 1 1;
   }
 }
 

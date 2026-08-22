@@ -1,83 +1,126 @@
+/* -------------------------------------------------------------------------
+ * Brand moment — editorial collage
+ *
+ * Three portraits laid over one another like prints on a table. Nothing is
+ * aligned to anything: each layer has its own left/top/width, deliberately
+ * off-grid, and each is rotated by a fraction of a degree.
+ *
+ * Layout lives entirely here. The scroll loop in BrandMoment.jsx only ever
+ * writes `transform`, so the collage is composed correctly before any script
+ * runs — and stays composed if the script never runs at all.
+ * ---------------------------------------------------------------------- */
 .moment {
-  position: relative;
-  background: var(--black);
-  color: var(--stone);
+  background: var(--ink);
+  padding-block: clamp(4rem, 9vw, 8rem) clamp(3rem, 7vw, 6rem);
   overflow: clip;
 }
 
-/* Scroll runway: each card needs a beat of travel before the next sticks over it. */
-.moment__stage {
+.moment__collage {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  /* Space between sticky anchors = how much they slide before covering. */
-  gap: clamp(10vh, 18vh, 22vh);
-  max-width: var(--maxw);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-  /* Extra runway after the last card so the top of the stack can finish settling. */
-  padding-bottom: clamp(8vh, 14vh, 18vh);
+  /* Taller than the prints so they have somewhere to drift. */
+  aspect-ratio: 16 / 11;
+  width: 100%;
 }
 
-.moment__card {
-  --card-top: calc(env(safe-area-inset-top, 0px) + clamp(5.5rem, 12vh, 7.5rem) + (var(--i) * 0.85rem));
-
-  position: sticky;
-  top: var(--card-top);
-  z-index: calc(1 + var(--i));
-  width: min(100%, 42rem);
-  margin-inline: auto;
-  aspect-ratio: 3 / 4;
-  max-height: min(58vh, 34rem);
-  overflow: hidden;
-  background: var(--ink);
-  /* Soft depth so the overlap reads without turning into “card UI”. */
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+.moment__layer {
+  position: absolute;
+  left: var(--l);
+  top: var(--t);
+  width: var(--w);
+  z-index: var(--z);
+  rotate: var(--r);
+  /* Written by the scroll loop; declared so the layer has a transform from
+     the first paint and never promotes/demotes mid-scroll. */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  background: var(--black);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 
 .moment__img {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 1600 / 2223;
   object-fit: cover;
-  object-position: center 35%;
+}
+
+/* Overlaps are generous on purpose: the largest gap the parallax can open
+   between two layers is ~62px, against 8–10% of the shell in horizontal
+   overlap and several hundred px vertically. They cannot come apart. */
+.moment__layer[data-layer='back'] {
+  --l: 0%;
+  --t: 6%;
+  --w: 36%;
+  --z: 1;
+  --r: -1.2deg;
+}
+
+.moment__layer[data-layer='mid'] {
+  --l: 28%;
+  --t: 22%;
+  --w: 38%;
+  --z: 2;
+  --r: 0.8deg;
+}
+
+.moment__layer[data-layer='front'] {
+  --l: 56%;
+  --t: 0%;
+  --w: 36%;
+  --z: 3;
+  --r: -0.5deg;
 }
 
 .moment__caption {
-  max-width: var(--maxw);
-  margin-inline: auto;
-  padding: clamp(2rem, 4vw, 3rem) var(--gutter) 0;
+  margin-top: clamp(2rem, 4vw, 3.25rem);
   color: var(--stone-40);
 }
 
+/* -------------------------------------------------------------------------
+ * Mobile — the same collage, closed up.
+ *
+ * Three prints across a 390px screen would be postage stamps, so the layers
+ * widen and stack more vertically. The overlap increases rather than
+ * decreases: the collage reads as layered even at 320px.
+ * ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
-  .moment__card {
-    width: min(100%, 26rem);
-    max-height: min(54vh, 30rem);
+  .moment__collage {
+    aspect-ratio: 10 / 13;
   }
 
-  .moment__stage {
-    gap: clamp(8vh, 14vh, 18vh);
+  .moment__layer {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  .moment__layer[data-layer='back'] {
+    --l: 0%;
+    --t: 0%;
+    --w: 62%;
+  }
+
+  .moment__layer[data-layer='mid'] {
+    --l: 34%;
+    --t: 26%;
+    --w: 64%;
+  }
+
+  .moment__layer[data-layer='front'] {
+    --l: 6%;
+    --t: 50%;
+    --w: 60%;
   }
 }
 
+/* -------------------------------------------------------------------------
+ * Reduced motion — the collage stays, the drift goes.
+ *
+ * The JS bails out before the loop starts, so `transform` is never written
+ * and the layers rest exactly where the CSS puts them.
+ * ---------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  /* Static fan instead of a scroll stack. */
-  .moment__stage {
-    display: grid;
-    place-items: center;
-    gap: 0;
-    min-height: min(58vh, 34rem);
-    padding-bottom: 0;
-  }
-
-  .moment__card {
-    position: relative;
-    top: auto;
-    grid-area: 1 / 1;
-    width: min(100%, 22rem);
-    max-height: min(48vh, 26rem);
-    translate: calc((var(--i) - 1) * 0.85rem) calc(var(--i) * 0.7rem);
-    rotate: calc((var(--i) - 1) * 1.4deg);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  .moment__layer {
+    will-change: auto;
+    transform: none;
   }
 }

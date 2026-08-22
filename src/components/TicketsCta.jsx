@@ -13,7 +13,7 @@ import './TicketsCta.css'
  * without JavaScript. A plain left-click is intercepted and opens the
  * in-page ticketing overlay instead.
  *
- * `variant`: 'solid' (beige fill) | 'outline' (beige hairline)
+ * `variant`: 'solid' (ghost on dark — stone hairline) | 'outline' (ghost on dark / filled on stone)
  * `size`:    'sm' (chrome) | 'md' (menu / contact)
  */
 export default function TicketsCta({ variant = 'solid', size = 'sm', className = '', onClick }) {
