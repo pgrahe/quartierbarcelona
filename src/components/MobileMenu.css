@@ -11,6 +11,10 @@
     visibility 0s linear var(--t-base);
 }
 
+.mmenu:focus {
+  outline: none;
+}
+
 .mmenu[data-open='true'] {
   opacity: 1;
   visibility: visible;

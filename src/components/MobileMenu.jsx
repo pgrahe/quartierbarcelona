@@ -15,6 +15,7 @@ import './MobileMenu.css'
 export default function MobileMenu({ open, onClose }) {
   const { t } = useLanguage()
   const panelRef = useRef(null)
+  const wasOpenRef = useRef(false)
 
   const links = [
     { id: 'inicio', label: t.nav.home },
@@ -57,9 +58,10 @@ export default function MobileMenu({ open, onClose }) {
     }
 
     document.addEventListener('keydown', onKey)
-    // Move focus in once the panel has painted.
+    // Focus the dialog shell, not the first link — programmatic link focus
+    // flashes :focus-visible on touch open (notably iOS Safari, first time).
     const id = window.setTimeout(() => {
-      panelRef.current?.querySelector('a[href], button')?.focus()
+      panelRef.current?.focus({ preventScroll: true })
     }, 60)
 
     return () => {
@@ -67,6 +69,18 @@ export default function MobileMenu({ open, onClose }) {
       window.clearTimeout(id)
     }
   }, [open, onClose])
+
+  // Return focus to the hamburger that opened the panel.
+  useEffect(() => {
+    if (open) {
+      wasOpenRef.current = true
+      return
+    }
+    if (!wasOpenRef.current) return
+    window.setTimeout(() => {
+      document.querySelector('.nav__burger')?.focus({ preventScroll: true })
+    }, 0)
+  }, [open])
 
   const go = (e, id) => {
     e.preventDefault()
@@ -81,6 +95,7 @@ export default function MobileMenu({ open, onClose }) {
       className="mmenu"
       data-open={open}
       aria-hidden={!open}
+      tabIndex={-1}
       {...(open ? { role: 'dialog', 'aria-modal': 'true', 'aria-label': t.nav.menu } : {})}
       {...(open ? {} : { inert: '' })}
       ref={panelRef}

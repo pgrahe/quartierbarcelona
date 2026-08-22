@@ -15,10 +15,13 @@
   overflow: clip;
 }
 
+/* Height has to clear the tallest layer at its LOWEST point — that is its
+   top offset, plus its own height, plus the full parallax travel (86px on the
+   front layer). Sized short, the drift pushes a print past the bottom edge and
+   the caption underneath collides with it. */
 .moment__collage {
   position: relative;
-  /* Taller than the prints so they have somewhere to drift. */
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 4 / 3;
   width: 100%;
 }
 
@@ -86,7 +89,7 @@
  * ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .moment__collage {
-    aspect-ratio: 10 / 13;
+    aspect-ratio: 10 / 17;
   }
 
   .moment__layer {
@@ -96,19 +99,19 @@
   .moment__layer[data-layer='back'] {
     --l: 0%;
     --t: 0%;
-    --w: 62%;
+    --w: 60%;
   }
 
   .moment__layer[data-layer='mid'] {
-    --l: 34%;
-    --t: 26%;
-    --w: 64%;
+    --l: 36%;
+    --t: 18%;
+    --w: 62%;
   }
 
   .moment__layer[data-layer='front'] {
     --l: 6%;
-    --t: 50%;
-    --w: 60%;
+    --t: 34%;
+    --w: 58%;
   }
 }
 
