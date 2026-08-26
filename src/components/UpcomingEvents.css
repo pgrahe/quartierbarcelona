@@ -46,7 +46,6 @@
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  touch-action: pan-x;
   /* Hide the scrollbar; the dots are the position cue. */
   scrollbar-width: none;
 }
@@ -89,8 +88,7 @@
   isolation: isolate;
   background: var(--ink);
   border: 1px solid var(--stone-12);
-  /* Let horizontal swipes reach the carousel viewport. */
-  touch-action: pan-x;
+  cursor: pointer;
   transition:
     border-color var(--t-base) var(--ease),
     translate var(--t-base) var(--ease-out),
@@ -218,10 +216,8 @@
   overflow-wrap: anywhere;
 }
 
-/* ---- Action ---- */
+/* ---- Action (visual label only — the flyer itself is the control) ---- */
 .flyer__action {
-  /* Deliberately NOT positioned: the stretched hit area below resolves
-     against the flyer, which is the element that should be clickable. */
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -234,15 +230,7 @@
   text-transform: uppercase;
   color: var(--stone-55);
   transition: color var(--t-base) var(--ease);
-}
-
-/* Stretched so the whole flyer is the hit area, while the button itself
-   stays the one focusable, correctly-named control. */
-.flyer__action::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+  pointer-events: none;
 }
 
 .flyer__action-label {
@@ -260,6 +248,11 @@
   scale: 0 1;
   transform-origin: left;
   transition: scale var(--t-base) var(--ease-out);
+}
+
+.flyer:focus-visible {
+  outline: 1px solid var(--stone-55);
+  outline-offset: 4px;
 }
 
 .flyer__arrow {

@@ -17,19 +17,58 @@ import './UpcomingEvents.css'
 function Flyer({ event, lang, labels, ticketsLabel }) {
   const { openTickets } = useTickets()
   const date = formatEventDate(event.date, lang)
+  const startRef = useRef(null)
+
+  const accessibleName = [
+    labels.cardLabel,
+    event.title,
+    date?.full,
+  ]
+    .filter(Boolean)
+    .join(' — ')
+
+  const onPointerDown = (e) => {
+    startRef.current = { x: e.clientX, y: e.clientY }
+  }
+
+  const onActivate = (e) => {
+    const start = startRef.current
+    startRef.current = null
+    // Ignore the gesture if it was a scroll/swipe, not a tap.
+    if (start) {
+      const dx = Math.abs(e.clientX - start.x)
+      const dy = Math.abs(e.clientY - start.y)
+      if (dx > 10 || dy > 10) return
+    }
+    openTickets()
+  }
+
+  const onKeyDown = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return
+    e.preventDefault()
+    openTickets()
+  }
 
   return (
-    <article className="flyer">
+    <article
+      className="flyer"
+      role="button"
+      tabIndex={0}
+      aria-label={accessibleName}
+      onPointerDown={onPointerDown}
+      onClick={onActivate}
+      onKeyDown={onKeyDown}
+    >
       <span className="flyer__glow" aria-hidden="true" />
       <span className="flyer__grain" aria-hidden="true" />
       <span className="flyer__sheen" aria-hidden="true" />
 
-      <div className="flyer__top">
+      <div className="flyer__top" aria-hidden="true">
         <span className="eyebrow flyer__tag">{event.age}</span>
         {date && <span className="eyebrow flyer__weekday">{date.weekday}</span>}
       </div>
 
-      <div className="flyer__mark">
+      <div className="flyer__mark" aria-hidden="true">
         <img
           src="/brand/quartier-beige.png"
           alt=""
@@ -37,10 +76,11 @@ function Flyer({ event, lang, labels, ticketsLabel }) {
           height="381"
           loading="lazy"
           decoding="async"
+          draggable="false"
         />
       </div>
 
-      <div className="flyer__foot">
+      <div className="flyer__foot" aria-hidden="true">
         {date && (
           <p className="flyer__date">
             <time dateTime={date.iso}>
@@ -55,18 +95,12 @@ function Flyer({ event, lang, labels, ticketsLabel }) {
 
         <h3 className="flyer__title">{event.title}</h3>
 
-        <button type="button" className="flyer__action" onClick={openTickets}>
-          <span className="flyer__action-label" aria-hidden="true">
-            {ticketsLabel}
-          </span>
-          <svg className="flyer__arrow" viewBox="0 0 24 12" aria-hidden="true" focusable="false">
+        <p className="flyer__action">
+          <span className="flyer__action-label">{ticketsLabel}</span>
+          <svg className="flyer__arrow" viewBox="0 0 24 12" focusable="false">
             <path d="M0 6h21M16 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1" />
           </svg>
-          <span className="visually-hidden">
-            {labels.cardLabel} — {event.title}
-            {date ? `, ${date.full}` : ''}
-          </span>
-        </button>
+        </p>
       </div>
     </article>
   )
