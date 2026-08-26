@@ -33,14 +33,26 @@
   color: var(--stone-55);
 }
 
-/* ---- Carousel of flyers (mobile) / row (desktop) ---- */
+/* ---- Carousel of flyers (mobile swipe) / row (desktop) ---- */
 .agenda__carousel {
   margin-top: clamp(3rem, 6vw, 5rem);
   max-width: 22rem;
 }
 
 .agenda__viewport {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  /* Hide the scrollbar; the dots are the position cue. */
+  scrollbar-width: none;
+}
+
+.agenda__viewport::-webkit-scrollbar {
+  display: none;
 }
 
 .agenda__track {
@@ -48,14 +60,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  transition: transform 720ms var(--ease-out);
-  will-change: transform;
 }
 
 .agenda__item {
   flex: 0 0 100%;
   min-width: 0;
   padding-inline: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* -------------------------------------------------------------------------
@@ -77,6 +89,8 @@
   isolation: isolate;
   background: var(--ink);
   border: 1px solid var(--stone-12);
+  /* Let horizontal swipes reach the carousel viewport. */
+  touch-action: pan-x;
   transition:
     border-color var(--t-base) var(--ease),
     translate var(--t-base) var(--ease-out),
@@ -359,20 +373,19 @@
 
   .agenda__viewport {
     overflow: visible;
+    scroll-snap-type: none;
   }
 
   .agenda__track {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(1rem, 2vw, 1.75rem);
-    transform: none !important;
-    will-change: auto;
-    transition: none;
   }
 
   .agenda__item {
     flex: none;
     width: auto;
+    scroll-snap-align: none;
   }
 
   .agenda__dots {
@@ -381,8 +394,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .agenda__track {
-    transition: none;
+  .agenda__viewport {
+    scroll-behavior: auto;
   }
 
   .flyer,

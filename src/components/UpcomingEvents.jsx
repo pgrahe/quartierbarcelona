@@ -7,15 +7,12 @@ import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
 
 /**
- * PRÓXIMOS EVENTOS — the programme, set as flyers in an auto-advancing strip.
+ * PRÓXIMOS EVENTOS — the programme as flyers.
  *
- * One flyer is in view at a time; the strip eases left on a timer and the
- * dots under it mark which night is showing. The CTA opens the on-site
- * Fourvenues calendar overlay (the listing, until each night has its own
- * slug). Line-up lives in EVENTS in src/config/site.js.
+ * Mobile: one flyer at a time; the visitor swipes sideways (no autoplay).
+ * Desktop: all flyers in a row. Dots track the swipe on small screens.
+ * The CTA opens the on-site Fourvenues calendar overlay.
  */
-
-const AUTO_MS = 5200
 
 function Flyer({ event, lang, labels, ticketsLabel }) {
   const { openTickets } = useTickets()
@@ -80,42 +77,34 @@ export default function UpcomingEvents() {
   const a = t.agenda
   const ticketsLabel = t.nav.tickets
   const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const viewportRef = useRef(null)
   const count = EVENTS.length
-  const reduceMotion = useRef(false)
 
+  const goTo = useCallback((i) => {
+    const viewport = viewportRef.current
+    if (!viewport || !count) return
+    const next = ((i % count) + count) % count
+    const item = viewport.querySelectorAll('.agenda__item')[next]
+    if (item) {
+      item.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+    }
+    setIndex(next)
+  }, [count])
+
+  // Keep the dots in sync with a manual swipe.
   useEffect(() => {
-    reduceMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  }, [])
+    const viewport = viewportRef.current
+    if (!viewport || count < 2) return
 
-  const goTo = useCallback(
-    (i) => {
-      if (!count) return
-      setIndex(((i % count) + count) % count)
-    },
-    [count],
-  )
-
-  // Auto-advance only on the mobile carousel — desktop shows the row.
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 900px)')
-    const tick = () => {
-      if (!mq.matches || count < 2 || paused || reduceMotion.current) return
-      setIndex((i) => (i + 1) % count)
+    const onScroll = () => {
+      const w = viewport.clientWidth || 1
+      const i = Math.round(viewport.scrollLeft / w)
+      setIndex(Math.max(0, Math.min(count - 1, i)))
     }
 
-    if (!mq.matches || count < 2 || paused || reduceMotion.current) return
-
-    const id = window.setInterval(tick, AUTO_MS)
-    const onChange = () => {
-      if (!mq.matches) setIndex(0)
-    }
-    mq.addEventListener('change', onChange)
-    return () => {
-      window.clearInterval(id)
-      mq.removeEventListener('change', onChange)
-    }
-  }, [count, paused])
+    viewport.addEventListener('scroll', onScroll, { passive: true })
+    return () => viewport.removeEventListener('scroll', onScroll)
+  }, [count])
 
   if (!count) return null
 
@@ -141,22 +130,9 @@ export default function UpcomingEvents() {
           </p>
         </div>
 
-        <div
-          className="agenda__carousel"
-          data-reveal
-          style={{ '--reveal-delay': '200ms' }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false)
-          }}
-        >
-          <div className="agenda__viewport">
-            <ul
-              className="agenda__track"
-              style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
-            >
+        <div className="agenda__carousel" data-reveal style={{ '--reveal-delay': '200ms' }}>
+          <div className="agenda__viewport" ref={viewportRef}>
+            <ul className="agenda__track">
               {EVENTS.map((event) => (
                 <li key={event.id} className="agenda__item">
                   <Flyer event={event} lang={lang} labels={a} ticketsLabel={ticketsLabel} />
