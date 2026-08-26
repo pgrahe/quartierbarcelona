@@ -1,9 +1,11 @@
 .hero {
   position: relative;
   display: grid;
-  /* 100svh on iOS Safari, so the slogan never sits under the toolbar. */
-  min-height: var(--vh-fallback);
-  min-height: 100svh;
+  /* Fill the *visible* viewport on iOS Safari. `100svh` undershoots when the
+     chrome overlays the page, so About's stone peeks under the toolbar before
+     any scroll. `dvh` tracks the live viewport; `100vh` is the old fallback. */
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background: var(--black);
   isolation: isolate;
@@ -250,6 +252,13 @@
  * Mobile
  * ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
+  .hero {
+    /* Lock height on phones so the next section cannot peek under Safari's
+       bottom chrome on first paint. */
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
   .hero__bar {
     display: flex;
   }

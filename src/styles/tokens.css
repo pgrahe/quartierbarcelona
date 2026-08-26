@@ -150,13 +150,15 @@
   --nav-h: 84px;
   --radius: 1px;
 
-  /* Real viewport height on iOS Safari, where 100vh lies about the toolbar. */
+  /* Visible viewport height. Prefer dvh on iOS Safari: vh is often the large
+     viewport (toolbars hidden) and svh undershoots when chrome overlays the
+     page — either way a full-bleed hero gets the height wrong. */
   --vh-fallback: 100vh;
 }
 
-@supports (height: 100svh) {
+@supports (height: 100dvh) {
   :root {
-    --vh-fallback: 100svh;
+    --vh-fallback: 100dvh;
   }
 }
 
