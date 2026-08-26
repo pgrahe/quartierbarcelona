@@ -2,6 +2,7 @@ node_modules
 node_modules.nosync
 node_modules 2
 dist
+.cache
 .DS_Store
 *.local
 .claude

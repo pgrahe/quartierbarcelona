@@ -8,6 +8,8 @@ import MobileMenu from './components/MobileMenu'
 import Hero from './components/Hero'
 import About from './components/About'
 import BrandMoment from './components/BrandMoment'
+import VipExperience from './components/VipExperience'
+import NightStack from './components/NightStack'
 import PrivateEvents from './components/PrivateEvents'
 import Contact from './components/Contact'
 import LocationMap from './components/LocationMap'
@@ -48,6 +50,8 @@ export default function App() {
         <Hero />
         <About />
         <BrandMoment />
+        <VipExperience />
+        <NightStack />
         <PrivateEvents />
         <Contact />
         <LocationMap />

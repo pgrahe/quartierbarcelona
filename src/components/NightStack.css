@@ -1,0 +1,63 @@
+.nstack {
+  background: var(--ink);
+  /* Sticky plates cannot pin inside `overflow: clip` (.section). */
+  overflow: visible;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.nstack__shell {
+  display: grid;
+  justify-items: center;
+}
+
+.nstack__plates {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 26rem);
+  isolation: isolate;
+}
+
+.nstack__plate {
+  position: sticky;
+  top: calc(var(--nav-h) + 0.85rem);
+  z-index: var(--z, 1);
+  overflow: hidden;
+  background: var(--black);
+  height: min(68svh, 38rem);
+  box-shadow: 0 -24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.nstack__plate:first-child {
+  box-shadow: none;
+}
+
+.nstack__plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.12) contrast(1.04);
+  scale: 1.05;
+  transition: scale 1.6s var(--ease-out);
+}
+
+.nstack__plate[data-revealed='true'] img {
+  scale: 1;
+}
+
+@media (max-width: 900px) {
+  .nstack__plates {
+    width: min(100%, 20rem);
+  }
+
+  .nstack__plate {
+    height: min(62svh, 32rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nstack__plate img {
+    scale: 1;
+    transition: none;
+  }
+}

@@ -50,7 +50,7 @@ export default function LocationMap() {
           </div>
         </div>
 
-        <div className="loc__map" data-reveal="mask" style={{ '--reveal-delay': '120ms' }}>
+        <div className="loc__map">
           <VenueMap title={t.location.mapLabel} />
         </div>
       </div>

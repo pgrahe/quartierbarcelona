@@ -1,0 +1,108 @@
+.vip {
+  background: var(--stone);
+  color: var(--black);
+}
+
+.vip__layout {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  justify-items: center;
+}
+
+/* ---- Type ---- */
+.vip__head {
+  text-align: center;
+}
+
+.vip__eyebrow {
+  color: var(--bordeaux);
+}
+
+.vip__title {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  font-family: var(--font-body);
+  font-size: clamp(1.875rem, 3.6vw, 3.25rem);
+  font-weight: var(--w-bold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-align: center;
+}
+
+.vip__copy {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.vip__body {
+  max-width: 34ch;
+  font-size: var(--fs-body);
+  line-height: 1.72;
+  color: rgba(0, 0, 0, 0.7);
+  text-wrap: pretty;
+}
+
+.vip__cta-row {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.vip__note {
+  font-size: var(--fs-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.42);
+}
+
+/* ---- Plate ---- */
+.vip__plate {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  width: min(100%, 24rem);
+}
+
+.vip__plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  /* Night flash frame — lift midtones so it doesn’t sit muddy on stone. */
+  filter: brightness(1.18) contrast(1.06) saturate(1.05);
+  scale: 1.05;
+  transition: scale 1.6s var(--ease-out);
+}
+
+.vip__plate[data-revealed='true'] img {
+  scale: 1;
+}
+
+@media (max-width: 900px) {
+  .vip__plate {
+    width: min(100%, 20rem);
+  }
+
+  .vip__body {
+    max-width: none;
+  }
+
+  .vip__cta {
+    width: 100%;
+  }
+
+  .vip__cta-row {
+    justify-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vip__plate img {
+    scale: 1;
+    transition: none;
+  }
+}

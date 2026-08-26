@@ -1,6 +1,6 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { renderToString } from "react-dom/server";
-import { createContext, useState, useCallback, useEffect, useMemo, useContext, useRef, useLayoutEffect } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, useMemo, useRef, useLayoutEffect, lazy, Suspense } from "react";
 const LANGUAGES = [
   { code: "es", label: "ES", name: "Español", htmlLang: "es" },
   { code: "en", label: "EN", name: "English", htmlLang: "en" },
@@ -25,6 +25,9 @@ const translations = {
       home: "INICIO",
       about: "SOBRE NOSOTROS",
       contact: "CONTACTO",
+      vipExperience: "VIP EXPERIENCE",
+      // Navbar only — five full labels overflow the bar on a narrow laptop.
+      vipExperienceShort: "VIP",
       privateEvents: "EVENTOS PRIVADOS",
       // Navbar only — the full label overflows the bar on narrow laptops.
       privateEventsShort: "EVENTOS",
@@ -58,6 +61,16 @@ const translations = {
       imageAlt: "Ambiente nocturno en la pista de Quartier Barcelona",
       imageAlt2: "Grupo de amigos en una noche en Quartier Barcelona",
       imageAlt3: "Invitada celebrando en Quartier Barcelona"
+    },
+    vipExperience: {
+      eyebrow: "VIP EXPERIENCE",
+      // English headline, like the hero slogan and the About / Private Events
+      // titles — brand voice, not copy to translate.
+      title: "Own the night.",
+      body: "Reserva tu mesa en la mejor zona de la sala y vive la noche desde dentro. Servicio dedicado, botella en mesa y el mejor ángulo de Quartier.",
+      note: "Mesas limitadas y sujetas a disponibilidad.",
+      imageAlt: "Grupo de amigos celebrando en una mesa VIP de Quartier Barcelona",
+      imageAlt2: "Botellas con luces de bengala servidas en la pista de Quartier Barcelona"
     },
     privateEvents: {
       eyebrow: "PRIVATE EVENTS",
@@ -100,6 +113,8 @@ const translations = {
       home: "HOME",
       about: "ABOUT",
       contact: "CONTACT",
+      vipExperience: "VIP EXPERIENCE",
+      vipExperienceShort: "VIP",
       privateEvents: "PRIVATE EVENTS",
       privateEventsShort: "EVENTS",
       tickets: "TICKETS & VIP TABLES",
@@ -131,6 +146,14 @@ const translations = {
       imageAlt: "Night atmosphere on the Quartier Barcelona dancefloor",
       imageAlt2: "Friends together on a night at Quartier Barcelona",
       imageAlt3: "Guest celebrating at Quartier Barcelona"
+    },
+    vipExperience: {
+      eyebrow: "VIP EXPERIENCE",
+      title: "Own the night.",
+      body: "Book your table in the best part of the room and take the night from the inside. Dedicated service, bottle service and the best view of Quartier.",
+      note: "Tables are limited and subject to availability.",
+      imageAlt: "Friends celebrating at a VIP table at Quartier Barcelona",
+      imageAlt2: "Bottle service with sparklers on the Quartier Barcelona dancefloor"
     },
     privateEvents: {
       eyebrow: "PRIVATE EVENTS",
@@ -171,6 +194,8 @@ const translations = {
       home: "ACCUEIL",
       about: "À PROPOS",
       contact: "CONTACT",
+      vipExperience: "VIP EXPERIENCE",
+      vipExperienceShort: "VIP",
       privateEvents: "ÉVÉNEMENTS PRIVÉS",
       privateEventsShort: "ÉVÉNEMENTS",
       tickets: "TICKETS ET TABLES VIP",
@@ -202,6 +227,14 @@ const translations = {
       imageAlt: "Ambiance nocturne sur la piste du Quartier Barcelona",
       imageAlt2: "Groupe d’amis lors d’une nuit au Quartier Barcelona",
       imageAlt3: "Invitée célébrant au Quartier Barcelona"
+    },
+    vipExperience: {
+      eyebrow: "VIP EXPERIENCE",
+      title: "Own the night.",
+      body: "Réservez votre table dans le meilleur coin de la salle et vivez la nuit de l’intérieur. Service dédié, bouteilles en table et le plus bel angle du Quartier.",
+      note: "Tables en nombre limité, selon disponibilité.",
+      imageAlt: "Des amis qui font la fête à une table VIP du Quartier Barcelona",
+      imageAlt2: "Service de bouteilles avec cierges magiques sur la piste du Quartier Barcelona"
     },
     privateEvents: {
       eyebrow: "PRIVATE EVENTS",
@@ -242,6 +275,8 @@ const translations = {
       home: "START",
       about: "ÜBER UNS",
       contact: "KONTAKT",
+      vipExperience: "VIP EXPERIENCE",
+      vipExperienceShort: "VIP",
       privateEvents: "PRIVATE EVENTS",
       privateEventsShort: "EVENTS",
       tickets: "TICKETS UND VIP-TISCHE",
@@ -273,6 +308,14 @@ const translations = {
       imageAlt: "Nachtatmosphäre auf der Tanzfläche des Quartier Barcelona",
       imageAlt2: "Freundesgruppe an einem Abend im Quartier Barcelona",
       imageAlt3: "Gast feiert im Quartier Barcelona"
+    },
+    vipExperience: {
+      eyebrow: "VIP EXPERIENCE",
+      title: "Own the night.",
+      body: "Reservieren Sie Ihren Tisch im besten Bereich des Clubs und erleben Sie die Nacht von innen. Eigener Service, Flaschenservice und der beste Blick über Quartier.",
+      note: "Begrenzte Tischanzahl, nach Verfügbarkeit.",
+      imageAlt: "Freunde feiern an einem VIP-Tisch im Quartier Barcelona",
+      imageAlt2: "Flaschenservice mit Wunderkerzen auf der Tanzfläche des Quartier Barcelona"
     },
     privateEvents: {
       eyebrow: "PRIVATE EVENTS",
@@ -579,6 +622,7 @@ function Navbar({ solid, menuOpen, onToggleMenu }) {
   const links = [
     { id: "inicio", label: t.nav.home },
     { id: "sobre-nosotros", label: t.nav.about },
+    { id: "vip-experience", label: t.nav.vipExperienceShort },
     // Short label here only: the full one overflows the bar around 900–1024px.
     { id: "eventos-privados", label: t.nav.privateEventsShort },
     { id: "contacto", label: t.nav.contact }
@@ -627,6 +671,7 @@ function MobileMenu({ open, onClose }) {
   const links = [
     { id: "inicio", label: t.nav.home },
     { id: "sobre-nosotros", label: t.nav.about },
+    { id: "vip-experience", label: t.nav.vipExperience },
     { id: "eventos-privados", label: t.nav.privateEvents },
     { id: "contacto", label: t.nav.contact }
   ];
@@ -1083,6 +1128,58 @@ function BrandMoment() {
     /* @__PURE__ */ jsx("p", { className: "eyebrow moment__caption", children: t.brand.caption })
   ] }) });
 }
+function VipExperience() {
+  const { t } = useLanguage();
+  const vip = t.vipExperience;
+  return /* @__PURE__ */ jsx("section", { id: "vip-experience", className: "vip section on-stone", "aria-labelledby": "vip-title", children: /* @__PURE__ */ jsxs("div", { className: "shell vip__grid", children: [
+    /* @__PURE__ */ jsxs("div", { className: "vip__text", children: [
+      /* @__PURE__ */ jsx("p", { className: "eyebrow vip__eyebrow", "data-reveal": true, children: vip.eyebrow }),
+      /* @__PURE__ */ jsx("h2", { className: "vip__title", id: "vip-title", "data-reveal": true, style: { "--reveal-delay": "80ms" }, children: vip.title }),
+      /* @__PURE__ */ jsx("p", { className: "vip__body", "data-reveal": true, style: { "--reveal-delay": "160ms" }, children: vip.body }),
+      /* @__PURE__ */ jsxs("div", { className: "vip__cta-row", "data-reveal": true, style: { "--reveal-delay": "240ms" }, children: [
+        /* @__PURE__ */ jsx(TicketsCta, { variant: "outline", size: "md", className: "vip__cta" }),
+        /* @__PURE__ */ jsx("p", { className: "vip__note", children: vip.note })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "vip__plates", children: [
+      /* @__PURE__ */ jsx("figure", { className: "vip__plate", "data-plate": "a", "data-reveal": "mask", children: /* @__PURE__ */ jsx(
+        "img",
+        {
+          src: "/img/vip-table-1100.jpg",
+          srcSet: "/img/vip-table-700.jpg 700w, /img/vip-table-1100.jpg 1100w, /img/vip-table-1500.jpg 1500w",
+          sizes: "(max-width: 900px) 46vw, 26vw",
+          alt: vip.imageAlt,
+          width: "1100",
+          height: "1650",
+          loading: "lazy",
+          decoding: "async"
+        }
+      ) }),
+      /* @__PURE__ */ jsx(
+        "figure",
+        {
+          className: "vip__plate",
+          "data-plate": "b",
+          "data-reveal": "mask",
+          style: { "--reveal-delay": "140ms" },
+          children: /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: "/img/vip-bottles-1100.jpg",
+              srcSet: "/img/vip-bottles-700.jpg 700w, /img/vip-bottles-1100.jpg 1100w, /img/vip-bottles-1500.jpg 1500w",
+              sizes: "(max-width: 900px) 46vw, 26vw",
+              alt: vip.imageAlt2,
+              width: "1100",
+              height: "1527",
+              loading: "lazy",
+              decoding: "async"
+            }
+          )
+        }
+      )
+    ] })
+  ] }) });
+}
 function PrivateEvents() {
   const { t } = useLanguage();
   const pe = t.privateEvents;
@@ -1142,82 +1239,6 @@ function Contact() {
     ] })
   ] }) });
 }
-function VenueMap({ title }) {
-  const hostRef = useRef(null);
-  useEffect(() => {
-    const el = hostRef.current;
-    if (!el) return;
-    let cancelled = false;
-    let map;
-    let ro;
-    let kick;
-    (async () => {
-      const mod = await import("leaflet");
-      const L = mod.default ?? mod;
-      if (cancelled || !hostRef.current) return;
-      map = L.map(hostRef.current, {
-        scrollWheelZoom: false,
-        zoomControl: true,
-        attributionControl: true
-      }).setView([LOCATION.lat, LOCATION.lng], LOCATION.zoom);
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: "abcd",
-        maxZoom: 20
-      }).addTo(map);
-      const pin = L.divIcon({
-        className: "loc__pin",
-        html: '<span class="loc__pin-dot" aria-hidden="true"></span>',
-        iconSize: [18, 18],
-        iconAnchor: [9, 9]
-      });
-      L.marker([LOCATION.lat, LOCATION.lng], {
-        icon: pin,
-        title: title || "Quartier Barcelona"
-      }).addTo(map);
-      ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(() => map.invalidateSize()) : null;
-      ro == null ? void 0 : ro.observe(hostRef.current);
-      kick = window.setTimeout(() => map.invalidateSize(), 400);
-    })().catch((err) => {
-      console.error("VenueMap failed to load Leaflet", err);
-    });
-    return () => {
-      cancelled = true;
-      window.clearTimeout(kick);
-      ro == null ? void 0 : ro.disconnect();
-      map == null ? void 0 : map.remove();
-    };
-  }, [title]);
-  return /* @__PURE__ */ jsx("div", { ref: hostRef, className: "loc__leaflet", role: "img", "aria-label": title });
-}
-function LocationMap() {
-  const { t } = useLanguage();
-  const [line1, line2] = t.location.title.split("\n");
-  return /* @__PURE__ */ jsx("section", { className: "loc", "aria-label": t.location.eyebrow, children: /* @__PURE__ */ jsxs("div", { className: "loc__grid", children: [
-    /* @__PURE__ */ jsx("div", { className: "loc__panel on-stone", children: /* @__PURE__ */ jsxs("div", { className: "loc__panel-inner", children: [
-      /* @__PURE__ */ jsx("p", { className: "eyebrow loc__eyebrow", "data-reveal": true, children: t.location.eyebrow }),
-      /* @__PURE__ */ jsxs("h2", { className: "loc__title", "data-reveal": true, style: { "--reveal-delay": "80ms" }, children: [
-        /* @__PURE__ */ jsx("span", { children: line1 }),
-        line2 && /* @__PURE__ */ jsx("span", { children: line2 })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "loc__meta", "data-reveal": true, style: { "--reveal-delay": "160ms" }, children: [
-        /* @__PURE__ */ jsx("hr", { className: "rule" }),
-        /* @__PURE__ */ jsx("address", { className: "loc__address", children: addressLines().map((line) => /* @__PURE__ */ jsx("span", { children: line }, line)) }),
-        /* @__PURE__ */ jsx(
-          "a",
-          {
-            className: "loc__directions",
-            href: mapDirectionsUrl(),
-            target: "_blank",
-            rel: "noopener noreferrer",
-            children: t.location.directions
-          }
-        )
-      ] })
-    ] }) }),
-    /* @__PURE__ */ jsx("div", { className: "loc__map", "data-reveal": "mask", style: { "--reveal-delay": "120ms" }, children: /* @__PURE__ */ jsx(VenueMap, { title: t.location.mapLabel }) })
-  ] }) });
-}
 function Footer() {
   const { t } = useLanguage();
   const { openTickets } = useTickets();
@@ -1225,6 +1246,7 @@ function Footer() {
   const links = [
     { id: "inicio", label: t.nav.home },
     { id: "sobre-nosotros", label: t.nav.about },
+    { id: "vip-experience", label: t.nav.vipExperience },
     { id: "eventos-privados", label: t.nav.privateEvents },
     { id: "contacto", label: t.nav.contact }
   ];
@@ -1418,6 +1440,7 @@ function TicketsOverlay() {
     }
   );
 }
+const LocationMap = lazy(() => import("./assets/LocationMap-CCUiIq3b.js"));
 function App() {
   const { t } = useLanguage();
   const mainRef = useRef(null);
@@ -1440,9 +1463,10 @@ function App() {
       /* @__PURE__ */ jsx(Hero, {}),
       /* @__PURE__ */ jsx(About, {}),
       /* @__PURE__ */ jsx(BrandMoment, {}),
+      /* @__PURE__ */ jsx(VipExperience, {}),
       /* @__PURE__ */ jsx(PrivateEvents, {}),
       /* @__PURE__ */ jsx(Contact, {}),
-      /* @__PURE__ */ jsx(LocationMap, {})
+      /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(LocationMap, {}) })
     ] }),
     /* @__PURE__ */ jsx(Footer, {}),
     /* @__PURE__ */ jsx(TicketsOverlay, {})
@@ -1499,11 +1523,15 @@ function render(lang) {
 }
 export {
   GSC_VERIFICATION,
+  LOCATION as L,
   LOCALES,
   OG_IMAGE,
   SITE_URL,
+  addressLines as a,
   absoluteUrl,
   buildJsonLd,
+  mapDirectionsUrl as m,
   render,
-  seoFor
+  seoFor,
+  useLanguage as u
 };

@@ -2,8 +2,11 @@ import { useEffect } from 'react'
 
 /**
  * Reveals every `[data-reveal]` inside `rootRef` once as it enters the
- * viewport. One observer for the whole subtree instead of one per element,
- * and it disconnects as soon as the last element has fired.
+ * viewport. One observer for the whole subtree instead of one per element.
+ *
+ * A MutationObserver picks up nodes that mount later (lazy sections, Suspense)
+ * — querying once on the first paint would leave those elements at opacity 0
+ * forever.
  */
 /* threshold 0 + a negative bottom margin rather than a ratio: an element
    taller than the viewport can never reach a meaningful ratio, so the margin
@@ -13,29 +16,46 @@ export function useReveal(rootRef, { threshold = 0, rootMargin = '0px 0px -12% 0
     const root = rootRef.current
     if (!root) return
 
-    const targets = Array.from(root.querySelectorAll('[data-reveal]'))
-    if (!targets.length) return
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced || !('IntersectionObserver' in window)) {
-      targets.forEach((el) => el.setAttribute('data-revealed', 'true'))
-      return
+      const revealAll = () => {
+        root.querySelectorAll('[data-reveal]').forEach((el) => {
+          el.setAttribute('data-revealed', 'true')
+        })
+      }
+      revealAll()
+      const mo = new MutationObserver(revealAll)
+      mo.observe(root, { childList: true, subtree: true })
+      return () => mo.disconnect()
     }
 
-    let remaining = targets.length
+    const seen = new WeakSet()
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue
           entry.target.setAttribute('data-revealed', 'true')
           io.unobserve(entry.target)
-          if (--remaining === 0) io.disconnect()
         }
       },
       { threshold, rootMargin },
     )
 
-    targets.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+    const watch = () => {
+      root.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (seen.has(el) || el.getAttribute('data-revealed') === 'true') return
+        seen.add(el)
+        io.observe(el)
+      })
+    }
+
+    watch()
+    const mo = new MutationObserver(watch)
+    mo.observe(root, { childList: true, subtree: true })
+
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+    }
   }, [rootRef, threshold, rootMargin])
 }

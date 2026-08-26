@@ -42,6 +42,9 @@ export const translations = {
       home: 'INICIO',
       about: 'SOBRE NOSOTROS',
       contact: 'CONTACTO',
+      vipExperience: 'VIP EXPERIENCE',
+      // Navbar only — five full labels overflow the bar on a narrow laptop.
+      vipExperienceShort: 'VIP',
       privateEvents: 'EVENTOS PRIVADOS',
       // Navbar only — the full label overflows the bar on narrow laptops.
       privateEventsShort: 'EVENTOS',
@@ -75,6 +78,23 @@ export const translations = {
       imageAlt: 'Ambiente nocturno en la pista de Quartier Barcelona',
       imageAlt2: 'Grupo de amigos en una noche en Quartier Barcelona',
       imageAlt3: 'Invitada celebrando en Quartier Barcelona',
+    },
+    vipExperience: {
+      eyebrow: 'VIP EXPERIENCE',
+      // English headline, like the hero slogan and the About / Private Events
+      // titles — brand voice, not copy to translate.
+      title: 'OWN THE NIGHT',
+      body:
+        'Reserva tu mesa en la mejor zona de la sala y vive la noche desde dentro. Servicio dedicado, botella en mesa y el mejor ángulo de Quartier.',
+      note: 'Mesas limitadas y sujetas a disponibilidad.',
+      imageAlt: 'Grupo de amigos celebrando en una mesa VIP de Quartier Barcelona',
+      imageAlt2: 'Botellas con luces de bengala servidas en la pista de Quartier Barcelona',
+    },
+    nightStack: {
+      caption: 'LA NOCHE EN QUARTIER',
+      imageAlt: 'Amigos sonriendo en una noche en Quartier Barcelona',
+      imageAlt2: 'Grupo celebrando juntos en Quartier Barcelona',
+      imageAlt3: 'Invitadas en la pista de Quartier Barcelona',
     },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
@@ -120,6 +140,8 @@ export const translations = {
       home: 'HOME',
       about: 'ABOUT',
       contact: 'CONTACT',
+      vipExperience: 'VIP EXPERIENCE',
+      vipExperienceShort: 'VIP',
       privateEvents: 'PRIVATE EVENTS',
       privateEventsShort: 'EVENTS',
       tickets: 'TICKETS & VIP TABLES',
@@ -151,6 +173,21 @@ export const translations = {
       imageAlt: 'Night atmosphere on the Quartier Barcelona dancefloor',
       imageAlt2: 'Friends together on a night at Quartier Barcelona',
       imageAlt3: 'Guest celebrating at Quartier Barcelona',
+    },
+    vipExperience: {
+      eyebrow: 'VIP EXPERIENCE',
+      title: 'OWN THE NIGHT',
+      body:
+        'Book your table in the best part of the room and take the night from the inside. Dedicated service, bottle service and the best view of Quartier.',
+      note: 'Tables are limited and subject to availability.',
+      imageAlt: 'Friends celebrating at a VIP table at Quartier Barcelona',
+      imageAlt2: 'Bottle service with sparklers on the Quartier Barcelona dancefloor',
+    },
+    nightStack: {
+      caption: 'THE NIGHT AT QUARTIER',
+      imageAlt: 'Friends smiling on a night at Quartier Barcelona',
+      imageAlt2: 'Group celebrating together at Quartier Barcelona',
+      imageAlt3: 'Guests on the Quartier Barcelona dancefloor',
     },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
@@ -194,6 +231,8 @@ export const translations = {
       home: 'ACCUEIL',
       about: 'À PROPOS',
       contact: 'CONTACT',
+      vipExperience: 'VIP EXPERIENCE',
+      vipExperienceShort: 'VIP',
       privateEvents: 'ÉVÉNEMENTS PRIVÉS',
       privateEventsShort: 'ÉVÉNEMENTS',
       tickets: 'TICKETS ET TABLES VIP',
@@ -225,6 +264,21 @@ export const translations = {
       imageAlt: 'Ambiance nocturne sur la piste du Quartier Barcelona',
       imageAlt2: 'Groupe d’amis lors d’une nuit au Quartier Barcelona',
       imageAlt3: 'Invitée célébrant au Quartier Barcelona',
+    },
+    vipExperience: {
+      eyebrow: 'VIP EXPERIENCE',
+      title: 'OWN THE NIGHT',
+      body:
+        'Réservez votre table dans le meilleur coin de la salle et vivez la nuit de l’intérieur. Service dédié, bouteilles en table et le plus bel angle du Quartier.',
+      note: 'Tables en nombre limité, selon disponibilité.',
+      imageAlt: 'Des amis qui font la fête à une table VIP du Quartier Barcelona',
+      imageAlt2: 'Service de bouteilles avec cierges magiques sur la piste du Quartier Barcelona',
+    },
+    nightStack: {
+      caption: 'LA NUIT AU QUARTIER',
+      imageAlt: 'Des amis qui sourient lors d’une nuit au Quartier Barcelona',
+      imageAlt2: 'Groupe qui célèbre ensemble au Quartier Barcelona',
+      imageAlt3: 'Invitées sur la piste du Quartier Barcelona',
     },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
@@ -268,6 +322,8 @@ export const translations = {
       home: 'START',
       about: 'ÜBER UNS',
       contact: 'KONTAKT',
+      vipExperience: 'VIP EXPERIENCE',
+      vipExperienceShort: 'VIP',
       privateEvents: 'PRIVATE EVENTS',
       privateEventsShort: 'EVENTS',
       tickets: 'TICKETS UND VIP-TISCHE',
@@ -299,6 +355,21 @@ export const translations = {
       imageAlt: 'Nachtatmosphäre auf der Tanzfläche des Quartier Barcelona',
       imageAlt2: 'Freundesgruppe an einem Abend im Quartier Barcelona',
       imageAlt3: 'Gast feiert im Quartier Barcelona',
+    },
+    vipExperience: {
+      eyebrow: 'VIP EXPERIENCE',
+      title: 'OWN THE NIGHT',
+      body:
+        'Reservieren Sie Ihren Tisch im besten Bereich des Clubs und erleben Sie die Nacht von innen. Eigener Service, Flaschenservice und der beste Blick über Quartier.',
+      note: 'Begrenzte Tischanzahl, nach Verfügbarkeit.',
+      imageAlt: 'Freunde feiern an einem VIP-Tisch im Quartier Barcelona',
+      imageAlt2: 'Flaschenservice mit Wunderkerzen auf der Tanzfläche des Quartier Barcelona',
+    },
+    nightStack: {
+      caption: 'DIE NACHT IM QUARTIER',
+      imageAlt: 'Freunde lächeln an einem Abend im Quartier Barcelona',
+      imageAlt2: 'Gruppe feiert gemeinsam im Quartier Barcelona',
+      imageAlt3: 'Gäste auf der Tanzfläche des Quartier Barcelona',
     },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',

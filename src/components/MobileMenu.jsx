@@ -20,6 +20,7 @@ export default function MobileMenu({ open, onClose }) {
   const links = [
     { id: 'inicio', label: t.nav.home },
     { id: 'sobre-nosotros', label: t.nav.about },
+    { id: 'vip-experience', label: t.nav.vipExperience },
     { id: 'eventos-privados', label: t.nav.privateEvents },
     { id: 'contacto', label: t.nav.contact },
   ]

@@ -1,14 +1,23 @@
 import { useEffect, useRef } from 'react'
 import { LOCATION } from '../config/site'
-import 'leaflet/dist/leaflet.css'
 
 /**
  * Leaflet map on Carto Positron tiles — the light monochrome OSM look
  * (same family as the Sutton-style reference), with a brand-dark pin.
  *
- * Leaflet is loaded inside the effect (not at module top level) so a missing
- * window during tooling, or a stale Vite prebundle, cannot blank the whole app.
+ * Leaflet is loaded inside the effect (not at module top level) so the 450 KB
+ * CJS build stays off the critical path. Vite must pre-bundle it (see
+ * optimizeDeps in vite.config.js); a raw UMD `import('leaflet')` has no
+ * ESM exports and silently leaves this container empty.
  */
+function leafletApi(mod) {
+  const candidates = [mod?.default, mod, typeof window !== 'undefined' ? window.L : null]
+  for (const candidate of candidates) {
+    if (candidate && typeof candidate.map === 'function') return candidate
+  }
+  return null
+}
+
 export default function VenueMap({ title }) {
   const hostRef = useRef(null)
 
@@ -22,9 +31,11 @@ export default function VenueMap({ title }) {
     let kick
 
     ;(async () => {
+      await import('leaflet/dist/leaflet.css')
       const mod = await import('leaflet')
-      const L = mod.default ?? mod
+      const L = leafletApi(mod)
       if (cancelled || !hostRef.current) return
+      if (!L) throw new Error('Leaflet loaded without a map() constructor')
 
       map = L.map(hostRef.current, {
         scrollWheelZoom: false,
