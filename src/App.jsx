@@ -11,6 +11,7 @@ import BrandMoment from './components/BrandMoment'
 import VipExperience from './components/VipExperience'
 import NightStack from './components/NightStack'
 import PrivateEvents from './components/PrivateEvents'
+import PhotoMarquee from './components/PhotoMarquee'
 import Contact from './components/Contact'
 import LocationMap from './components/LocationMap'
 import Footer from './components/Footer'
@@ -53,6 +54,7 @@ export default function App() {
         <VipExperience />
         <NightStack />
         <PrivateEvents />
+        <PhotoMarquee />
         <Contact />
         <LocationMap />
       </main>

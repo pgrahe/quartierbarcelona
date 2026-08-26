@@ -1,0 +1,91 @@
+.marquee {
+  background: var(--black);
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+  overflow: clip;
+}
+
+.marquee__viewport {
+  overflow: hidden;
+  /* Soft edges so the loop doesn’t hard-cut against the shell. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 4%,
+    #000 96%,
+    transparent 100%
+  );
+}
+
+.marquee__row {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 48s linear infinite;
+  will-change: transform;
+}
+
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: clamp(0.65rem, 1.4vw, 1.15rem);
+  /* Same as the plate gap, so -50% lands exactly on the duplicate. */
+  padding-right: clamp(0.65rem, 1.4vw, 1.15rem);
+}
+
+.marquee__plate {
+  flex: 0 0 auto;
+  width: clamp(10.5rem, 28vw, 18rem);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.marquee__plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  filter: brightness(1.08) contrast(1.04);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 900px) {
+  .marquee__plate {
+    width: clamp(9.5rem, 48vw, 14rem);
+  }
+
+  .marquee__row {
+    animation-duration: 36s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__row {
+    animation: none;
+  }
+
+  .marquee__viewport {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    mask-image: none;
+  }
+
+  .marquee__row {
+    width: max-content;
+    padding-inline: var(--gutter);
+  }
+
+  /* One track is enough when nothing loops. */
+  .marquee__track[aria-hidden='true'] {
+    display: none;
+  }
+}

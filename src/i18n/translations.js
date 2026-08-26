@@ -96,6 +96,14 @@ export const translations = {
       imageAlt2: 'Grupo celebrando juntos en Quartier Barcelona',
       imageAlt3: 'Invitadas en la pista de Quartier Barcelona',
     },
+    photoMarquee: {
+      caption: 'AMBIENTE QUARTIER',
+      imageAlt: 'Ambiente de fiesta en Quartier Barcelona',
+      imageAlt2: 'Invitados en una noche en Quartier Barcelona',
+      imageAlt3: 'Pista y público en Quartier Barcelona',
+      imageAlt4: 'Celebración en Quartier Barcelona',
+      imageAlt5: 'Noche en la sala de Quartier Barcelona',
+    },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
       // Headline stays English in every language, like the hero slogan and the
@@ -189,6 +197,14 @@ export const translations = {
       imageAlt2: 'Group celebrating together at Quartier Barcelona',
       imageAlt3: 'Guests on the Quartier Barcelona dancefloor',
     },
+    photoMarquee: {
+      caption: 'QUARTIER ATMOSPHERE',
+      imageAlt: 'Party atmosphere at Quartier Barcelona',
+      imageAlt2: 'Guests on a night at Quartier Barcelona',
+      imageAlt3: 'Dancefloor and crowd at Quartier Barcelona',
+      imageAlt4: 'Celebration at Quartier Barcelona',
+      imageAlt5: 'Night in the Quartier Barcelona room',
+    },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
       title: 'Make it yours.',
@@ -280,6 +296,14 @@ export const translations = {
       imageAlt2: 'Groupe qui célèbre ensemble au Quartier Barcelona',
       imageAlt3: 'Invitées sur la piste du Quartier Barcelona',
     },
+    photoMarquee: {
+      caption: 'AMBIANCE QUARTIER',
+      imageAlt: 'Ambiance de fête au Quartier Barcelona',
+      imageAlt2: 'Invités lors d’une nuit au Quartier Barcelona',
+      imageAlt3: 'Piste et public au Quartier Barcelona',
+      imageAlt4: 'Célébration au Quartier Barcelona',
+      imageAlt5: 'Nuit dans la salle du Quartier Barcelona',
+    },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
       title: 'Make it yours.',
@@ -370,6 +394,14 @@ export const translations = {
       imageAlt: 'Freunde lächeln an einem Abend im Quartier Barcelona',
       imageAlt2: 'Gruppe feiert gemeinsam im Quartier Barcelona',
       imageAlt3: 'Gäste auf der Tanzfläche des Quartier Barcelona',
+    },
+    photoMarquee: {
+      caption: 'QUARTIER ATMOSPHÄRE',
+      imageAlt: 'Partyatmosphäre im Quartier Barcelona',
+      imageAlt2: 'Gäste an einem Abend im Quartier Barcelona',
+      imageAlt3: 'Tanzfläche und Publikum im Quartier Barcelona',
+      imageAlt4: 'Feier im Quartier Barcelona',
+      imageAlt5: 'Nacht im Saal des Quartier Barcelona',
     },
     privateEvents: {
       eyebrow: 'PRIVATE EVENTS',
