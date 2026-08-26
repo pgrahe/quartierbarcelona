@@ -6,13 +6,22 @@ import { useEffect, useState } from 'react'
  * Drives two things: the navbar going from transparent to solid, and the
  * mobile hamburger appearing only after the hero. Uses an IntersectionObserver
  * on a sentinel rather than a scroll listener, so it costs nothing per frame.
+ *
+ * `resetKey` exists because the hero is not on every page: pass the current
+ * route and the sentinel is torn down when we leave the home page and built
+ * again when we come back, instead of the answer going stale on a hero that
+ * no longer exists.
  */
-export function useHeroPassed(heroId = 'inicio', ratio = 0.72) {
+export function useHeroPassed(heroId = 'inicio', ratio = 0.72, resetKey) {
   const [passed, setPassed] = useState(false)
 
   useEffect(() => {
     const hero = document.getElementById(heroId)
-    if (!hero) return
+    // No hero on this page — nothing has been scrolled past.
+    if (!hero) {
+      setPassed(false)
+      return
+    }
 
     // A zero-height sentinel parked `ratio` of the way down the hero.
     const sentinel = document.createElement('div')
@@ -37,7 +46,7 @@ export function useHeroPassed(heroId = 'inicio', ratio = 0.72) {
       io.disconnect()
       sentinel.remove()
     }
-  }, [heroId, ratio])
+  }, [heroId, ratio, resetKey])
 
   return passed
 }

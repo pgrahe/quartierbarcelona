@@ -38,12 +38,11 @@ export function absoluteUrl(path = '/') {
 }
 
 /**
- * ⚠️ PENDING — no social profiles were found anywhere in the project, so this
- * is empty rather than guessed. Add the real profile URLs and they flow
- * straight into the JSON-LD `sameAs`, which is how Google ties the site to
- * the Business Profile.
+ * Social profiles. Feeds JSON-LD `sameAs` and the footer icons.
  */
-export const SOCIAL = []
+export const INSTAGRAM_URL = 'https://www.instagram.com/quartierbarcelona/'
+
+export const SOCIAL = [INSTAGRAM_URL]
 
 /**
  * ⚠️ PENDING — Google Search Console verification token.
@@ -145,10 +144,36 @@ export function mapDirectionsUrl() {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery())}`
 }
 
+/* -------------------------------------------------------------------------
+ * PRÓXIMOS EVENTOS — the flyer cards on the home page.
+ *
+ * ⚠️ PLACEHOLDER LINE-UP. Replace with the real programme when Fourvenues
+ * publishes each night. Until then the CTA opens the calendar listing inside
+ * the on-site ticketing overlay (not the Fourvenues site).
+ *
+ * Each entry is:
+ *   id     stable key, never shown
+ *   date   ISO date, YYYY-MM-DD. Weekday / day / month are derived with Intl.
+ *   title  the night's name — brand, shown as written, not translated
+ *   age    required age, printed top-left on the flyer (e.g. '+20')
+ *   slug   optional Fourvenues event path; when set, the overlay can deep-link
+ *          to that night. Left off → calendar listing.
+ *
+ * Empty the array and the whole section stops rendering.
+ * ---------------------------------------------------------------------- */
+export const EVENTS = [
+  { id: 'opening', date: '2026-10-02', title: 'OPENING', age: '+20' },
+  { id: 'guest-dj', date: '2026-10-09', title: 'GUEST DJ', age: '+20' },
+  { id: 'quartier-nights', date: '2026-10-16', title: 'QUARTIER NIGHTS', age: '+20' },
+]
+
 /** Legal pages are not built yet — these anchors keep the markup honest. */
 export const LEGAL = {
   privacy: '#',
   notice: '#',
 }
 
-export const SECTIONS = ['inicio', 'sobre-nosotros', 'contacto']
+/* Page URLs are not here — they live in src/router/routes.js, which is the one
+   table the navigation, the language switcher, hreflang, the sitemap and the
+   build all read from. Section anchors within the home page (`#contacto`) are
+   written on the components that own them. */

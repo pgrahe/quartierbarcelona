@@ -12,8 +12,12 @@ import './VipExperience.css'
  * The CTA is the site's primary one: this section is the argument for exactly
  * the action TICKETS Y MESAS VIP performs, so it reuses it rather than
  * inventing a second, competing button.
+ *
+ * `eyebrow` is overridable because on /vip-experience the page header above
+ * already says VIP EXPERIENCE, and a label should never repeat the line
+ * directly above it.
  */
-export default function VipExperience() {
+export default function VipExperience({ eyebrow }) {
   const { t } = useLanguage()
   const vip = t.vipExperience
 
@@ -22,7 +26,7 @@ export default function VipExperience() {
       <div className="shell vip__layout">
         <div className="vip__head">
           <p className="eyebrow vip__eyebrow" data-reveal>
-            {vip.eyebrow}
+            {eyebrow || vip.eyebrow}
           </p>
 
           <h2 className="vip__title" id="vip-title" data-reveal style={{ '--reveal-delay': '80ms' }}>

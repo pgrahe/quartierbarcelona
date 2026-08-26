@@ -11,8 +11,12 @@ import './PrivateEvents.css'
  *
  * The CTA opens WhatsApp with the enquiry pre-written. Outline on stone, so it
  * never competes with the solid Tickets button.
+ *
+ * `title` is overridable because on /private-events the page header above
+ * already says PRIVATE EVENTS, and a heading should never repeat the line
+ * directly above it.
  */
-export default function PrivateEvents() {
+export default function PrivateEvents({ title }) {
   const { t } = useLanguage()
   const pe = t.privateEvents
 
@@ -35,7 +39,7 @@ export default function PrivateEvents() {
         <div className="pev__panel on-stone">
           <div className="pev__panel-inner">
             <h2 className="pev__title" id="pev-title" data-reveal>
-              {pe.eyebrow}
+              {title || pe.eyebrow}
             </h2>
 
             <p className="pev__subtitle" data-reveal style={{ '--reveal-delay': '80ms' }}>

@@ -1,16 +1,23 @@
 /* -------------------------------------------------------------------------
  * Build-time prerender.
  *
- * Turns the single-page app into four indexable, fully-formed HTML documents:
+ * Turns the app into a set of indexable, fully-formed HTML documents — every
+ * page, in every language:
  *
- *   /        Spanish (canonical + x-default)
- *   /en/     /fr/     /de/
+ *   /                  /en/            /fr/            /de/
+ *   /sobre-nosotros    /en/about       /fr/a-propos    /de/ueber-uns
+ *   /vip-experience    /en/vip-experience   …          …
+ *   /private-events    /en/private-events   …          …
  *
  * Each one ships its own title, description, canonical, hreflang set, Open
  * Graph, Twitter card and JSON-LD — and the rendered content, so the copy,
  * headings, address and links are in the HTML before JavaScript runs.
  *
- * robots.txt and sitemap.xml are written here too, from the same config, so
+ * The URL list is not written here: it comes from src/router/routes.js, the
+ * same table the running app navigates with, so a page can never exist in the
+ * navigation and be missing from the build (or the sitemap).
+ *
+ * robots.txt and sitemap.xml are written here too, from that same source, so
  * they can never drift out of sync with the pages that actually exist.
  *
  * Run automatically by `npm run build`.
@@ -30,6 +37,10 @@ const {
   OG_IMAGE,
   GSC_VERIFICATION,
   absoluteUrl,
+  allPaths,
+  pathFor,
+  PAGE_HEROES,
+  HERO_POSTERS,
   seoFor,
   buildJsonLd,
 } = await import(pathToFileURL(path.join(ssrDist, 'entry-server.js')).href)
@@ -39,27 +50,54 @@ const esc = (s) =>
 
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
 
-function headFor(locale) {
-  const seo = seoFor(locale.code)
-  const url = absoluteUrl(locale.path)
-  const image = absoluteUrl(OG_IMAGE)
-
-  // Every page advertises every language, including itself — that is what the
-  // spec requires and what makes the set self-consistent.
-  const alternates = LOCALES.map(
+/** Every language's URL for one route, plus x-default. That set is what makes
+ *  hreflang self-consistent: each page advertises every language including
+ *  itself, and they all point at the same page rather than at the home page. */
+function alternatesFor(routeId) {
+  const tags = LOCALES.map(
     (l) =>
-      `    <link rel="alternate" hreflang="${l.hreflang}" href="${absoluteUrl(l.path)}" />`,
+      `    <link rel="alternate" hreflang="${l.hreflang}" href="${absoluteUrl(pathFor(routeId, l.code))}" />`,
   )
   const xDefault = LOCALES.find((l) => l.isDefault)
-  alternates.push(
-    `    <link rel="alternate" hreflang="x-default" href="${absoluteUrl(xDefault.path)}" />`,
+  tags.push(
+    `    <link rel="alternate" hreflang="x-default" href="${absoluteUrl(pathFor(routeId, xDefault.code))}" />`,
   )
+  return tags
+}
+
+/**
+ * The one image worth preloading on this page — its LCP candidate.
+ *
+ * The home page has two, because the hero swaps between a landscape and a
+ * vertical cut at 900px and only one of them is ever used; `media` makes the
+ * browser fetch exactly one. The content pages have a single responsive
+ * header photograph, so the preload carries the same srcset the <img> does —
+ * without it the browser would preload one candidate and then download a
+ * different one.
+ */
+function preloadFor(routeId) {
+  if (routeId === 'home') {
+    return [
+      `    <link rel="preload" as="image" href="${HERO_POSTERS.desktop}" fetchpriority="high" media="(min-width: 901px)" />`,
+      `    <link rel="preload" as="image" href="${HERO_POSTERS.mobile}" fetchpriority="high" media="(max-width: 900px)" />`,
+    ].join('\n')
+  }
+
+  const hero = PAGE_HEROES[routeId]
+  if (!hero) return ''
+
+  return `    <link rel="preload" as="image" href="${hero.src}" imagesrcset="${esc(hero.srcSet)}" imagesizes="100vw" fetchpriority="high" />`
+}
+
+function headFor(locale, routeId, url) {
+  const seo = seoFor(locale.code, routeId)
+  const image = absoluteUrl(OG_IMAGE)
 
   const tags = [
     `    <meta name="description" content="${esc(seo.description)}" />`,
     `    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
     `    <link rel="canonical" href="${url}" />`,
-    ...alternates,
+    ...alternatesFor(routeId),
     ``,
     `    <meta property="og:type" content="website" />`,
     `    <meta property="og:site_name" content="Quartier Barcelona" />`,
@@ -88,26 +126,31 @@ function headFor(locale) {
 
   tags.push(
     ``,
-    `    <script type="application/ld+json">${JSON.stringify(buildJsonLd(locale.code))}</script>`,
+    `    <script type="application/ld+json">${JSON.stringify(buildJsonLd(locale.code, routeId))}</script>`,
   )
 
   return tags.join('\n')
 }
 
-let written = 0
-for (const locale of LOCALES) {
-  const seo = seoFor(locale.code)
+const pages = allPaths()
+
+for (const { locale, routeId, path: urlPath } of pages) {
+  const seo = seoFor(locale.code, routeId)
+  const url = absoluteUrl(urlPath)
+
   const html = template
-    .replace('<!--seo-head-->', headFor(locale))
+    .replace('<!--seo-head-->', headFor(locale, routeId, url))
+    .replace('<!--lcp-preload-->', preloadFor(routeId))
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`)
     .replace('<html lang="es">', `<html lang="${locale.hreflang}">`)
-    .replace('<!--app-html-->', render(locale.code))
+    .replace('<!--app-html-->', render(locale.code, urlPath))
 
-  const outDir = locale.path === '/' ? dist : path.join(dist, locale.path)
+  // "/" is the dist root; "/en/" and "/sobre-nosotros" are directories with an
+  // index.html inside, which is what a static host serves for a clean URL.
+  const outDir = urlPath === '/' ? dist : path.join(dist, urlPath)
   fs.mkdirSync(outDir, { recursive: true })
   fs.writeFileSync(path.join(outDir, 'index.html'), html)
-  written++
-  console.log(`  prerendered ${locale.path.padEnd(6)} → ${(html.length / 1024).toFixed(1)} KB`)
+  console.log(`  prerendered ${urlPath.padEnd(22)} → ${(html.length / 1024).toFixed(1)} KB`)
 }
 
 /* ---- sitemap.xml ---- */
@@ -115,19 +158,21 @@ const lastmod = new Date().toISOString().slice(0, 10)
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${LOCALES.map(
-  (l) => `  <url>
-    <loc>${absoluteUrl(l.path)}</loc>
+${pages
+  .map(
+    ({ locale, routeId, path: urlPath }) => `  <url>
+    <loc>${absoluteUrl(urlPath)}</loc>
 ${LOCALES.map(
   (alt) =>
-    `    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${absoluteUrl(alt.path)}" />`,
+    `    <xhtml:link rel="alternate" hreflang="${alt.hreflang}" href="${absoluteUrl(pathFor(routeId, alt.code))}" />`,
 ).join('\n')}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl('/')}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(pathFor(routeId, 'es'))}" />
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${l.isDefault ? '1.0' : '0.8'}</priority>
+    <priority>${routeId === 'home' ? (locale.isDefault ? '1.0' : '0.8') : locale.isDefault ? '0.8' : '0.6'}</priority>
   </url>`,
-).join('\n')}
+  )
+  .join('\n')}
 </urlset>
 `
 
@@ -142,4 +187,4 @@ Sitemap: ${SITE_URL}/sitemap.xml
 `
 fs.writeFileSync(path.join(dist, 'robots.txt'), robots)
 
-console.log(`  sitemap.xml + robots.txt written (${written} URLs)`)
+console.log(`  sitemap.xml + robots.txt written (${pages.length} URLs)`)

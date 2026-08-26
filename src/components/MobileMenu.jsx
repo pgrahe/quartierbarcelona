@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
-import { navOffset, scrollToSection } from '../lib/scrollTo'
+import { RouteLink, useRoute } from '../router/RouteContext'
 import LanguageSelector from './LanguageSelector'
 import TicketsCta from './TicketsCta'
 import './MobileMenu.css'
@@ -8,21 +8,22 @@ import './MobileMenu.css'
 /**
  * Fullscreen mobile menu.
  *
- * Tapping a link closes the menu and smooth-scrolls from wherever the visitor
- * currently is — no navigation, no hash, no reload. Focus is trapped while
- * open and returned to the hamburger on close.
+ * Tapping a link closes the panel and goes to that page — or, for Contact,
+ * to the home page and down to the contact block. Focus is trapped while open
+ * and returned to the hamburger on close.
  */
 export default function MobileMenu({ open, onClose }) {
   const { t } = useLanguage()
+  const { routeId } = useRoute()
   const panelRef = useRef(null)
   const wasOpenRef = useRef(false)
 
   const links = [
-    { id: 'inicio', label: t.nav.home },
-    { id: 'sobre-nosotros', label: t.nav.about },
-    { id: 'vip-experience', label: t.nav.vipExperience },
-    { id: 'eventos-privados', label: t.nav.privateEvents },
-    { id: 'contacto', label: t.nav.contact },
+    { key: 'home', to: 'home', label: t.nav.home },
+    { key: 'about', to: 'about', label: t.nav.about },
+    { key: 'vip', to: 'vip', label: t.nav.vipExperience },
+    { key: 'events', to: 'events', label: t.nav.privateEvents },
+    { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
   ]
 
   // Lock the page behind the panel.
@@ -83,13 +84,6 @@ export default function MobileMenu({ open, onClose }) {
     }, 0)
   }, [open])
 
-  const go = (e, id) => {
-    e.preventDefault()
-    onClose()
-    // Let the panel finish leaving before the page moves underneath it.
-    window.setTimeout(() => scrollToSection(id, { offset: navOffset() }), 260)
-  }
-
   return (
     <div
       id="mobile-menu"
@@ -104,15 +98,18 @@ export default function MobileMenu({ open, onClose }) {
       <div className="mmenu__inner">
         <nav className="mmenu__links" aria-label={t.nav.menu}>
           {links.map((l, i) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
+            <RouteLink
+              key={l.key}
+              to={l.to}
+              hash={l.hash}
               className="mmenu__link"
+              data-active={!l.hash && l.to === routeId}
+              delay={260}
               style={{ '--i': i }}
-              onClick={(e) => go(e, l.id)}
+              onClick={onClose}
             >
               {l.label}
-            </a>
+            </RouteLink>
           ))}
         </nav>
 

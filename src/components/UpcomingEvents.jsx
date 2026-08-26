@@ -1,0 +1,179 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { EVENTS } from '../config/site'
+import { useLanguage } from '../i18n/LanguageContext'
+import { formatEventDate } from '../lib/eventDate'
+import { useTickets } from '../tickets/TicketsContext'
+import TicketsCta from './TicketsCta'
+import './UpcomingEvents.css'
+
+/**
+ * PRÓXIMOS EVENTOS — the programme, set as flyers in an auto-advancing strip.
+ *
+ * One flyer is in view at a time; the strip eases left on a timer and the
+ * dots under it mark which night is showing. The CTA opens the on-site
+ * Fourvenues calendar overlay (the listing, until each night has its own
+ * slug). Line-up lives in EVENTS in src/config/site.js.
+ */
+
+const AUTO_MS = 5200
+
+function Flyer({ event, lang, labels, ticketsLabel }) {
+  const { openTickets } = useTickets()
+  const date = formatEventDate(event.date, lang)
+
+  return (
+    <article className="flyer">
+      <span className="flyer__glow" aria-hidden="true" />
+      <span className="flyer__grain" aria-hidden="true" />
+      <span className="flyer__sheen" aria-hidden="true" />
+
+      <div className="flyer__top">
+        <span className="eyebrow flyer__tag">{event.age}</span>
+        {date && <span className="eyebrow flyer__weekday">{date.weekday}</span>}
+      </div>
+
+      <div className="flyer__mark">
+        <img
+          src="/brand/quartier-beige.png"
+          alt=""
+          width="1600"
+          height="381"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <div className="flyer__foot">
+        {date && (
+          <p className="flyer__date">
+            <time dateTime={date.iso}>
+              <span className="flyer__day">{date.day}</span>
+              <span className="flyer__month">
+                {date.month}
+                <span className="flyer__year">{date.year}</span>
+              </span>
+            </time>
+          </p>
+        )}
+
+        <h3 className="flyer__title">{event.title}</h3>
+
+        <button type="button" className="flyer__action" onClick={openTickets}>
+          <span className="flyer__action-label" aria-hidden="true">
+            {ticketsLabel}
+          </span>
+          <svg className="flyer__arrow" viewBox="0 0 24 12" aria-hidden="true" focusable="false">
+            <path d="M0 6h21M16 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1" />
+          </svg>
+          <span className="visually-hidden">
+            {labels.cardLabel} — {event.title}
+            {date ? `, ${date.full}` : ''}
+          </span>
+        </button>
+      </div>
+    </article>
+  )
+}
+
+export default function UpcomingEvents() {
+  const { t, lang } = useLanguage()
+  const a = t.agenda
+  const ticketsLabel = t.nav.tickets
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const count = EVENTS.length
+  const reduceMotion = useRef(false)
+
+  useEffect(() => {
+    reduceMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  }, [])
+
+  const goTo = useCallback(
+    (i) => {
+      if (!count) return
+      setIndex(((i % count) + count) % count)
+    },
+    [count],
+  )
+
+  useEffect(() => {
+    if (count < 2 || paused || reduceMotion.current) return
+    const id = window.setInterval(() => {
+      setIndex((i) => (i + 1) % count)
+    }, AUTO_MS)
+    return () => window.clearInterval(id)
+  }, [count, paused])
+
+  if (!count) return null
+
+  return (
+    <section id="agenda" className="agenda section velvet" aria-labelledby="agenda-title">
+      <div className="shell">
+        <div className="agenda__head">
+          <p className="eyebrow agenda__eyebrow" data-reveal>
+            {a.eyebrow}
+          </p>
+
+          <h2
+            className="agenda__title"
+            id="agenda-title"
+            data-reveal
+            style={{ '--reveal-delay': '80ms' }}
+          >
+            {a.title}
+          </h2>
+
+          <p className="agenda__lead" data-reveal style={{ '--reveal-delay': '160ms' }}>
+            {a.lead}
+          </p>
+        </div>
+
+        <div
+          className="agenda__carousel"
+          data-reveal
+          style={{ '--reveal-delay': '200ms' }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false)
+          }}
+        >
+          <div className="agenda__viewport">
+            <ul
+              className="agenda__track"
+              style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
+            >
+              {EVENTS.map((event) => (
+                <li key={event.id} className="agenda__item">
+                  <Flyer event={event} lang={lang} labels={a} ticketsLabel={ticketsLabel} />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {count > 1 && (
+            <div className="agenda__dots" role="tablist" aria-label={a.title}>
+              {EVENTS.map((event, i) => (
+                <button
+                  key={event.id}
+                  type="button"
+                  role="tab"
+                  className="agenda__dot"
+                  aria-selected={i === index}
+                  aria-label={event.title}
+                  onClick={() => goTo(i)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="agenda__foot" data-reveal>
+          <TicketsCta variant="outline" size="md" label={a.cta} className="agenda__cta" />
+          <p className="agenda__note">{a.note}</p>
+        </div>
+      </div>
+    </section>
+  )
+}

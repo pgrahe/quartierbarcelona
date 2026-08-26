@@ -1,6 +1,16 @@
-# Quartier Barcelona — landing page
+# Quartier Barcelona — site
 
-One page, six sections, smooth-scroll navigation. No routing, no CMS, no extra pages.
+Four pages in four languages — sixteen real, prerendered HTML documents. No CMS,
+no router dependency: the router is ~120 lines in `src/router/`.
+
+| Page | ES | EN | FR | DE |
+| --- | --- | --- | --- | --- |
+| Home | `/` | `/en/` | `/fr/` | `/de/` |
+| About | `/sobre-nosotros` | `/en/about` | `/fr/a-propos` | `/de/ueber-uns` |
+| VIP | `/vip-experience` | `/en/vip-experience` | … | … |
+| Private events | `/private-events` | `/en/private-events` | … | … |
+
+Contact and location stay on the home page, at the bottom — `/#contacto`.
 
 ```bash
 npm install
@@ -14,15 +24,27 @@ is CSS transitions.
 
 ---
 
-## The three things you'll want to change
+## The things you'll want to change
 
 | What | Where |
 | --- | --- |
 | **Ticketing account** | `src/config/site.js` → `FOURVENUES_SLUG` (`quartier-club`) |
 | **Address (map + address line)** | `src/config/site.js` → `LOCATION` |
-| **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` (×4 languages) |
+| **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` / `about.coda` (×4 languages) |
+| **The programme (PRÓXIMOS EVENTOS)** | `src/config/site.js` → `EVENTS` — currently placeholder test nights |
+| **URLs / adding a page** | `src/router/routes.js` — one table drives navigation, hreflang, the sitemap and the build |
 
 Each is defined once and consumed everywhere — no duplicated strings.
+
+### Próximos eventos
+
+`EVENTS` is a list of `{ id, date, title, tag }`. The weekday, day and month
+printed on each flyer are derived from `date` with `Intl` in the visitor's own
+language, so a night is one line and needs no translation. Empty the array and
+the section stops rendering rather than showing an empty heading.
+
+⚠️ The three entries there now are **test data** (`TEST EVENT`, September 2026).
+Replace them with the real line-up.
 
 ---
 
@@ -45,11 +67,20 @@ gracefully without JavaScript.
 
 ## SEO
 
-Four indexable, prerendered pages — `/` (Spanish, canonical + x-default),
-`/en/`, `/fr/`, `/de/`. `npm run build` renders each one to real HTML with its
-own title, description, canonical, hreflang set, Open Graph, Twitter card and
-`NightClub` JSON-LD, then writes `sitemap.xml` and `robots.txt` from the same
-config. Nothing is hand-maintained.
+Sixteen indexable, prerendered documents — every page in every language.
+`npm run build` renders each one to real HTML with its own title, description,
+canonical, hreflang set, Open Graph, Twitter card, `NightClub` + `WebPage`
+JSON-LD (plus a `BreadcrumbList` on the inner pages) and an LCP `<link
+rel="preload">` for that page's own header image, then writes `sitemap.xml` and
+`robots.txt` from the same config. Nothing is hand-maintained.
+
+The URL list comes from `src/router/routes.js` — the same table the running app
+navigates with — so a page cannot exist in the navigation and be missing from
+the build or the sitemap. Add a route there and the documents, the language
+switcher, the hreflang sets and the sitemap all follow from it.
+
+hreflang is per *page*, not per site: `/sobre-nosotros` points at `/en/about`,
+`/fr/a-propos` and `/de/ueber-uns`, not at the home page of each language.
 
 **The URL decides the language, and nothing else** — not localStorage, not the
 browser's language. Serving French at `/` because of a stored preference would
@@ -61,11 +92,17 @@ domain and canonicals, hreflang, sitemap, robots and JSON-LD all follow.
 
 ### Hosting requirement
 
-The four pages are real files (`dist/index.html`, `dist/en/index.html`, …).
-**Do not add a catch-all SPA rewrite** (`/* → /index.html`) on Vercel/Netlify:
-it would serve the Spanish document at `/en/`, `/fr/` and `/de/`, breaking both
-the language and the canonical. Static-file-first — the default on both hosts —
-is what this needs.
+Every page is a real file (`dist/index.html`, `dist/en/index.html`,
+`dist/sobre-nosotros/index.html`, …). **Do not add a catch-all SPA rewrite**
+(`/* → /index.html`) on Vercel/Netlify: it would serve the Spanish home page at
+every URL, breaking the language, the canonical and every inner page — and it
+would answer 200 for URLs that should 404. Static-file-first, which is the
+default on both hosts, is exactly what this needs.
+
+Navigation between pages is still instant: links are intercepted client-side,
+so the ticketing overlay, the chosen language and the fixed navbar survive a
+page change. The real `href` is always there for cmd-click, crawlers and
+no-JS visitors.
 
 ### Still to add
 
@@ -77,9 +114,15 @@ is what this needs.
 
 ## Languages
 
-ES (default) · EN · FR · DE, in `src/i18n/translations.js`. One HTML document;
-the choice persists in `localStorage` and falls back to the browser's language.
-`MORE THAN A CLUB` is never translated.
+ES (default) · EN · FR · DE, in `src/i18n/translations.js`. Switching language
+keeps you on the page you are reading — `/vip-experience` → `/fr/vip-experience`,
+not back to the home page.
+
+Slugs are translated where the word is genuinely translated (`sobre-nosotros` /
+`about` / `a-propos` / `ueber-uns`) and identical where the label is brand
+English that already appears untranslated on the site (`vip-experience`,
+`private-events`). `MORE THAN A CLUB`, `A NEW CHAPTER`, `OWN THE NIGHT` and
+`Make it yours.` are never translated either — they are brand, not copy.
 
 ## Palette
 

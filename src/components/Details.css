@@ -1,0 +1,133 @@
+/* -------------------------------------------------------------------------
+ * DetailGrid — numbered points
+ * ---------------------------------------------------------------------- */
+.dgrid {
+  background: var(--ink);
+  color: var(--stone);
+}
+
+.dgrid--stone {
+  background: var(--stone);
+  color: var(--black);
+}
+
+.dgrid__eyebrow {
+  color: var(--stone-40);
+  /* An <h2> that is set as a label, not as a headline — the page's own H1 is
+     the heading that matters, and this only has to name the list below it. */
+  font-size: var(--fs-label);
+  letter-spacing: var(--tr-label);
+}
+
+.dgrid--stone .dgrid__eyebrow {
+  color: var(--bordeaux);
+}
+
+.dgrid__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.25rem, 4vw, 3.5rem) clamp(2.5rem, 6vw, 6rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  list-style: none;
+}
+
+.dgrid__item {
+  display: grid;
+  gap: 0.85rem;
+  padding-top: clamp(1.25rem, 2vw, 1.75rem);
+  border-top: 1px solid var(--stone-12);
+}
+
+.dgrid--stone .dgrid__item {
+  border-top-color: var(--bordeaux-40);
+}
+
+.dgrid__index {
+  color: var(--stone-40);
+}
+
+.dgrid--stone .dgrid__index {
+  color: var(--bordeaux);
+  opacity: 0.55;
+}
+
+.dgrid__title {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.dgrid__body {
+  max-width: 38ch;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--stone-55);
+  text-wrap: pretty;
+}
+
+.dgrid--stone .dgrid__body {
+  color: rgba(0, 0, 0, 0.62);
+}
+
+/* -------------------------------------------------------------------------
+ * SpecRows — label / value
+ * ---------------------------------------------------------------------- */
+.specs {
+  background: var(--black);
+  color: var(--stone);
+}
+
+.specs__eyebrow {
+  color: var(--stone-40);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tr-label);
+}
+
+.specs__list {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 68rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.specs__row {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: baseline;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--stone-12);
+}
+
+.specs__label {
+  color: var(--stone-40);
+}
+
+.specs__value {
+  font-size: var(--fs-lead);
+  line-height: 1.45;
+  color: var(--stone-90);
+  text-wrap: pretty;
+}
+
+.specs__foot {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (max-width: 900px) {
+  .dgrid__list {
+    grid-template-columns: 1fr;
+  }
+
+  .dgrid__body {
+    max-width: none;
+  }
+
+  .specs__row {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}

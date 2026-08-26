@@ -159,8 +159,6 @@ export default function BrandMoment() {
             </figure>
           ))}
         </div>
-
-        <p className="eyebrow moment__caption">{t.brand.caption}</p>
       </div>
     </section>
   )

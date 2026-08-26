@@ -1,0 +1,361 @@
+.agenda.section {
+  background: var(--black);
+  color: var(--stone);
+  /* BrandMoment sits just above — less air than a full section opening. */
+  padding-block: clamp(1.25rem, 3.5vw, 2.5rem) var(--section-y);
+}
+
+/* ---- Head ---- */
+.agenda__head {
+  max-width: 46rem;
+}
+
+.agenda__eyebrow {
+  color: var(--bordeaux);
+  /* Bordeaux on black needs a touch of lift to stay a colour and not a smudge. */
+  filter: brightness(1.9);
+}
+
+.agenda__title {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  font-size: var(--fs-display);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.agenda__lead {
+  max-width: 34ch;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--stone-55);
+}
+
+/* ---- Carousel of flyers ---- */
+.agenda__carousel {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  max-width: 22rem;
+}
+
+.agenda__viewport {
+  overflow: hidden;
+}
+
+.agenda__track {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: transform 720ms var(--ease-out);
+  will-change: transform;
+}
+
+.agenda__item {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding-inline: 0;
+}
+
+/* -------------------------------------------------------------------------
+ * The flyer
+ *
+ * A printed card, not a list row: dark ground, hairline edge, wordmark
+ * centred, the date set large in the display face. Everything that moves on
+ * hover moves slightly — a flyer that bounces stops looking printed.
+ * ---------------------------------------------------------------------- */
+.flyer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  aspect-ratio: 3 / 4;
+  padding: clamp(1.15rem, 2vw, 1.75rem);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ink);
+  border: 1px solid var(--stone-12);
+  transition:
+    border-color var(--t-base) var(--ease),
+    translate var(--t-base) var(--ease-out),
+    box-shadow var(--t-base) var(--ease-out);
+}
+
+/* Bordeaux breathed in behind the wordmark. Sparse use of the accent, as the
+   palette intends — it reads as stage light, not as a coloured panel. */
+.flyer__glow {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  z-index: -2;
+  height: 78%;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 50% 40%, var(--bordeaux-70) 0%, rgba(90, 24, 32, 0) 72%);
+  opacity: 0.5;
+  transition: opacity var(--t-slow) var(--ease-out);
+}
+
+.flyer__grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/img/velvet-dark.png');
+  background-size: 256px 256px;
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+}
+
+/* A single pass of light across the card on hover. */
+.flyer__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(231, 225, 214, 0) 38%,
+    rgba(231, 225, 214, 0.07) 50%,
+    rgba(231, 225, 214, 0) 62%
+  );
+  translate: -120% 0;
+}
+
+/* ---- Top row ---- */
+.flyer__top {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.flyer__tag {
+  color: var(--stone-55);
+}
+
+.flyer__weekday {
+  color: var(--bordeaux);
+  filter: brightness(2);
+}
+
+/* ---- Wordmark ---- */
+.flyer__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.flyer__mark img {
+  width: min(66%, 13rem);
+  height: auto;
+  opacity: 0.94;
+  transition:
+    scale var(--t-slow) var(--ease-out),
+    opacity var(--t-base) var(--ease);
+}
+
+/* ---- Date + title ---- */
+.flyer__foot {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.flyer__date time {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.flyer__day {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: clamp(2.5rem, 4.6vw, 3.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  color: var(--stone);
+}
+
+.flyer__month {
+  display: grid;
+  gap: 0.3rem;
+  font-size: var(--fs-label);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-label);
+  line-height: 1;
+  color: var(--stone-70);
+}
+
+.flyer__year {
+  color: var(--stone-40);
+}
+
+.flyer__title {
+  font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
+  font-weight: var(--w-bold);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--stone);
+  overflow-wrap: anywhere;
+}
+
+/* ---- Action ---- */
+.flyer__action {
+  /* Deliberately NOT positioned: the stretched hit area below resolves
+     against the flyer, which is the element that should be clickable. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  margin-top: 0.35rem;
+  padding-block: 0.35rem;
+  font-size: var(--fs-label);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--stone-55);
+  transition: color var(--t-base) var(--ease);
+}
+
+/* Stretched so the whole flyer is the hit area, while the button itself
+   stays the one focusable, correctly-named control. */
+.flyer__action::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.flyer__action-label {
+  position: relative;
+}
+
+.flyer__action-label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.28em;
+  height: 1px;
+  background: currentColor;
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale var(--t-base) var(--ease-out);
+}
+
+.flyer__arrow {
+  width: 1.35rem;
+  height: auto;
+  transition: translate var(--t-base) var(--ease-out);
+}
+
+/* ---- Hover ---- */
+@media (hover: hover) {
+  .flyer:hover {
+    border-color: var(--stone-40);
+    translate: 0 -4px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+  }
+
+  .flyer:hover .flyer__glow {
+    opacity: 0.95;
+  }
+
+  .flyer:hover .flyer__mark img {
+    scale: 1.04;
+    opacity: 1;
+  }
+
+  .flyer:hover .flyer__action {
+    color: var(--stone);
+  }
+
+  .flyer:hover .flyer__action-label::after {
+    scale: 1 1;
+  }
+
+  .flyer:hover .flyer__arrow {
+    translate: 4px 0;
+  }
+
+  .flyer:hover .flyer__sheen {
+    translate: 120% 0;
+    transition: translate 1.1s var(--ease-out);
+  }
+}
+
+/* ---- Dots ---- */
+.agenda__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.agenda__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--stone-22);
+  transition:
+    background var(--t-base) var(--ease),
+    scale var(--t-base) var(--ease-out);
+}
+
+.agenda__dot[aria-selected='true'] {
+  background: var(--stone);
+  scale: 1.15;
+}
+
+@media (hover: hover) {
+  .agenda__dot:hover {
+    background: var(--stone-55);
+  }
+}
+
+/* ---- Foot ---- */
+.agenda__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.agenda__note {
+  font-size: var(--fs-label);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--stone-40);
+}
+
+@media (max-width: 640px) {
+  .agenda__carousel {
+    max-width: min(100%, 21rem);
+    margin-inline: auto;
+  }
+
+  .agenda__cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agenda__track {
+    transition: none;
+  }
+
+  .flyer,
+  .flyer__glow,
+  .flyer__mark img,
+  .flyer__action,
+  .flyer__action-label::after,
+  .flyer__arrow,
+  .flyer__sheen {
+    transition: none;
+  }
+}

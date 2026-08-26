@@ -4,7 +4,9 @@
  * Every visible string on the site comes from here. To change copy, edit the
  * value in all four languages; nothing else needs touching.
  *
- * ⚠️ `about.body` is PLACEHOLDER copy. See the comment above it.
+ * Headlines that are brand rather than copy — the hero slogan, "A NEW
+ * CHAPTER", "OWN THE NIGHT", "VIP EXPERIENCE", "PRIVATE EVENTS", "Make it
+ * yours." — stay in English in every language, deliberately.
  * ---------------------------------------------------------------------- */
 
 export const LANGUAGES = [
@@ -56,20 +58,50 @@ export const translations = {
       skipToContent: 'Saltar al contenido',
       closeTickets: 'Cerrar entradas',
       ticketsExternal: 'Abrir en Fourvenues',
+      breadcrumb: 'Estás aquí',
     },
     hero: {
       videoLabel: 'Vídeo ambiente de Quartier Barcelona',
+      scroll: 'DESLIZA',
+    },
+    /* Headers of the three inner pages. `name` is the page's H1, `lead` the
+       line under it, `sectionEyebrow` / `sectionTitle` the label the reused
+       section below takes so it never repeats the H1 word for word. */
+    pages: {
+      eyebrow: 'QUARTIER BARCELONA',
+      about: {
+        name: 'SOBRE NOSOTROS',
+        lead: 'Una nueva etapa de la noche de Barcelona.',
+        sectionEyebrow: 'NUESTRA HISTORIA',
+        imageAlt: 'Noche en la pista de Quartier Barcelona',
+      },
+      vip: {
+        name: 'VIP EXPERIENCE',
+        lead: 'La noche desde el mejor ángulo de la sala.',
+        sectionEyebrow: 'MESAS Y RESERVADOS',
+        imageAlt: 'Mesa VIP con botellas en Quartier Barcelona',
+      },
+      events: {
+        name: 'PRIVATE EVENTS',
+        lead: 'Un espacio único para celebrarlo a tu manera.',
+        sectionTitle: 'TU EVENTO EN QUARTIER',
+        imageAlt: 'Sala preparada para un evento privado en Quartier Barcelona',
+      },
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
-      // The first entry is set as a lead, the last as a closing line.
+      // The first entry is set as a lead; `closing` is the pull quote and
+      // `coda` the paragraphs that follow it.
       body: [
         'Hay lugares a los que vas una noche. Y hay lugares que se convierten en parte de ella.',
-        'Durante décadas, este espacio ha formado parte de la noche de Barcelona. Hoy, esa historia evoluciona con Quartier. Un espacio completamente renovado, un nuevo diseño y una nueva identidad para una nueva generación.',
-        'Música, ambiente y una experiencia cuidada hasta el último detalle se unen para crear una nueva forma de vivir la noche.',
+        'Durante décadas, este lugar ha formado parte de la noche de Barcelona. Hoy, esa historia continúa bajo una nueva identidad.',
+        'Quartier nace para llevar ese legado al presente: un espacio completamente renovado, un nuevo diseño y una nueva forma de vivir la noche. Un punto de encuentro donde la música, el diseño, la gente y la energía se unen para crear algo único.',
       ],
-      closing: 'Porque salir es solo el principio.',
+      closing: 'Una nueva etapa. Una nueva identidad. Una nueva generación.',
+      coda: [
+        'Aquí la música es solo el inicio. Cada noche está pensada para convertirse en una experiencia: desde quienes están detrás de la cabina hasta cada detalle del espacio y cada persona que lo hace posible.',
+      ],
       caption: 'PEDRALBES · BARCELONA',
       imageAlt: 'Retrato en blanco y negro de una noche en Quartier Barcelona',
     },
@@ -78,6 +110,27 @@ export const translations = {
       imageAlt: 'Ambiente nocturno en la pista de Quartier Barcelona',
       imageAlt2: 'Grupo de amigos en una noche en Quartier Barcelona',
       imageAlt3: 'Invitada celebrando en Quartier Barcelona',
+    },
+    agenda: {
+      eyebrow: 'AGENDA',
+      title: 'PRÓXIMOS EVENTOS',
+      lead: 'Las próximas noches en Quartier.',
+      note: 'Aforo limitado. Acceso sujeto a admisión.',
+      cta: 'VER TODA LA AGENDA',
+      cardCta: 'TICKETS Y MESAS VIP',
+      cardLabel: 'Tickets y mesas VIP',
+    },
+    explore: {
+      eyebrow: 'DESCUBRE',
+      title: 'EXPLORA QUARTIER',
+      titleAlt: 'SIGUE EXPLORANDO',
+      more: 'VER MÁS',
+      about: 'La historia del espacio y la identidad que la continúa.',
+      vip: 'Mesas, reservados y servicio dedicado.',
+      events: 'Eventos privados, corporativos y celebraciones.',
+      aboutImageAlt: 'Retrato de una noche en Quartier Barcelona',
+      vipImageAlt: 'Botellas servidas en una mesa VIP de Quartier Barcelona',
+      eventsImageAlt: 'Reservado de Quartier Barcelona',
     },
     vipExperience: {
       eyebrow: 'VIP EXPERIENCE',
@@ -89,6 +142,14 @@ export const translations = {
       note: 'Mesas limitadas y sujetas a disponibilidad.',
       imageAlt: 'Grupo de amigos celebrando en una mesa VIP de Quartier Barcelona',
       imageAlt2: 'Botellas con luces de bengala servidas en la pista de Quartier Barcelona',
+      // Only rendered on /vip-experience — the detail list under the pitch.
+      detailsTitle: 'QUÉ INCLUYE',
+      details: [
+        { title: 'MESA EN ZONA PREFERENTE', body: 'Tu espacio reservado en la mejor zona de la sala, con vista directa a la pista y a la cabina.' },
+        { title: 'SERVICIO DEDICADO', body: 'Un equipo pendiente de tu mesa toda la noche, para que no tengas que moverte de ella.' },
+        { title: 'BOTELLA EN MESA', body: 'Carta de destilados y champagne servida en mesa, con la presentación que la noche merece.' },
+        { title: 'ACCESO PRIORITARIO', body: 'Entrada directa para tu grupo, sin cola, a la hora que hayas reservado.' },
+      ],
     },
     nightStack: {
       caption: 'LA NOCHE EN QUARTIER',
@@ -115,6 +176,20 @@ export const translations = {
       cta: 'SOLICITAR INFORMACIÓN',
       whatsappMessage: 'Hola, me gustaría recibir información sobre eventos privados en Quartier Barcelona.',
       imageAlt: 'Reservado de Quartier Barcelona',
+      // Only rendered on /private-events.
+      formatsTitle: 'FORMATOS',
+      formats: [
+        { title: 'EVENTOS CORPORATIVOS', body: 'Presentaciones, cenas de empresa y fiestas de fin de año en un espacio que no parece una sala de eventos.' },
+        { title: 'CELEBRACIONES PRIVADAS', body: 'Cumpleaños, aniversarios y fiestas privadas con la sala entera o la zona que necesites.' },
+        { title: 'LANZAMIENTOS Y MARCAS', body: 'Presentaciones de producto y activaciones de marca, con la iluminación y el sonido del club.' },
+      ],
+      infoTitle: 'CÓMO FUNCIONA',
+      info: [
+        { label: 'AFORO', value: 'Sala completa o por zonas, según el formato.' },
+        { label: 'HORARIOS', value: 'Tarde y noche, entre semana y fines de semana.' },
+        { label: 'PRODUCCIÓN', value: 'Sonido, iluminación y equipo del club incluidos.' },
+        { label: 'RESERVA', value: 'Escríbenos y preparamos una propuesta a medida.' },
+      ],
     },
     contact: {
       eyebrow: 'HABLEMOS',
@@ -136,6 +211,7 @@ export const translations = {
       contactTitle: 'CONTACTO',
       rights: 'QUARTIER BARCELONA',
       partners: 'PARTNERS',
+      instagram: 'Instagram de Quartier Barcelona',
     },
   },
 
@@ -160,19 +236,45 @@ export const translations = {
       skipToContent: 'Skip to content',
       closeTickets: 'Close tickets',
       ticketsExternal: 'Open on Fourvenues',
+      breadcrumb: 'You are here',
     },
     hero: {
       videoLabel: 'Quartier Barcelona atmosphere video',
+      scroll: 'SCROLL',
+    },
+    pages: {
+      eyebrow: 'QUARTIER BARCELONA',
+      about: {
+        name: 'ABOUT US',
+        lead: 'A new chapter in the nights of Barcelona.',
+        sectionEyebrow: 'OUR STORY',
+        imageAlt: 'Night on the Quartier Barcelona dancefloor',
+      },
+      vip: {
+        name: 'VIP EXPERIENCE',
+        lead: 'The night from the best angle in the room.',
+        sectionEyebrow: 'TABLES & BOOTHS',
+        imageAlt: 'VIP table with bottle service at Quartier Barcelona',
+      },
+      events: {
+        name: 'PRIVATE EVENTS',
+        lead: 'A singular space to celebrate your way.',
+        sectionTitle: 'YOUR EVENT AT QUARTIER',
+        imageAlt: 'The room set up for a private event at Quartier Barcelona',
+      },
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
       body: [
-        'There are places you go to for a night. And places that become part of it.',
-        "For decades, this space has been part of Barcelona's nights. Today that story moves on as Quartier. A completely renovated space, a new design and a new identity for a new generation.",
-        'Music, atmosphere and an experience considered down to the last detail come together to create a new way of living the night.',
+        'There are places you go to for a night. And there are places that become part of it.',
+        'For decades, this place has been part of the nights of Barcelona. Today that story continues under a new identity.',
+        'Quartier exists to carry that legacy into the present: a completely renovated space, a new design and a new way of living the night. A meeting point where music, design, people and energy come together to create something singular.',
       ],
-      closing: 'Because going out is only the beginning.',
+      closing: 'A new chapter. A new identity. A new generation.',
+      coda: [
+        'Here the music is only the beginning. Every night is built to become an experience: from whoever is behind the booth to every detail of the space and every person who makes it possible.',
+      ],
       caption: 'PEDRALBES · BARCELONA',
       imageAlt: 'Black and white portrait of a night at Quartier Barcelona',
     },
@@ -182,6 +284,27 @@ export const translations = {
       imageAlt2: 'Friends together on a night at Quartier Barcelona',
       imageAlt3: 'Guest celebrating at Quartier Barcelona',
     },
+    agenda: {
+      eyebrow: 'WHAT’S ON',
+      title: 'UPCOMING EVENTS',
+      lead: 'The next nights at Quartier.',
+      note: 'Limited capacity. Admission at the door’s discretion.',
+      cta: 'SEE THE FULL CALENDAR',
+      cardCta: 'TICKETS & VIP TABLES',
+      cardLabel: 'Tickets and VIP tables',
+    },
+    explore: {
+      eyebrow: 'DISCOVER',
+      title: 'EXPLORE QUARTIER',
+      titleAlt: 'KEEP EXPLORING',
+      more: 'SEE MORE',
+      about: 'The story of the space and the identity that carries it on.',
+      vip: 'Tables, booths and dedicated service.',
+      events: 'Private events, corporate occasions and celebrations.',
+      aboutImageAlt: 'Portrait of a night at Quartier Barcelona',
+      vipImageAlt: 'Bottle service at a VIP table at Quartier Barcelona',
+      eventsImageAlt: 'Private booth at Quartier Barcelona',
+    },
     vipExperience: {
       eyebrow: 'VIP EXPERIENCE',
       title: 'OWN THE NIGHT',
@@ -190,6 +313,13 @@ export const translations = {
       note: 'Tables are limited and subject to availability.',
       imageAlt: 'Friends celebrating at a VIP table at Quartier Barcelona',
       imageAlt2: 'Bottle service with sparklers on the Quartier Barcelona dancefloor',
+      detailsTitle: 'WHAT IS INCLUDED',
+      details: [
+        { title: 'TABLE IN THE BEST AREA', body: 'Your own reserved space in the best part of the room, facing the dancefloor and the booth.' },
+        { title: 'DEDICATED SERVICE', body: 'A team looking after your table all night, so you never have to leave it.' },
+        { title: 'BOTTLE SERVICE', body: 'A spirits and champagne list served at the table, presented the way the night deserves.' },
+        { title: 'PRIORITY ACCESS', body: 'Straight in for your group, no queue, at the time you booked.' },
+      ],
     },
     nightStack: {
       caption: 'THE NIGHT AT QUARTIER',
@@ -214,9 +344,22 @@ export const translations = {
       cta: 'REQUEST INFORMATION',
       whatsappMessage: 'Hello, I would like information about private events at Quartier Barcelona.',
       imageAlt: 'Private booth at Quartier Barcelona',
+      formatsTitle: 'FORMATS',
+      formats: [
+        { title: 'CORPORATE EVENTS', body: 'Presentations, company dinners and end-of-year parties in a space that looks nothing like a function room.' },
+        { title: 'PRIVATE CELEBRATIONS', body: 'Birthdays, anniversaries and private parties, in the whole room or the area you need.' },
+        { title: 'LAUNCHES & BRANDS', body: 'Product presentations and brand activations, with the club’s own lighting and sound.' },
+      ],
+      infoTitle: 'HOW IT WORKS',
+      info: [
+        { label: 'CAPACITY', value: 'The full room or by area, depending on the format.' },
+        { label: 'TIMES', value: 'Evening and night, weekdays and weekends.' },
+        { label: 'PRODUCTION', value: 'Sound, lighting and the club’s own team included.' },
+        { label: 'BOOKING', value: 'Write to us and we will put together a tailored proposal.' },
+      ],
     },
     contact: {
-      eyebrow: "LET'S TALK",
+      eyebrow: 'LET’S TALK',
       title: 'CONTACT',
       emailLabel: 'EMAIL',
       phoneLabel: 'PHONE',
@@ -235,6 +378,7 @@ export const translations = {
       contactTitle: 'CONTACT',
       rights: 'QUARTIER BARCELONA',
       partners: 'PARTNERS',
+      instagram: 'Quartier Barcelona on Instagram',
     },
   },
 
@@ -259,19 +403,45 @@ export const translations = {
       skipToContent: 'Aller au contenu',
       closeTickets: 'Fermer les billets',
       ticketsExternal: 'Ouvrir sur Fourvenues',
+      breadcrumb: 'Vous êtes ici',
     },
     hero: {
-      videoLabel: "Vidéo d'ambiance de Quartier Barcelona",
+      videoLabel: 'Vidéo d’ambiance de Quartier Barcelona',
+      scroll: 'FAITES DÉFILER',
+    },
+    pages: {
+      eyebrow: 'QUARTIER BARCELONA',
+      about: {
+        name: 'À PROPOS',
+        lead: 'Une nouvelle étape des nuits de Barcelone.',
+        sectionEyebrow: 'NOTRE HISTOIRE',
+        imageAlt: 'Nuit sur la piste du Quartier Barcelona',
+      },
+      vip: {
+        name: 'VIP EXPERIENCE',
+        lead: 'La nuit depuis le plus bel angle de la salle.',
+        sectionEyebrow: 'TABLES ET CARRÉS VIP',
+        imageAlt: 'Table VIP avec service de bouteilles au Quartier Barcelona',
+      },
+      events: {
+        name: 'PRIVATE EVENTS',
+        lead: 'Un lieu singulier pour célébrer à votre façon.',
+        sectionTitle: 'VOTRE ÉVÉNEMENT AU QUARTIER',
+        imageAlt: 'Salle préparée pour un événement privé au Quartier Barcelona',
+      },
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
       body: [
-        "Il y a des lieux où l'on va le temps d'une nuit. Et des lieux qui en deviennent une partie.",
-        "Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd'hui, cette histoire évolue avec Quartier. Un espace entièrement rénové, un nouveau design et une nouvelle identité pour une nouvelle génération.",
-        "La musique, l'ambiance et une expérience soignée jusque dans le moindre détail se rejoignent pour créer une nouvelle façon de vivre la nuit.",
+        'Il y a des lieux où l’on va le temps d’une nuit. Et il y a des lieux qui en deviennent une partie.',
+        'Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd’hui, cette histoire se poursuit sous une nouvelle identité.',
+        'Quartier naît pour amener cet héritage jusqu’au présent : un espace entièrement rénové, un nouveau design et une nouvelle façon de vivre la nuit. Un point de rencontre où la musique, le design, les gens et l’énergie se réunissent pour créer quelque chose d’unique.',
       ],
-      closing: "Parce que sortir n'est que le commencement.",
+      closing: 'Une nouvelle étape. Une nouvelle identité. Une nouvelle génération.',
+      coda: [
+        'Ici, la musique n’est qu’un début. Chaque nuit est pensée pour devenir une expérience : de celles et ceux qui sont derrière la cabine jusqu’au moindre détail du lieu et à chaque personne qui le rend possible.',
+      ],
       caption: 'PEDRALBES · BARCELONE',
       imageAlt: 'Portrait en noir et blanc d’une nuit au Quartier Barcelona',
     },
@@ -281,6 +451,27 @@ export const translations = {
       imageAlt2: 'Groupe d’amis lors d’une nuit au Quartier Barcelona',
       imageAlt3: 'Invitée célébrant au Quartier Barcelona',
     },
+    agenda: {
+      eyebrow: 'AGENDA',
+      title: 'PROCHAINS ÉVÉNEMENTS',
+      lead: 'Les prochaines nuits au Quartier.',
+      note: 'Capacité limitée. Accès soumis à l’admission.',
+      cta: 'VOIR TOUT L’AGENDA',
+      cardCta: 'TICKETS ET TABLES VIP',
+      cardLabel: 'Tickets et tables VIP',
+    },
+    explore: {
+      eyebrow: 'DÉCOUVRIR',
+      title: 'EXPLOREZ QUARTIER',
+      titleAlt: 'CONTINUEZ À EXPLORER',
+      more: 'VOIR PLUS',
+      about: 'L’histoire du lieu et l’identité qui la poursuit.',
+      vip: 'Tables, carrés VIP et service dédié.',
+      events: 'Événements privés, professionnels et célébrations.',
+      aboutImageAlt: 'Portrait d’une nuit au Quartier Barcelona',
+      vipImageAlt: 'Service de bouteilles à une table VIP du Quartier Barcelona',
+      eventsImageAlt: 'Espace privatif du Quartier Barcelona',
+    },
     vipExperience: {
       eyebrow: 'VIP EXPERIENCE',
       title: 'OWN THE NIGHT',
@@ -289,6 +480,13 @@ export const translations = {
       note: 'Tables en nombre limité, selon disponibilité.',
       imageAlt: 'Des amis qui font la fête à une table VIP du Quartier Barcelona',
       imageAlt2: 'Service de bouteilles avec cierges magiques sur la piste du Quartier Barcelona',
+      detailsTitle: 'CE QUI EST INCLUS',
+      details: [
+        { title: 'TABLE EN ZONE PRIVILÉGIÉE', body: 'Votre espace réservé dans le meilleur coin de la salle, face à la piste et à la cabine.' },
+        { title: 'SERVICE DÉDIÉ', body: 'Une équipe attentive à votre table toute la nuit, pour ne jamais avoir à la quitter.' },
+        { title: 'BOUTEILLES EN TABLE', body: 'Une carte de spiritueux et de champagnes servie en table, avec la présentation que la nuit mérite.' },
+        { title: 'ACCÈS PRIORITAIRE', body: 'Entrée directe pour votre groupe, sans file, à l’heure réservée.' },
+      ],
     },
     nightStack: {
       caption: 'LA NUIT AU QUARTIER',
@@ -313,6 +511,19 @@ export const translations = {
       cta: 'DEMANDER DES INFORMATIONS',
       whatsappMessage: 'Bonjour, je souhaiterais des informations sur les événements privés au Quartier Barcelona.',
       imageAlt: 'Espace privatif du Quartier Barcelona',
+      formatsTitle: 'FORMATS',
+      formats: [
+        { title: 'ÉVÉNEMENTS D’ENTREPRISE', body: 'Présentations, dîners d’entreprise et fêtes de fin d’année dans un lieu qui ne ressemble en rien à une salle de séminaire.' },
+        { title: 'CÉLÉBRATIONS PRIVÉES', body: 'Anniversaires et fêtes privées, dans la salle entière ou dans l’espace dont vous avez besoin.' },
+        { title: 'LANCEMENTS ET MARQUES', body: 'Présentations de produit et activations de marque, avec la lumière et le son du club.' },
+      ],
+      infoTitle: 'COMMENT ÇA MARCHE',
+      info: [
+        { label: 'CAPACITÉ', value: 'Salle entière ou par zones, selon le format.' },
+        { label: 'HORAIRES', value: 'Soirée et nuit, en semaine comme le week-end.' },
+        { label: 'PRODUCTION', value: 'Son, lumière et équipe du club inclus.' },
+        { label: 'RÉSERVATION', value: 'Écrivez-nous et nous préparons une proposition sur mesure.' },
+      ],
     },
     contact: {
       eyebrow: 'PARLONS-EN',
@@ -334,6 +545,7 @@ export const translations = {
       contactTitle: 'CONTACT',
       rights: 'QUARTIER BARCELONA',
       partners: 'PARTENAIRES',
+      instagram: 'Quartier Barcelona sur Instagram',
     },
   },
 
@@ -358,19 +570,45 @@ export const translations = {
       skipToContent: 'Zum Inhalt springen',
       closeTickets: 'Tickets schließen',
       ticketsExternal: 'Auf Fourvenues öffnen',
+      breadcrumb: 'Sie sind hier',
     },
     hero: {
       videoLabel: 'Atmosphäre-Video von Quartier Barcelona',
+      scroll: 'SCROLLEN',
+    },
+    pages: {
+      eyebrow: 'QUARTIER BARCELONA',
+      about: {
+        name: 'ÜBER UNS',
+        lead: 'Ein neues Kapitel der Nächte Barcelonas.',
+        sectionEyebrow: 'UNSERE GESCHICHTE',
+        imageAlt: 'Nacht auf der Tanzfläche des Quartier Barcelona',
+      },
+      vip: {
+        name: 'VIP EXPERIENCE',
+        lead: 'Die Nacht vom besten Platz im Saal aus.',
+        sectionEyebrow: 'TISCHE UND LOUNGES',
+        imageAlt: 'VIP-Tisch mit Flaschenservice im Quartier Barcelona',
+      },
+      events: {
+        name: 'PRIVATE EVENTS',
+        lead: 'Ein besonderer Ort, um auf Ihre Art zu feiern.',
+        sectionTitle: 'IHR EVENT IM QUARTIER',
+        imageAlt: 'Für ein privates Event vorbereiteter Saal im Quartier Barcelona',
+      },
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
       body: [
-        'Es gibt Orte, an die man für eine Nacht geht. Und Orte, die zu einem Teil von ihr werden.',
-        'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute entwickelt sich diese Geschichte als Quartier weiter. Ein vollständig erneuerter Raum, ein neues Design und eine neue Identität für eine neue Generation.',
-        'Musik, Atmosphäre und ein bis ins letzte Detail durchdachtes Erlebnis verbinden sich zu einer neuen Art, die Nacht zu erleben.',
+        'Es gibt Orte, an die man für eine Nacht geht. Und es gibt Orte, die zu einem Teil von ihr werden.',
+        'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute wird diese Geschichte unter einer neuen Identität fortgeschrieben.',
+        'Quartier bringt dieses Erbe in die Gegenwart: ein vollständig erneuerter Raum, ein neues Design und eine neue Art, die Nacht zu erleben. Ein Treffpunkt, an dem Musik, Design, Menschen und Energie zusammenkommen und etwas Einzigartiges entsteht.',
       ],
-      closing: 'Denn Ausgehen ist erst der Anfang.',
+      closing: 'Ein neues Kapitel. Eine neue Identität. Eine neue Generation.',
+      coda: [
+        'Hier ist die Musik nur der Anfang. Jede Nacht ist darauf angelegt, ein Erlebnis zu werden: von allen hinter dem Pult bis zu jedem Detail des Raums und jeder Person, die ihn möglich macht.',
+      ],
       caption: 'PEDRALBES · BARCELONA',
       imageAlt: 'Schwarzweiß-Porträt einer Nacht im Quartier Barcelona',
     },
@@ -380,6 +618,27 @@ export const translations = {
       imageAlt2: 'Freundesgruppe an einem Abend im Quartier Barcelona',
       imageAlt3: 'Gast feiert im Quartier Barcelona',
     },
+    agenda: {
+      eyebrow: 'PROGRAMM',
+      title: 'KOMMENDE EVENTS',
+      lead: 'Die nächsten Nächte im Quartier.',
+      note: 'Begrenzte Kapazität. Einlass nach Ermessen.',
+      cta: 'GESAMTES PROGRAMM ANSEHEN',
+      cardCta: 'TICKETS UND VIP-TISCHE',
+      cardLabel: 'Tickets und VIP-Tische',
+    },
+    explore: {
+      eyebrow: 'ENTDECKEN',
+      title: 'QUARTIER ENTDECKEN',
+      titleAlt: 'WEITER ENTDECKEN',
+      more: 'MEHR SEHEN',
+      about: 'Die Geschichte des Ortes und die Identität, die sie fortschreibt.',
+      vip: 'Tische, Lounges und eigener Service.',
+      events: 'Private Events, Firmenfeiern und Feierlichkeiten.',
+      aboutImageAlt: 'Porträt einer Nacht im Quartier Barcelona',
+      vipImageAlt: 'Flaschenservice an einem VIP-Tisch im Quartier Barcelona',
+      eventsImageAlt: 'Privater Bereich im Quartier Barcelona',
+    },
     vipExperience: {
       eyebrow: 'VIP EXPERIENCE',
       title: 'OWN THE NIGHT',
@@ -388,6 +647,13 @@ export const translations = {
       note: 'Begrenzte Tischanzahl, nach Verfügbarkeit.',
       imageAlt: 'Freunde feiern an einem VIP-Tisch im Quartier Barcelona',
       imageAlt2: 'Flaschenservice mit Wunderkerzen auf der Tanzfläche des Quartier Barcelona',
+      detailsTitle: 'WAS ENTHALTEN IST',
+      details: [
+        { title: 'TISCH IM BESTEN BEREICH', body: 'Ihr reservierter Platz im besten Bereich des Saals, mit direktem Blick auf Tanzfläche und Pult.' },
+        { title: 'EIGENER SERVICE', body: 'Ein Team, das sich die ganze Nacht um Ihren Tisch kümmert, damit Sie ihn nie verlassen müssen.' },
+        { title: 'FLASCHENSERVICE', body: 'Spirituosen- und Champagnerkarte am Tisch serviert, mit der Präsentation, die die Nacht verdient.' },
+        { title: 'BEVORZUGTER EINLASS', body: 'Direkter Eintritt für Ihre Gruppe, ohne Schlange, zur reservierten Zeit.' },
+      ],
     },
     nightStack: {
       caption: 'DIE NACHT IM QUARTIER',
@@ -412,6 +678,19 @@ export const translations = {
       cta: 'INFORMATIONEN ANFRAGEN',
       whatsappMessage: 'Hallo, ich hätte gerne Informationen zu privaten Events im Quartier Barcelona.',
       imageAlt: 'Privater Bereich im Quartier Barcelona',
+      formatsTitle: 'FORMATE',
+      formats: [
+        { title: 'FIRMENEVENTS', body: 'Präsentationen, Firmenessen und Jahresabschlussfeiern in einem Raum, der nach allem aussieht, nur nicht nach Veranstaltungssaal.' },
+        { title: 'PRIVATE FEIERN', body: 'Geburtstage, Jubiläen und private Partys — im ganzen Saal oder in dem Bereich, den Sie brauchen.' },
+        { title: 'LAUNCHES UND MARKEN', body: 'Produktpräsentationen und Markenaktivierungen, mit Licht und Sound des Clubs.' },
+      ],
+      infoTitle: 'SO FUNKTIONIERT ES',
+      info: [
+        { label: 'KAPAZITÄT', value: 'Ganzer Saal oder nach Bereichen, je nach Format.' },
+        { label: 'ZEITEN', value: 'Abend und Nacht, unter der Woche und am Wochenende.' },
+        { label: 'PRODUKTION', value: 'Sound, Licht und das Team des Clubs inklusive.' },
+        { label: 'BUCHUNG', value: 'Schreiben Sie uns und wir erstellen ein maßgeschneidertes Angebot.' },
+      ],
     },
     contact: {
       eyebrow: 'SPRECHEN WIR',
@@ -433,6 +712,7 @@ export const translations = {
       contactTitle: 'KONTAKT',
       rights: 'QUARTIER BARCELONA',
       partners: 'PARTNER',
+      instagram: 'Quartier Barcelona auf Instagram',
     },
   },
 }

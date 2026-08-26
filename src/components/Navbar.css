@@ -108,6 +108,17 @@
   }
 }
 
+/* The page you are on keeps the rule drawn, so the bar always says where you
+   are. Full stone rather than the hover colour — this is state, not a hover. */
+.nav__link[data-active='true'] {
+  color: var(--stone);
+}
+
+.nav__link[data-active='true']::after {
+  scale: 1 1;
+  background: var(--stone-40);
+}
+
 /* ---- Right end ---- */
 .nav__end {
   display: flex;

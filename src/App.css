@@ -1,66 +1,94 @@
 /* -------------------------------------------------------------------------
- * Section-to-section transitions
- *
- * The page moves black → beige → ink → black → beige/black → black. Left as
- * plain adjacent blocks those changes read as stacked <div>s, so each seam
- * gets one deliberate treatment: a short gradient that lets one ground bleed
- * into the next, plus the About portrait physically overlapping the section
- * below it (see About.css).
+ * Page shell and section-to-section transitions
  * ---------------------------------------------------------------------- */
 
 main {
   display: block;
 }
 
-/* These use ::after, not ::before — ::before belongs to .velvet, and a second
-   rule on the same pseudo-element would silently replace the texture. */
+/* -------------------------------------------------------------------------
+ * Page change
+ *
+ * Only after a navigation, never on first load: the home page opens on the
+ * video hero with its own entrance, and fading that in behind a second,
+ * page-level fade makes the whole thing arrive twice.
+ * ---------------------------------------------------------------------- */
+.page[data-animate='true'] {
+  animation: page-in 560ms var(--ease-out) both;
+}
 
-/* Hero → About: deliberately NO overlay strip here. One used to sit above the
-   About section to soften the change of ground, but it painted over the last
-   ~140px of the hero and cropped the video. The hero's own bottom scrim
-   already carries the eye down; the beige then starts clean. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
 
-/* About → BrandMoment: beige settles into ink. */
-.moment::after {
+@media (prefers-reduced-motion: reduce) {
+  .page[data-animate='true'] {
+    animation: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * Seams
+ *
+ * The page moves between three grounds — black, ink and stone — and the order
+ * is no longer fixed: each page composes its own sequence. So the seam is not
+ * written per section any more, it is written per *change of ground*: any
+ * section that directly follows a beige one gets beige bleeding into its top
+ * edge, any section that follows an ink one gets ink.
+ *
+ * That means a section can be moved, reused on another page or dropped
+ * entirely and the transitions stay correct on their own.
+ *
+ * These use ::after, not ::before — ::before belongs to .velvet, and a second
+ * rule on the same pseudo-element would silently replace the texture.
+ *
+ * Hero → About deliberately has NO strip. One used to sit above the About
+ * section to soften the change of ground, but it painted over the last ~140px
+ * of the hero and cropped the video. The hero's own bottom scrim already
+ * carries the eye down; the beige then starts clean. Same for a page header
+ * into the section under it.
+ * ---------------------------------------------------------------------- */
+
+/* Beige grounds: About, VIP, Explore, and a stone detail grid. */
+:is(.about, .vip, .explore, .dgrid--stone) + section::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   height: clamp(3rem, 7vw, 6rem);
   background: linear-gradient(to bottom, var(--stone) 0%, rgba(231, 225, 214, 0) 100%);
-  opacity: 0.14;
+  opacity: 0.15;
   pointer-events: none;
-  z-index: 2;
+  /* Above NightStack's sticky plates (z-index 1–3), which is the only thing
+     in the page that paints high enough to sit over a seam. */
+  z-index: 5;
 }
 
-/* VIP (stone) → NightStack (ink): beige bleeds into the dark stack. */
-.nstack::after {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: clamp(3rem, 7vw, 6rem);
-  background: linear-gradient(to bottom, var(--stone) 0%, rgba(231, 225, 214, 0) 100%);
-  opacity: 0.16;
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* BrandMoment → Contact: ink resolves into black. */
-.contact::after {
+/* Ink grounds: the collage, the sticky stack, a dark detail grid. */
+:is(.moment, .nstack, .dgrid:not(.dgrid--stone)) + section::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   height: clamp(4rem, 9vw, 7rem);
   background: linear-gradient(to bottom, var(--ink) 0%, rgba(22, 22, 22, 0) 100%);
   pointer-events: none;
-  z-index: 2;
+  z-index: 5;
 }
 
-/* Location → Footer: the beige panel's edge softened from below. */
-.loc::after {
+/* Location → Footer: the beige panel's edge softened from below. ::before,
+   because .loc may also be picking up a seam on ::after from the rule above. */
+.loc::before {
   content: '';
   position: absolute;
   inset: auto 0 0 0;
   height: 1px;
   background: var(--stone-06);
   pointer-events: none;
+  z-index: 5;
 }

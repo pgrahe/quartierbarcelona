@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 
 import { SLOGAN, SLOGAN_ARTICLE, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
+import { RouteLink } from '../router/RouteContext'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
 
@@ -266,9 +267,9 @@ export default function Hero() {
 
       {/* Mobile-only chrome: logo left, CTA right. Nothing else above the fold. */}
       <div className="hero__bar">
-        <a href="#inicio" className="hero__logo" aria-label="Quartier Barcelona">
+        <RouteLink to="home" className="hero__logo" aria-label="Quartier Barcelona">
           <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
-        </a>
+        </RouteLink>
         <TicketsCta className="hero__cta" />
       </div>
 

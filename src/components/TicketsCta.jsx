@@ -15,8 +15,17 @@ import './TicketsCta.css'
  *
  * `variant`: 'solid' (ghost on dark — stone hairline) | 'outline' (ghost on dark / filled on stone)
  * `size`:    'sm' (chrome) | 'md' (menu / contact)
+ * `label`:   overrides the wording where the surrounding copy has already
+ *            said "tickets" — the agenda's "VER TODA LA AGENDA", for one.
+ *            The destination and behaviour never change with it.
  */
-export default function TicketsCta({ variant = 'solid', size = 'sm', className = '', onClick }) {
+export default function TicketsCta({
+  variant = 'solid',
+  size = 'sm',
+  className = '',
+  label,
+  onClick,
+}) {
   const { t } = useLanguage()
   const { openTickets } = useTickets()
 
@@ -36,7 +45,7 @@ export default function TicketsCta({ variant = 'solid', size = 'sm', className =
       rel="noopener noreferrer"
       className={`cta cta--${variant} cta--${size} ${className}`.trim()}
     >
-      <span className="cta__label">{t.nav.tickets}</span>
+      <span className="cta__label">{label || t.nav.tickets}</span>
     </a>
   )
 }

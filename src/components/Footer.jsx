@@ -1,6 +1,6 @@
-import { CONTACT, LEGAL, TICKETS_VIP_URL } from '../config/site'
+import { CONTACT, INSTAGRAM_URL, LEGAL, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
-import { navOffset, scrollToSection } from '../lib/scrollTo'
+import { RouteLink } from '../router/RouteContext'
 import { useTickets } from '../tickets/TicketsContext'
 import LanguageSelector from './LanguageSelector'
 import './Footer.css'
@@ -11,38 +11,28 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   const links = [
-    { id: 'inicio', label: t.nav.home },
-    { id: 'sobre-nosotros', label: t.nav.about },
-    { id: 'vip-experience', label: t.nav.vipExperience },
-    { id: 'eventos-privados', label: t.nav.privateEvents },
-    { id: 'contacto', label: t.nav.contact },
+    { key: 'home', to: 'home', label: t.nav.home },
+    { key: 'about', to: 'about', label: t.nav.about },
+    { key: 'vip', to: 'vip', label: t.nav.vipExperience },
+    { key: 'events', to: 'events', label: t.nav.privateEvents },
+    { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
   ]
-
-  const go = (e, id) => {
-    e.preventDefault()
-    scrollToSection(id, { offset: navOffset() })
-  }
 
   return (
     <footer className="foot">
       <div className="shell">
         <div className="foot__top">
-          <a
-            href="#inicio"
-            className="foot__logo"
-            onClick={(e) => go(e, 'inicio')}
-            aria-label="Quartier Barcelona"
-          >
+          <RouteLink to="home" className="foot__logo" aria-label="Quartier Barcelona">
             <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
-          </a>
+          </RouteLink>
 
           <div className="foot__cols">
             <nav className="foot__col" aria-label={t.footer.navTitle}>
               <p className="eyebrow foot__col-title">{t.footer.navTitle}</p>
               {links.map((l) => (
-                <a key={l.id} href={`#${l.id}`} className="foot__link" onClick={(e) => go(e, l.id)}>
+                <RouteLink key={l.key} to={l.to} hash={l.hash} className="foot__link">
                   {l.label}
-                </a>
+                </RouteLink>
               ))}
               <a
                 href={TICKETS_VIP_URL}
@@ -66,6 +56,35 @@ export default function Footer() {
               </a>
               <a className="foot__link" href={`tel:${CONTACT.phoneHref}`}>
                 {CONTACT.phoneDisplay}
+              </a>
+              <a
+                className="foot__social"
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t.footer.instagram}
+              >
+                <svg
+                  className="foot__social-icon"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <rect
+                    x="2.75"
+                    y="2.75"
+                    width="18.5"
+                    height="18.5"
+                    rx="5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle cx="12" cy="12" r="4.25" stroke="currentColor" strokeWidth="1.5" />
+                  <circle cx="17.35" cy="6.65" r="1.15" fill="currentColor" />
+                </svg>
               </a>
             </div>
           </div>

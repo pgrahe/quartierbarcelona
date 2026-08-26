@@ -1,5 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
-import { navOffset, scrollToSection } from '../lib/scrollTo'
+import { RouteLink, useRoute } from '../router/RouteContext'
 import LanguageSelector from './LanguageSelector'
 import TicketsCta from './TicketsCta'
 import './Navbar.css'
@@ -11,41 +11,42 @@ import './Navbar.css'
  * a hairline rule once the hero is behind us. On mobile it carries only the
  * hamburger, and only after the hero — the hero itself keeps its own minimal
  * logo + CTA pair (see Hero).
+ *
+ * Every link is a real URL. Home and Contact point at the home page, Contact
+ * with a hash, so it scrolls when you are already there and navigates first
+ * when you are not.
  */
 export default function Navbar({ solid, menuOpen, onToggleMenu }) {
   const { t } = useLanguage()
+  const { routeId } = useRoute()
 
   const links = [
-    { id: 'inicio', label: t.nav.home },
-    { id: 'sobre-nosotros', label: t.nav.about },
-    { id: 'vip-experience', label: t.nav.vipExperienceShort },
+    { key: 'home', to: 'home', label: t.nav.home },
+    { key: 'about', to: 'about', label: t.nav.about },
+    { key: 'vip', to: 'vip', label: t.nav.vipExperienceShort },
     // Short label here only: the full one overflows the bar around 900–1024px.
-    { id: 'eventos-privados', label: t.nav.privateEventsShort },
-    { id: 'contacto', label: t.nav.contact },
+    { key: 'events', to: 'events', label: t.nav.privateEventsShort },
+    { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
   ]
-
-  const go = (e, id) => {
-    e.preventDefault()
-    scrollToSection(id, { offset: navOffset() })
-  }
 
   return (
     <header className="nav" data-solid={solid} data-menu-open={menuOpen}>
       <div className="nav__inner">
-        <a
-          href="#inicio"
-          className="nav__logo"
-          onClick={(e) => go(e, 'inicio')}
-          aria-label="Quartier Barcelona"
-        >
+        <RouteLink to="home" className="nav__logo" aria-label="Quartier Barcelona">
           <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
-        </a>
+        </RouteLink>
 
         <nav className="nav__links" aria-label={t.nav.menu}>
           {links.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="nav__link" onClick={(e) => go(e, l.id)}>
+            <RouteLink
+              key={l.key}
+              to={l.to}
+              hash={l.hash}
+              className="nav__link"
+              data-active={!l.hash && l.to === routeId}
+            >
               {l.label}
-            </a>
+            </RouteLink>
           ))}
         </nav>
 

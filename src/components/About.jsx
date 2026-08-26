@@ -7,17 +7,27 @@ import './About.css'
  * Asymmetric on desktop: type on the left across seven columns, a tall
  * portrait on the right that runs past the section's bottom padding and
  * overlaps the next section, so the two never read as stacked boxes.
+ *
+ * `eyebrow` is overridable because on /sobre-nosotros the page header above
+ * already carries "QUARTIER BARCELONA", and a label should never repeat the
+ * line directly above it.
  */
-export default function About() {
+export default function About({ eyebrow }) {
   const { t } = useLanguage()
   const [line1, line2] = t.about.title.split('\n')
+  const coda = t.about.coda || []
+
+  // The stagger runs straight down the column: lead, body, pull quote, coda,
+  // caption. Each block picks up where the one above it left off.
+  const closingDelay = 160 + t.about.body.length * 60
+  const codaDelay = closingDelay + 60
 
   return (
     <section id="sobre-nosotros" className="about section velvet on-stone">
       <div className="shell about__grid">
         <div className="about__text">
           <p className="eyebrow about__eyebrow" data-reveal>
-            {t.about.eyebrow}
+            {eyebrow || t.about.eyebrow}
           </p>
 
           <h2 className="about__title" data-reveal style={{ '--reveal-delay': '80ms' }}>
@@ -25,8 +35,9 @@ export default function About() {
             {line2 && <span>{line2}</span>}
           </h2>
 
-          {/* Copy lives in src/i18n/translations.js → about.body / about.closing.
-              First paragraph reads as a lead, the closing line as a pull quote. */}
+          {/* Copy lives in src/i18n/translations.js → about.body / about.closing
+              / about.coda. First paragraph reads as a lead, the closing line as
+              a pull quote, and the coda picks the thread back up after it. */}
           <div className="about__body">
             {t.about.body.map((para, i) => (
               <p
@@ -43,12 +54,26 @@ export default function About() {
           <p
             className="about__closing"
             data-reveal
-            style={{ '--reveal-delay': `${160 + t.about.body.length * 60}ms` }}
+            style={{ '--reveal-delay': `${closingDelay}ms` }}
           >
             {t.about.closing}
           </p>
 
-          <div className="about__meta" data-reveal style={{ '--reveal-delay': '240ms' }}>
+          {coda.length > 0 && (
+            <div className="about__coda">
+              {coda.map((para, i) => (
+                <p key={i} data-reveal style={{ '--reveal-delay': `${codaDelay + i * 60}ms` }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+          )}
+
+          <div
+            className="about__meta"
+            data-reveal
+            style={{ '--reveal-delay': `${codaDelay + coda.length * 60}ms` }}
+          >
             <hr className="rule about__rule" />
             <p className="eyebrow about__caption">{t.about.caption}</p>
           </div>

@@ -8,6 +8,7 @@ import {
   absoluteUrl,
   localeFor,
 } from '../config/site'
+import { pathFor } from '../router/routes'
 import { seoFor } from './meta'
 
 /* -------------------------------------------------------------------------
@@ -17,15 +18,22 @@ import { seoFor } from './meta'
  * from LocalBusiness → so address, geo, telephone and openingHours are all
  * valid on it.
  *
+ * Every page carries the venue and the website nodes — that is what ties all
+ * four languages and all four pages to one business — plus a WebPage node for
+ * itself. Sub-pages add a BreadcrumbList, so search results can show the
+ * "Quartier Barcelona › VIP Experience" trail instead of a bare URL.
+ *
  * Everything here comes from real project data. Deliberately absent:
  * aggregateRating, review, priceRange and openingHoursSpecification — none of
  * those are known, and inventing them is exactly what gets structured data
  * flagged as spam. They are listed in the README as pending.
  * ---------------------------------------------------------------------- */
-export function buildJsonLd(code) {
+export function buildJsonLd(code, routeId = 'home') {
   const locale = localeFor(code)
-  const seo = seoFor(code)
-  const url = absoluteUrl(locale.path)
+  const seo = seoFor(code, routeId)
+  const homeSeo = seoFor(code, 'home')
+  const homeUrl = absoluteUrl(locale.path)
+  const url = absoluteUrl(pathFor(routeId, code))
 
   const hasStreet = Boolean(LOCATION.street)
   const hasGeo = Number.isFinite(LOCATION.lat) && Number.isFinite(LOCATION.lng)
@@ -35,8 +43,8 @@ export function buildJsonLd(code) {
     '@id': `${SITE_URL}/#venue`,
     name: 'Quartier Barcelona',
     alternateName: 'Quartier Pedralbes',
-    description: seo.description,
-    url,
+    description: homeSeo.description,
+    url: homeUrl,
     telephone: CONTACT.phoneHref,
     email: CONTACT.email,
     image: absoluteUrl(OG_IMAGE),
@@ -70,5 +78,42 @@ export function buildJsonLd(code) {
     publisher: { '@id': `${SITE_URL}/#venue` },
   }
 
-  return { '@context': 'https://schema.org', '@graph': [venue, website] }
+  const webpage = {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: seo.title,
+    description: seo.description,
+    inLanguage: locale.hreflang,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#venue` },
+    primaryImageOfPage: absoluteUrl(OG_IMAGE),
+  }
+
+  const graph = [venue, website, webpage]
+
+  if (routeId !== 'home') {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Quartier Barcelona',
+          item: homeUrl,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          // The page's own title without the brand suffix reads as the crumb.
+          name: seo.title.split('|')[0].trim(),
+          item: url,
+        },
+      ],
+    })
+    webpage.breadcrumb = { '@id': `${url}#breadcrumb` }
+  }
+
+  return { '@context': 'https://schema.org', '@graph': graph }
 }
