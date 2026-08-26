@@ -3,15 +3,11 @@ import TicketsCta from './TicketsCta'
 import './VipExperience.css'
 
 /**
- * VIP experience — sits between the brand moment and Private Events.
+ * VIP experience.
  *
- * Title, one night photograph, then the pitch. On stone rather than black so
- * the sections that follow (all dark) get a break — and a night photograph
- * lands hardest against beige.
- *
- * The CTA is the site's primary one: this section is the argument for exactly
- * the action TICKETS Y MESAS VIP performs, so it reuses it rather than
- * inventing a second, competing button.
+ * On desktop: type on one side, the night photograph on the other — an
+ * editorial split that uses the width. On mobile: title, plate, then pitch,
+ * centred on stone.
  *
  * `eyebrow` is overridable because on /vip-experience the page header above
  * already says VIP EXPERIENCE, and a label should never repeat the line
@@ -38,7 +34,7 @@ export default function VipExperience({ eyebrow }) {
           <img
             src="/img/vip-table-1100.jpg"
             srcSet="/img/vip-table-700.jpg 700w, /img/vip-table-1100.jpg 1100w, /img/vip-table-1500.jpg 1500w"
-            sizes="(max-width: 900px) 88vw, 32rem"
+            sizes="(max-width: 900px) 72vw, 38vw"
             alt={vip.imageAlt}
             width="1100"
             height="1650"

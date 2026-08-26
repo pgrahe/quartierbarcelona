@@ -7,7 +7,7 @@
 
 /* ---- Head ---- */
 .agenda__head {
-  max-width: 46rem;
+  max-width: none;
 }
 
 .agenda__eyebrow {
@@ -18,9 +18,11 @@
 
 .agenda__title {
   margin-top: clamp(1.25rem, 2.5vw, 2rem);
-  font-size: var(--fs-display);
+  /* Sized to keep "PRÓXIMOS EVENTOS" on one line on desktop. */
+  font-size: clamp(1.75rem, 3.2vw, 3.25rem);
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .agenda__lead {
@@ -31,7 +33,7 @@
   color: var(--stone-55);
 }
 
-/* ---- Carousel of flyers ---- */
+/* ---- Carousel of flyers (mobile) / row (desktop) ---- */
 .agenda__carousel {
   margin-top: clamp(3rem, 6vw, 5rem);
   max-width: 22rem;
@@ -334,6 +336,11 @@
 }
 
 @media (max-width: 640px) {
+  .agenda__title {
+    white-space: normal;
+    font-size: clamp(1.75rem, 9vw, 2.5rem);
+  }
+
   .agenda__carousel {
     max-width: min(100%, 21rem);
     margin-inline: auto;
@@ -341,6 +348,35 @@
 
   .agenda__cta {
     width: 100%;
+  }
+}
+
+/* Desktop — title stays one line; flyers sit in a row. */
+@media (min-width: 901px) {
+  .agenda__carousel {
+    max-width: none;
+  }
+
+  .agenda__viewport {
+    overflow: visible;
+  }
+
+  .agenda__track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.75rem);
+    transform: none !important;
+    will-change: auto;
+    transition: none;
+  }
+
+  .agenda__item {
+    flex: none;
+    width: auto;
+  }
+
+  .agenda__dots {
+    display: none;
   }
 }
 

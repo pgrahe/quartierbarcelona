@@ -96,12 +96,25 @@ export default function UpcomingEvents() {
     [count],
   )
 
+  // Auto-advance only on the mobile carousel — desktop shows the row.
   useEffect(() => {
-    if (count < 2 || paused || reduceMotion.current) return
-    const id = window.setInterval(() => {
+    const mq = window.matchMedia('(max-width: 900px)')
+    const tick = () => {
+      if (!mq.matches || count < 2 || paused || reduceMotion.current) return
       setIndex((i) => (i + 1) % count)
-    }, AUTO_MS)
-    return () => window.clearInterval(id)
+    }
+
+    if (!mq.matches || count < 2 || paused || reduceMotion.current) return
+
+    const id = window.setInterval(tick, AUTO_MS)
+    const onChange = () => {
+      if (!mq.matches) setIndex(0)
+    }
+    mq.addEventListener('change', onChange)
+    return () => {
+      window.clearInterval(id)
+      mq.removeEventListener('change', onChange)
+    }
   }, [count, paused])
 
   if (!count) return null

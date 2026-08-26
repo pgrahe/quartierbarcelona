@@ -2,10 +2,10 @@ import { useLanguage } from '../i18n/LanguageContext'
 import './NightStack.css'
 
 /**
- * Night stack — three new portraits between VIP and Private Events.
+ * Night stack — three portraits before Contact.
  *
- * Each plate is sticky, so as the visitor scrolls the next photograph pins
- * over the one below it. Layout is pure CSS; no scroll loop required.
+ * Mobile: sticky plates that pin over each other on scroll.
+ * Desktop: a single row with a staggered entrance and a light hover lift.
  */
 
 const FRAMES = [
@@ -44,7 +44,7 @@ export default function NightStack() {
               <img
                 src={frame.src}
                 srcSet={frame.srcSet}
-                sizes="(max-width: 900px) 78vw, 26rem"
+                sizes="(max-width: 900px) 78vw, 30vw"
                 alt={ns[frame.altKey]}
                 width="1100"
                 height="1650"

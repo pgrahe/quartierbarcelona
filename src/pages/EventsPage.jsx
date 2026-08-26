@@ -2,6 +2,7 @@ import { whatsappUrl } from '../config/site'
 import { DetailGrid, SpecRows } from '../components/Details'
 import Explore from '../components/Explore'
 import PageHero from '../components/PageHero'
+import PhotoMarquee from '../components/PhotoMarquee'
 import PrivateEvents from '../components/PrivateEvents'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -30,6 +31,7 @@ export default function EventsPage() {
         </a>
       </SpecRows>
 
+      <PhotoMarquee />
       <Explore exclude="events" />
     </>
   )

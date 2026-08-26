@@ -23,7 +23,7 @@ export function DetailGrid({ id, eyebrow, items, tone = 'dark' }) {
           {eyebrow}
         </h2>
 
-        <ul className="dgrid__list">
+        <ul className="dgrid__list" data-count={items.length}>
           {items.map((item, i) => (
             <li
               key={item.title}

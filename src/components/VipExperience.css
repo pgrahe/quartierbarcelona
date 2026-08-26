@@ -21,7 +21,7 @@
 .vip__title {
   margin-top: clamp(1.25rem, 2.5vw, 2rem);
   font-family: var(--font-body);
-  font-size: clamp(1.875rem, 3.6vw, 3.25rem);
+  font-size: var(--fs-display);
   font-weight: var(--w-bold);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -64,6 +64,7 @@
   overflow: hidden;
   background: var(--black);
   width: min(100%, 24rem);
+  margin: 0;
 }
 
 .vip__plate img {
@@ -72,7 +73,6 @@
   height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  /* Night flash frame — lift midtones so it doesn’t sit muddy on stone. */
   filter: brightness(1.18) contrast(1.06) saturate(1.05);
   scale: 1.05;
   transition: scale 1.6s var(--ease-out);
@@ -80,6 +80,47 @@
 
 .vip__plate[data-revealed='true'] img {
   scale: 1;
+}
+
+/* Desktop — type left, photograph right. */
+@media (min-width: 901px) {
+  .vip__layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: center;
+    justify-items: stretch;
+  }
+
+  .vip__head {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: left;
+    align-self: end;
+  }
+
+  .vip__title {
+    text-align: left;
+  }
+
+  .vip__copy {
+    grid-column: 1;
+    grid-row: 2;
+    justify-items: start;
+    text-align: left;
+    align-self: start;
+  }
+
+  .vip__cta-row {
+    justify-items: start;
+  }
+
+  .vip__plate {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    max-width: 32rem;
+    justify-self: end;
+  }
 }
 
 @media (max-width: 900px) {
