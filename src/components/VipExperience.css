@@ -18,13 +18,18 @@
   color: var(--bordeaux);
 }
 
+/* Same treatment as the Intro and the programme: medium weight, wide
+   tracking. On beige it reads as engraved rather than as shouted. */
 .vip__title {
-  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: clamp(0.9rem, 2.2vw, 1.5rem);
   font-family: var(--font-body);
-  font-size: var(--fs-display);
-  font-weight: var(--w-bold);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.35rem, 6.2vw, 3rem);
+  font-weight: var(--w-medium);
+  line-height: 1.16;
+  letter-spacing: 0.14em;
+  /* Tracking is added after the last letter too, which pulls a centred line
+     visually left. The indent gives it back. */
+  text-indent: 0.14em;
   text-transform: uppercase;
   color: var(--black);
   text-align: center;
@@ -100,6 +105,7 @@
 
   .vip__title {
     text-align: left;
+    text-indent: 0;
   }
 
   .vip__copy {
@@ -124,20 +130,28 @@
 }
 
 @media (max-width: 900px) {
+  /* Small and centred, not a full-width banner. A photograph that fills the
+     screen has to carry the section on its own; held to two thirds of it, it
+     sits under the title as an illustration and lets the copy underneath
+     finish the thought. */
   .vip__plate {
-    width: min(100%, 20rem);
+    width: min(68%, 15rem);
   }
 
+  /* Cropped squarer than the portrait it is cut from, so the table stays the
+     subject at this size instead of a strip of ceiling and a strip of floor. */
+  .vip__plate img {
+    aspect-ratio: 4 / 5;
+    object-position: center;
+  }
+
+  /* Same short measure as the Intro paragraph. */
   .vip__body {
-    max-width: none;
-  }
-
-  .vip__cta {
-    width: 100%;
+    max-width: min(34ch, 19.5rem);
   }
 
   .vip__cta-row {
-    justify-items: stretch;
+    justify-items: center;
   }
 }
 

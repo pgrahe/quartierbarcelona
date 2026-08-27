@@ -91,6 +91,9 @@ export const translations = {
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
+      // The short cut of `body`, for the Intro block on the home page.
+      intro:
+        'Durante décadas, este lugar ha formado parte de la noche de Barcelona. Hoy esa historia continúa bajo una nueva identidad: un espacio completamente renovado donde la música, el diseño y la gente se encuentran para crear algo único.',
       // The first entry is set as a lead; `closing` is the pull quote and
       // `coda` the paragraphs that follow it.
       body: [
@@ -114,7 +117,6 @@ export const translations = {
     agenda: {
       eyebrow: 'AGENDA',
       title: 'PRÓXIMOS EVENTOS',
-      lead: 'Las próximas noches en Quartier.',
       note: 'Aforo limitado. Acceso sujeto a admisión.',
       cta: 'VER TODA LA AGENDA',
       cardCta: 'TICKETS Y MESAS VIP',
@@ -266,6 +268,9 @@ export const translations = {
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
+      // The short cut of `body`, for the Intro block on the home page.
+      intro:
+        'For decades, this place has been part of the nights of Barcelona. Today that story continues under a new identity: a completely renovated space where music, design and people come together to create something singular.',
       body: [
         'There are places you go to for a night. And there are places that become part of it.',
         'For decades, this place has been part of the nights of Barcelona. Today that story continues under a new identity.',
@@ -287,7 +292,6 @@ export const translations = {
     agenda: {
       eyebrow: 'WHAT’S ON',
       title: 'UPCOMING EVENTS',
-      lead: 'The next nights at Quartier.',
       note: 'Limited capacity. Admission at the door’s discretion.',
       cta: 'SEE THE FULL CALENDAR',
       cardCta: 'TICKETS & VIP TABLES',
@@ -433,6 +437,9 @@ export const translations = {
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
+      // The short cut of `body`, for the Intro block on the home page.
+      intro:
+        'Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd’hui, cette histoire se poursuit sous une nouvelle identité : un espace entièrement rénové où la musique, le design et les gens se réunissent pour créer quelque chose d’unique.',
       body: [
         'Il y a des lieux où l’on va le temps d’une nuit. Et il y a des lieux qui en deviennent une partie.',
         'Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd’hui, cette histoire se poursuit sous une nouvelle identité.',
@@ -454,7 +461,6 @@ export const translations = {
     agenda: {
       eyebrow: 'AGENDA',
       title: 'PROCHAINS ÉVÉNEMENTS',
-      lead: 'Les prochaines nuits au Quartier.',
       note: 'Capacité limitée. Accès soumis à l’admission.',
       cta: 'VOIR TOUT L’AGENDA',
       cardCta: 'TICKETS ET TABLES VIP',
@@ -600,6 +606,9 @@ export const translations = {
     about: {
       eyebrow: 'QUARTIER BARCELONA',
       title: 'A NEW\nCHAPTER',
+      // The short cut of `body`, for the Intro block on the home page.
+      intro:
+        'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute wird diese Geschichte unter einer neuen Identität fortgeschrieben: ein vollständig erneuerter Raum, in dem Musik, Design und Menschen zusammenkommen und etwas Einzigartiges entsteht.',
       body: [
         'Es gibt Orte, an die man für eine Nacht geht. Und es gibt Orte, die zu einem Teil von ihr werden.',
         'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute wird diese Geschichte unter einer neuen Identität fortgeschrieben.',
@@ -621,7 +630,6 @@ export const translations = {
     agenda: {
       eyebrow: 'PROGRAMM',
       title: 'KOMMENDE EVENTS',
-      lead: 'Die nächsten Nächte im Quartier.',
       note: 'Begrenzte Kapazität. Einlass nach Ermessen.',
       cta: 'GESAMTES PROGRAMM ANSEHEN',
       cardCta: 'TICKETS UND VIP-TISCHE',

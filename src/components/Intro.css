@@ -1,0 +1,51 @@
+/* -------------------------------------------------------------------------
+ * Intro — the short "about" that opens the page under the hero.
+ *
+ * Black ground, white headline, grey paragraph, everything centred. The whole
+ * section is two elements, and the space around them is doing as much work as
+ * the type: that is the point of it.
+ * ---------------------------------------------------------------------- */
+.intro.section {
+  background: var(--black);
+  color: var(--stone);
+  /* More air above than below — the hero ends in darkness, so the headline
+     needs room to arrive; the programme underneath follows on closely. */
+  padding-block: clamp(5rem, 17vw, 9.5rem) clamp(3.5rem, 11vw, 6.5rem);
+}
+
+.intro__inner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+/* Wide tracking at a medium weight, not tight tracking at a heavy one. The
+   letterforms are the same; the difference between the two is the difference
+   between a headline and a logotype. */
+.intro__title {
+  display: grid;
+  gap: 0.2em;
+  font-family: var(--font-body);
+  font-size: clamp(1.6rem, 8.4vw, 3.25rem);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  letter-spacing: 0.15em;
+  /* Tracking is added after the last letter too, which pulls a centred line
+     visually left. The indent gives it back. */
+  text-indent: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.intro__body {
+  /* A measure held well inside the gutter. Copy that runs edge to edge on a
+     phone reads as a block of text; held short, it reads as a statement. */
+  max-width: min(34ch, 19.5rem);
+  margin-top: clamp(1.75rem, 6vw, 2.75rem);
+  font-size: clamp(1rem, 4.2vw, 1.0625rem);
+  line-height: 1.85;
+  /* Grey, not white: the headline is the voice, this is the aside under it.
+     Held at 0.56 rather than lower so it stays readable on a phone outdoors. */
+  color: rgba(255, 255, 255, 0.56);
+  text-wrap: pretty;
+}

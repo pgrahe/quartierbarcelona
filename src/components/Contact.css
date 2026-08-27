@@ -7,10 +7,14 @@
   color: var(--stone-40);
 }
 
+/* Medium weight, wide tracking — shared with every other title on the page. */
 .contact__title {
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  font-size: var(--fs-display);
-  letter-spacing: -0.03em;
+  margin-top: clamp(1rem, 2.4vw, 1.75rem);
+  font-size: clamp(1.35rem, 6.2vw, 3rem);
+  font-weight: var(--w-medium);
+  line-height: 1.16;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
   text-transform: uppercase;
 }
 
@@ -83,6 +87,11 @@
 }
 
 @media (max-width: 720px) {
+  /* Centred down one axis, like the rest of the page on a phone. */
+  .contact .shell {
+    text-align: center;
+  }
+
   .contact__row {
     grid-template-columns: 1fr;
     gap: 0.85rem;
@@ -92,5 +101,10 @@
      breaking mid-domain. */
   .contact__value {
     font-size: clamp(1.0625rem, 4.9vw, 2rem);
+  }
+
+  .contact__cta {
+    flex-direction: column;
+    gap: 1rem;
   }
 }

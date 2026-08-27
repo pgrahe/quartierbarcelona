@@ -1,36 +1,35 @@
 .agenda.section {
   background: var(--black);
   color: var(--stone);
-  /* BrandMoment sits just above — less air than a full section opening. */
-  padding-block: clamp(1.25rem, 3.5vw, 2.5rem) var(--section-y);
+  /* Intro above, marquee directly below, both on black. The programme is
+     bracketed by the two rather than fenced off from them, so it opens and
+     closes on less than a full section's worth of padding. */
+  padding-block: clamp(2.5rem, 8vw, 4.5rem) clamp(3rem, 9vw, 5.5rem);
 }
 
 /* ---- Head ---- */
 .agenda__head {
   max-width: none;
+  text-align: center;
 }
 
 .agenda__eyebrow {
-  color: var(--bordeaux);
-  /* Bordeaux on black needs a touch of lift to stay a colour and not a smudge. */
-  filter: brightness(1.9);
+  color: var(--stone-40);
 }
 
+/* Wide tracking at a medium weight rather than tight tracking at a heavy one —
+   the same treatment the Intro headline uses, so the two read as one voice. */
 .agenda__title {
-  margin-top: clamp(1.25rem, 2.5vw, 2rem);
-  /* Sized to keep "PRÓXIMOS EVENTOS" on one line on desktop. */
-  font-size: clamp(1.75rem, 3.2vw, 3.25rem);
-  letter-spacing: -0.03em;
+  margin-top: clamp(0.9rem, 2.2vw, 1.5rem);
+  font-size: clamp(1.35rem, 6.2vw, 2.5rem);
+  font-weight: var(--w-medium);
+  line-height: 1.16;
+  /* Tracking is added after the last letter too, which pulls a centred line
+     visually left. The indent gives it back. */
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
   text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.agenda__lead {
-  max-width: 34ch;
-  margin-top: clamp(1rem, 2vw, 1.5rem);
-  font-size: var(--fs-lead);
-  line-height: 1.5;
-  color: var(--stone-55);
+  text-wrap: balance;
 }
 
 /* ---- Carousel of flyers (mobile swipe) / row (desktop) ---- */
@@ -331,8 +330,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 1.25rem 2rem;
   margin-top: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
 }
 
 .agenda__note {
@@ -343,23 +344,30 @@
 }
 
 @media (max-width: 640px) {
-  .agenda__title {
-    white-space: normal;
-    font-size: clamp(1.75rem, 9vw, 2.5rem);
-  }
-
   .agenda__carousel {
     max-width: min(100%, 21rem);
     margin-inline: auto;
   }
 
-  .agenda__cta {
-    width: 100%;
+  /* A button that runs the full width of the screen reads as an app control.
+     Held to its own width, with the caption under it, it reads as a door. */
+  .agenda__foot {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 
-/* Desktop — title stays one line; flyers sit in a row. */
+/* Desktop — head left-aligned again; flyers sit in a row. */
 @media (min-width: 901px) {
+  .agenda__head,
+  .agenda__foot {
+    text-align: left;
+  }
+
+  .agenda__foot {
+    justify-content: flex-start;
+  }
+
   .agenda__carousel {
     max-width: none;
   }

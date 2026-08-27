@@ -1,34 +1,39 @@
 import Hero from '../components/Hero'
-import BrandMoment from '../components/BrandMoment'
+import Intro from '../components/Intro'
 import UpcomingEvents from '../components/UpcomingEvents'
-import NightStack from '../components/NightStack'
 import PhotoMarquee from '../components/PhotoMarquee'
-import Explore from '../components/Explore'
+import VipExperience from '../components/VipExperience'
+import PrivateEvents from '../components/PrivateEvents'
+import BrandMoment from '../components/BrandMoment'
 import Contact from '../components/Contact'
 import LocationMap from '../components/LocationMap'
 
 /**
  * Home.
  *
- * The film, the overlapping collage, the programme, the infinite photo
- * marquee, the doors into the rest of the site, the sticky night stack into
- * contact, and finally how to reach us and where we are.
+ * Read on a phone, top to bottom: the film, a short word about who we are,
+ * the programme, the photographs running past, the table, the room you can
+ * take over, the collage, and then how to reach us and where we are.
  *
- * The long-form copy that used to live here has moved to the pages it
- * belongs to (/sobre-nosotros, /vip-experience, /private-events). What is
- * left is deliberately visual: the ground alternates black → ink → black →
- * black → stone → ink → black → beige so no two adjacent sections read as
- * one another.
+ * The order is deliberate. Everything that can be booked — a ticket, a table,
+ * the whole club — comes before anything that is only there to be looked at.
+ * The collage sits at the end as the closing image rather than as the page's
+ * first impression, and Contact follows it directly.
+ *
+ * Ground: black → black → black → stone → black/stone → ink → black → stone.
+ * The seams between changes of ground are written in App.css, per change,
+ * not per section, so this list can be reordered without touching them.
  */
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <BrandMoment />
+      <Intro />
       <UpcomingEvents />
       <PhotoMarquee />
-      <Explore />
-      <NightStack />
+      <VipExperience />
+      <PrivateEvents />
+      <BrandMoment />
       <Contact />
       <LocationMap />
     </>

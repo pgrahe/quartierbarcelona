@@ -158,10 +158,6 @@ export default function UpcomingEvents() {
           >
             {a.title}
           </h2>
-
-          <p className="agenda__lead" data-reveal style={{ '--reveal-delay': '160ms' }}>
-            {a.lead}
-          </p>
         </div>
 
         <div className="agenda__carousel" data-reveal style={{ '--reveal-delay': '200ms' }}>
