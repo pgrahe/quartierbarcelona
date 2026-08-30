@@ -74,11 +74,16 @@
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
+/* 0.62, not the 0.42 this used to be. Small uppercase type needs 4.5:1 and
+   0.42 only reached 2.9:1 even on the flat stone this panel replaced — the
+   deeper gold in the corners of the gilt ramp took it to 2.7:1. At 0.62 it
+   holds 4.6:1 against the darkest point of the ramp and 5.5:1 in the middle,
+   and still reads as a caption rather than as body copy. */
 .vip__note {
   font-size: var(--fs-label);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.42);
+  color: rgba(0, 0, 0, 0.62);
 }
 
 /* ---- Plate ---- */
