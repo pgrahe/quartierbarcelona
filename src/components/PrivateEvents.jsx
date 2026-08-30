@@ -37,6 +37,10 @@ export default function PrivateEvents({ title }) {
         </figure>
 
         <div className="pev__panel on-stone">
+          {/* The gilt ground — see `.gilt` in styles/base.css. One empty
+              decorative div; the whole surface is generated in CSS. */}
+          <div className="gilt" aria-hidden="true" />
+
           <div className="pev__panel-inner">
             <h2 className="pev__title" id="pev-title" data-reveal>
               {title || pe.eyebrow}

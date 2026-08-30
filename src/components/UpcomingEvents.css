@@ -4,7 +4,7 @@
   /* Intro above, marquee directly below, both on black. The programme is
      bracketed by the two rather than fenced off from them, so it opens and
      closes on less than a full section's worth of padding. */
-  padding-block: clamp(2.5rem, 8vw, 4.5rem) clamp(3rem, 9vw, 5.5rem);
+  padding-block: clamp(3.25rem, 10vw, 5.5rem) clamp(3.75rem, 11vw, 6.5rem);
 }
 
 /* ---- Head ---- */
@@ -13,16 +13,11 @@
   text-align: center;
 }
 
-.agenda__eyebrow {
-  color: var(--stone-40);
-}
-
 /* Wide tracking at a medium weight rather than tight tracking at a heavy one —
    the same treatment the Intro headline uses, so the two read as one voice. */
 .agenda__title {
-  margin-top: clamp(0.9rem, 2.2vw, 1.5rem);
   font-size: clamp(1.35rem, 6.2vw, 2.5rem);
-  font-weight: var(--w-medium);
+  font-weight: var(--w-bold);
   line-height: 1.16;
   /* Tracking is added after the last letter too, which pulls a centred line
      visually left. The indent gives it back. */
@@ -344,8 +339,12 @@
 }
 
 @media (max-width: 640px) {
+  .agenda .shell {
+    padding-inline: calc(var(--gutter) + 0.55rem);
+  }
+
   .agenda__carousel {
-    max-width: min(100%, 21rem);
+    max-width: min(100%, 20rem);
     margin-inline: auto;
   }
 

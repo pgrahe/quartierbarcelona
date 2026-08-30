@@ -42,13 +42,25 @@
 
 /* ---- Stone type panel ---- */
 .pev__panel {
+  position: relative;
+  /* The gilt layers blend against this panel's own ground, never against the
+     photograph beside it. */
+  isolation: isolate;
   display: grid;
   align-items: center;
   background: var(--stone);
   color: var(--black);
 }
 
+/* The gilt ground — the shared surface, defined as `.gilt` in base.css. The
+   default pool sits high because on this panel the type starts at the top. */
+.pev .gilt {
+  --gilt-pool: 135% 78% at 44% 16%;
+}
+
 .pev__panel-inner {
+  position: relative;
+  z-index: 1;
   padding: clamp(3.5rem, 7vw, 6rem) clamp(1.75rem, 4.5vw, 5rem);
 }
 
@@ -57,7 +69,7 @@
 .pev__title {
   font-family: var(--font-body);
   font-size: clamp(1.35rem, 6.2vw, 3rem);
-  font-weight: var(--w-medium);
+  font-weight: var(--w-bold);
   line-height: 1.16;
   letter-spacing: 0.14em;
   text-indent: 0.14em;

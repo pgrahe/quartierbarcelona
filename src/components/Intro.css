@@ -1,11 +1,15 @@
 /* -------------------------------------------------------------------------
  * Intro — the short "about" that opens the page under the hero.
  *
- * Black ground, white headline, grey paragraph, everything centred. The whole
- * section is two elements, and the space around them is doing as much work as
- * the type: that is the point of it.
+ * Black velvet ground, white headline, grey paragraph, everything centred.
+ * The section is two elements of type, and the space around them is doing as
+ * much work as the type: that is the point of it.
  * ---------------------------------------------------------------------- */
 .intro.section {
+  position: relative;
+  /* The velvet layers blend against each other and against this section's own
+     ground — never against the hero above or the programme below. */
+  isolation: isolate;
   background: var(--black);
   color: var(--stone);
   /* More air above than below — the hero ends in darkness, so the headline
@@ -13,21 +17,116 @@
   padding-block: clamp(5rem, 17vw, 9.5rem) clamp(3.5rem, 11vw, 6.5rem);
 }
 
+/* -------------------------------------------------------------------------
+ * The velvet
+ *
+ * Four layers, no images and no network requests. The two noise layers are
+ * SVG fractal turbulence inlined as data URIs — the browser generates the
+ * pixels, nothing is downloaded.
+ *
+ *   0  the pool of light      (radial gradient, on .intro__ground)
+ *   0  a slow diagonal sheen  (linear gradient, stacked over it)
+ *   1  the pile of the fabric (::before — fine vertical noise, overlay)
+ *   2  broad soft patches     (::after  — coarse noise, soft-light)
+ *
+ * Why `overlay` for the pile: overlay scales the texture by the surface under
+ * it, so the fabric shows where the light falls and disappears into the black
+ * where it doesn't — which is how real velvet behaves. It also means the
+ * section reaches true black at its own edges with no seam against whatever
+ * sits above or below it.
+ *
+ * Why the light pool is warm: a neutral grey at this lightness reads as
+ * plastic. #2b2624 is barely a colour and still reads as cloth.
+ * ---------------------------------------------------------------------- */
+.intro__ground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* One long, very faint diagonal. Two passes rather than one, so it reads
+       as light moving across cloth, not as a gradient laid on top of it. */
+    linear-gradient(
+      104deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.028) 30%,
+      transparent 47%,
+      transparent 63%,
+      rgba(255, 255, 255, 0.02) 78%,
+      transparent 94%
+    ),
+    /* A band of light across the middle. The vertical radius is deliberately
+       short so the gradient reaches true black well before the top and bottom
+       edges — that is what makes the section have no visible boundary against
+       the hero above it or the programme below it. */
+    radial-gradient(110% 48% at 50% 42%, #2b2624 0%, #171514 34%, #0a0909 62%, #000000 86%);
+}
+
+.intro__ground::before,
+.intro__ground::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* The pile. Tiled at a fixed 420 × 620, not stretched to the section, so a
+   strand is the same physical size on a phone and on a 27" screen — stretched
+   to fill, the same noise turns into corduroy on a wide viewport.
+   `stitchTiles='stitch'` is what makes the tile seamless; without it the
+   repeat shows as a grid. */
+.intro__ground::before {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27420%27%20height%3D%27620%27%3E%20%3Cfilter%20id%3D%27f%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%20%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%271.4%200.006%27%20numOctaves%3D%274%27%20seed%3D%273%27%20stitchTiles%3D%27stitch%27%2F%3E%20%3CfeColorMatrix%20type%3D%27saturate%27%20values%3D%270%27%2F%3E%3C%2Ffilter%3E%20%3Crect%20width%3D%27420%27%20height%3D%27620%27%20filter%3D%27url(%23f)%27%2F%3E%3C%2Fsvg%3E");
+  background-size: 420px 620px;
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+}
+
+/* The patches. Stretched to the section rather than tiled — the shapes are
+   large and soft, so stretching is invisible, and one instance means there is
+   no repeat to spot. This is the layer that stops the pile reading as perfect,
+   and perfectly even is what makes a texture look fake. */
+.intro__ground::after {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27400%27%20height%3D%27700%27%3E%20%3Cfilter%20id%3D%27c%27%20x%3D%270%27%20y%3D%270%27%20width%3D%27100%25%27%20height%3D%27100%25%27%3E%20%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.014%200.010%27%20numOctaves%3D%274%27%20seed%3D%2711%27%2F%3E%20%3CfeColorMatrix%20type%3D%27saturate%27%20values%3D%270%27%2F%3E%3C%2Ffilter%3E%20%3Crect%20width%3D%27400%27%20height%3D%27700%27%20filter%3D%27url(%23c)%27%2F%3E%3C%2Fsvg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+}
+
+/* Desktop — the pool is sized in rem rather than in per cent, so it stays a
+   pool of light behind the type instead of washing the full width of a wide
+   screen. The texture itself does not change. */
+@media (min-width: 901px) {
+  .intro__ground {
+    background:
+      linear-gradient(
+        104deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.024) 30%,
+        transparent 47%,
+        transparent 63%,
+        rgba(255, 255, 255, 0.018) 78%,
+        transparent 94%
+      ),
+      radial-gradient(46rem 21rem at 50% 46%, #2b2624 0%, #171514 34%, #0a0909 62%, #000000 86%);
+  }
+}
+
 .intro__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   text-align: center;
 }
 
-/* Wide tracking at a medium weight, not tight tracking at a heavy one. The
-   letterforms are the same; the difference between the two is the difference
-   between a headline and a logotype. */
+/* Same bold treatment as the other section titles on the home page. */
 .intro__title {
   display: grid;
   gap: 0.2em;
   font-family: var(--font-body);
   font-size: clamp(1.6rem, 8.4vw, 3.25rem);
-  font-weight: var(--w-medium);
+  font-weight: var(--w-bold);
   line-height: 1;
   letter-spacing: 0.15em;
   /* Tracking is added after the last letter too, which pulls a centred line

@@ -1,6 +1,8 @@
-.contact {
+.contact.section {
   background: var(--black);
   color: var(--stone);
+  /* BrandMoment sits just above — less opening air than a full section. */
+  padding-block: clamp(2rem, 5vw, 3.5rem) var(--section-y);
 }
 
 .contact__eyebrow {
@@ -11,7 +13,7 @@
 .contact__title {
   margin-top: clamp(1rem, 2.4vw, 1.75rem);
   font-size: clamp(1.35rem, 6.2vw, 3rem);
-  font-weight: var(--w-medium);
+  font-weight: var(--w-bold);
   line-height: 1.16;
   letter-spacing: 0.14em;
   text-indent: 0.14em;

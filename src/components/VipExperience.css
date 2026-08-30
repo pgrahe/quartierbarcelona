@@ -1,9 +1,27 @@
 .vip {
+  position: relative;
+  /* The silk layers below blend against this section's own ground, never
+     against the sections either side of it. */
+  isolation: isolate;
   background: var(--stone);
   color: var(--black);
 }
 
+/* The gilt ground — the shared surface, defined as `.gilt` in base.css. All
+   this section sets is where the light falls.
+
+   Mobile: the photograph runs full bleed across the top half, so the pool is
+   placed just below where it ends — as if the light were spilling off the
+   photograph onto the cloth — and the gold deepens toward the foot of the
+   section. Lit from the top of the box instead, the whole pool would sit
+   behind the picture and the type would get only the flat part. */
+.vip .gilt {
+  --gilt-pool: 140% 62% at 50% 56%;
+}
+
 .vip__layout {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: clamp(2rem, 5vw, 3.5rem);
   justify-items: center;
@@ -24,7 +42,7 @@
   margin-top: clamp(0.9rem, 2.2vw, 1.5rem);
   font-family: var(--font-body);
   font-size: clamp(1.35rem, 6.2vw, 3rem);
-  font-weight: var(--w-medium);
+  font-weight: var(--w-bold);
   line-height: 1.16;
   letter-spacing: 0.14em;
   /* Tracking is added after the last letter too, which pulls a centred line
@@ -89,6 +107,12 @@
 
 /* Desktop — type left, photograph right. */
 @media (min-width: 901px) {
+  /* The type sits on the left half here, so the pool of light follows it
+     rather than staying centred on a very wide box. */
+  .vip .gilt {
+    --gilt-pool: 52rem 26rem at 36% 46%;
+  }
+
   .vip__layout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     gap: clamp(2.5rem, 5vw, 5rem);
@@ -130,28 +154,64 @@
 }
 
 @media (max-width: 900px) {
-  /* Small and centred, not a full-width banner. A photograph that fills the
-     screen has to carry the section on its own; held to two thirds of it, it
-     sits under the title as an illustration and lets the copy underneath
-     finish the thought. */
-  .vip__plate {
-    width: min(68%, 15rem);
+  /* Plate leads; same stone air under the photo and under the note. */
+  .vip.section {
+    --vip-stone-pad: clamp(2.75rem, 9vw, 4rem);
+    padding-top: 0;
+    padding-bottom: var(--vip-stone-pad);
   }
 
-  /* Cropped squarer than the portrait it is cut from, so the table stays the
-     subject at this size instead of a strip of ceiling and a strip of floor. */
+  .vip__layout {
+    justify-items: stretch;
+    gap: 0;
+  }
+
+  /* Photo first, full-bleed; type stacks centered under it. */
+  .vip__plate {
+    order: 1;
+    width: 100vw;
+    max-width: none;
+    margin-inline: calc(50% - 50vw);
+    margin-bottom: var(--vip-stone-pad);
+  }
+
+  .vip__head {
+    order: 2;
+    margin-bottom: clamp(1.35rem, 4vw, 1.85rem);
+  }
+
+  .vip__copy {
+    order: 3;
+  }
+
+  .vip__head,
+  .vip__copy {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .vip__title {
+    text-align: center;
+    text-indent: 0.14em;
+  }
+
   .vip__plate img {
     aspect-ratio: 4 / 5;
     object-position: center;
   }
 
-  /* Same short measure as the Intro paragraph. */
   .vip__body {
     max-width: min(34ch, 19.5rem);
   }
 
   .vip__cta-row {
+    justify-self: stretch;
     justify-items: center;
+    text-align: center;
+  }
+
+  .vip__cta {
+    width: fit-content;
   }
 }
 

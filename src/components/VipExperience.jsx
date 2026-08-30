@@ -5,9 +5,8 @@ import './VipExperience.css'
 /**
  * VIP experience.
  *
- * On desktop: type on one side, the night photograph on the other — an
- * editorial split that uses the width. On mobile: title, plate, then pitch,
- * centred on stone.
+ * On desktop: type on one side, the night photograph on the other.
+ * On mobile: full-bleed plate first, then title + pitch left-aligned under it.
  *
  * `eyebrow` is overridable because on /vip-experience the page header above
  * already says VIP EXPERIENCE, and a label should never repeat the line
@@ -19,6 +18,10 @@ export default function VipExperience({ eyebrow }) {
 
   return (
     <section id="vip-experience" className="vip section on-stone" aria-labelledby="vip-title">
+      {/* The gilt ground — see `.gilt` in styles/base.css. One empty
+          decorative div; the whole surface is generated in CSS. */}
+      <div className="gilt" aria-hidden="true" />
+
       <div className="shell vip__layout">
         <div className="vip__head">
           <p className="eyebrow vip__eyebrow" data-reveal>
@@ -34,7 +37,7 @@ export default function VipExperience({ eyebrow }) {
           <img
             src="/img/vip-table-1100.jpg"
             srcSet="/img/vip-table-700.jpg 700w, /img/vip-table-1100.jpg 1100w, /img/vip-table-1500.jpg 1500w"
-            sizes="(max-width: 900px) 72vw, 38vw"
+            sizes="(max-width: 900px) 100vw, 38vw"
             alt={vip.imageAlt}
             width="1100"
             height="1650"

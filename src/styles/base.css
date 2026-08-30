@@ -224,6 +224,68 @@ html {
 }
 
 /* -------------------------------------------------------------------------
+ * Gilt — the ground under every light panel (VIP, Private Events).
+ *
+ * A decorative, empty div inside a `position: relative; isolation: isolate`
+ * panel. The whole surface is generated: no image is downloaded.
+ *
+ * What makes it read as gold rather than as card tinted yellow is that the
+ * HUE SHIFTS along the ramp, not just the lightness. A metal's highlight is
+ * nearly white, its midtone is saturated, and its shadow turns warm and
+ * olive: #f4eee0 → #eae3d1 → #ddd3bb → #cabf9f. Against the flat --stone it
+ * replaces, the midtone sits at the same lightness (L87%) and moves only in
+ * hue (39° → 43°) and chroma (S26% → S37%) — a touch of gold, not a repaint.
+ *
+ * The sheen is deliberately asymmetric: one pale warm band and one deeper
+ * gold band, not two of the same. Symmetrical highlights read as a gradient
+ * laid on top; offset ones read as a surface catching light from an angle.
+ *
+ * There is no woven grain here on purpose. `soft-light` modulation scales
+ * with the chroma of the ground, so a thread that is discreet on a neutral
+ * cream reads twice as loud on gold and turns metal into upholstery. All that
+ * sits over the gradient is the broad mottling, which exists to stop the ramp
+ * looking synthetic rather than to be seen (measured: 1.8 of 255).
+ *
+ * `--gilt-pool` is the size and position of the light, set per section,
+ * because where the light should fall depends on where that section's type
+ * and photograph are. Everything else is shared.
+ * ---------------------------------------------------------------------- */
+.gilt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      104deg,
+      transparent 0%,
+      rgba(255, 250, 232, 0.4) 24%,
+      transparent 41%,
+      transparent 59%,
+      rgba(170, 138, 72, 0.07) 76%,
+      transparent 93%
+    ),
+    radial-gradient(
+      var(--gilt-pool, 135% 78% at 44% 16%),
+      #f4eee0 0%,
+      #eae3d1 34%,
+      #ddd3bb 70%,
+      #cabf9f 100%
+    );
+}
+
+.gilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--tex-mottle);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.09;
+}
+
+/* -------------------------------------------------------------------------
  * Reveal on scroll
  *
  * One mechanism for the whole site: an IntersectionObserver flips

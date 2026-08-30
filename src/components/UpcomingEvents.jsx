@@ -143,19 +143,10 @@ export default function UpcomingEvents() {
   if (!count) return null
 
   return (
-    <section id="agenda" className="agenda section velvet" aria-labelledby="agenda-title">
+    <section id="agenda" className="agenda section" aria-labelledby="agenda-title">
       <div className="shell">
         <div className="agenda__head">
-          <p className="eyebrow agenda__eyebrow" data-reveal>
-            {a.eyebrow}
-          </p>
-
-          <h2
-            className="agenda__title"
-            id="agenda-title"
-            data-reveal
-            style={{ '--reveal-delay': '80ms' }}
-          >
+          <h2 className="agenda__title" id="agenda-title" data-reveal>
             {a.title}
           </h2>
         </div>

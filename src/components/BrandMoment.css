@@ -11,9 +11,8 @@
  * ---------------------------------------------------------------------- */
 .moment {
   background: var(--ink);
-  /* The collage now closes the home page rather than opening it: Contact
-     follows it directly, so the bottom needs real air under the prints. */
-  padding-block: clamp(4rem, 11vw, 8rem) clamp(3rem, 9vw, 6rem);
+  /* Contact follows — keep a little air under the prints, not a full section. */
+  padding-block: clamp(4rem, 11vw, 8rem) clamp(1rem, 3vw, 2rem);
   overflow: clip;
 }
 
