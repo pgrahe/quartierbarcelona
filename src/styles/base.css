@@ -224,7 +224,7 @@ html {
 }
 
 /* -------------------------------------------------------------------------
- * Gilt — the ground under every light panel (VIP, Private Events).
+ * Gilt — the ground under every light panel (VIP, Private Events, About).
  *
  * A decorative, empty div inside a `position: relative; isolation: isolate`
  * panel. The whole surface is generated: no image is downloaded.
@@ -232,11 +232,8 @@ html {
  * What makes it read as gold rather than as card tinted yellow is that the
  * HUE SHIFTS along the ramp, not just the lightness. A metal's highlight is
  * nearly white, its midtone is saturated, and its shadow turns warm and
- * olive: #f8f2df → #ede4ce → #ddd0ae → #c6b68d. Against the flat --stone it
- * replaces, the midtone holds the same lightness (L87%) and moves only in hue
- * (39° → 43°) and chroma (S26% → S46%) — the gold is carried by saturation,
- * never by darkening the panel, which is what would start eating the text
- * contrast.
+ * olive: #faf4d2 → #f0dfaa → #ddc17a → #c4a45e. The gold is carried by
+ * saturation and the sheen bands, not by darkening the panel into the text.
  *
  * The sheen is deliberately asymmetric: one pale warm band and one deeper
  * gold band, not two of the same. Symmetrical highlights read as a gradient
@@ -246,7 +243,7 @@ html {
  * with the chroma of the ground, so a thread that is discreet on a neutral
  * cream reads twice as loud on gold and turns metal into upholstery. All that
  * sits over the gradient is the broad mottling, which exists to stop the ramp
- * looking synthetic rather than to be seen (measured: 1.8 of 255).
+ * looking synthetic rather than to be seen.
  *
  * `--gilt-pool` is the size and position of the light, set per section,
  * because where the light should fall depends on where that section's type
@@ -261,18 +258,18 @@ html {
     linear-gradient(
       104deg,
       transparent 0%,
-      rgba(255, 250, 232, 0.46) 24%,
-      transparent 41%,
-      transparent 59%,
-      rgba(168, 132, 58, 0.13) 76%,
-      transparent 93%
+      rgba(255, 248, 210, 0.72) 22%,
+      transparent 40%,
+      transparent 56%,
+      rgba(176, 128, 36, 0.28) 74%,
+      transparent 92%
     ),
     radial-gradient(
       var(--gilt-pool, 135% 78% at 44% 16%),
-      #f8f2df 0%,
-      #ede4ce 34%,
-      #ddd0ae 70%,
-      #c6b68d 100%
+      #faf4d2 0%,
+      #f0dfaa 32%,
+      #ddc17a 68%,
+      #c4a45e 100%
     );
 }
 
@@ -284,7 +281,7 @@ html {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   mix-blend-mode: multiply;
-  opacity: 0.09;
+  opacity: 0.14;
 }
 
 /* -------------------------------------------------------------------------

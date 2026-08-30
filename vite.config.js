@@ -1,9 +1,12 @@
+import { execFile } from 'node:child_process'
 import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { promisify } from 'node:util'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const execFileAsync = promisify(execFile)
 const root = path.dirname(fileURLToPath(import.meta.url))
 const publicDir = path.join(root, 'public')
 const manifestPath = path.join(root, '.cache', 'pinned-assets.json')
@@ -27,6 +30,27 @@ async function loadManifest() {
   }
 }
 
+/** macOS iCloud stubs report a size but block forever on read. */
+async function listDataless(files) {
+  if (process.platform !== 'darwin' || files.length === 0) return []
+  try {
+    const { stdout } = await execFileAsync('find', [
+      publicDir,
+      '-type',
+      'f',
+      '-flags',
+      '+dataless',
+    ])
+    return stdout
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((abs) => path.relative(root, abs))
+  } catch {
+    return []
+  }
+}
+
 /** Force-download iCloud placeholders in public/ before Vite touches them. */
 export async function pinAssets() {
   const started = Date.now()
@@ -38,8 +62,15 @@ export async function pinAssets() {
   let skipped = 0
   const missing = []
 
+  const dataless = await listDataless(files)
+  if (dataless.length) {
+    missing.push(...dataless)
+  }
+
   for (const file of files) {
     const rel = path.relative(root, file)
+    if (dataless.includes(rel)) continue
+
     const info = await stat(file)
     next[rel] = { size: info.size, mtimeMs: info.mtimeMs }
 
@@ -72,12 +103,12 @@ export async function pinAssets() {
   console.log(`  pinned public assets: ${detail} (${mb} MB) in ${ms}ms`)
 
   if (missing.length) {
-    console.error('\n  ⚠️  These files are empty — still in iCloud or missing:')
-    missing.forEach((f) => console.error(`     · ${f}`))
+    console.error('\n  ⚠️  These files are empty / iCloud dataless — not local:')
+    ;[...new Set(missing)].forEach((f) => console.error(`     · ${f}`))
     console.error(
       '\n  Open Finder → right-click the project folder → "Download Now",',
     )
-    console.error('  or move the repo outside iCloud Desktop.\n')
+    console.error('  or restore them from dist/, or move the repo outside iCloud Desktop.\n')
     throw new Error(`${missing.length} public asset(s) not available locally`)
   }
 }
