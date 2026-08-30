@@ -8,9 +8,8 @@ import './About.css'
  * portrait on the right that runs past the section's bottom padding and
  * overlaps the next section, so the two never read as stacked boxes.
  *
- * `eyebrow` is overridable because on /sobre-nosotros the page header above
- * already carries "QUARTIER BARCELONA", and a label should never repeat the
- * line directly above it.
+ * `eyebrow` is overridable — on /sobre-nosotros the page opens on this block
+ * with `NUESTRA HISTORIA`, so the default about eyebrow can be replaced.
  */
 export default function About({ eyebrow }) {
   const { t } = useLanguage()

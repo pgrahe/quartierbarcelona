@@ -3,6 +3,11 @@
   background: var(--black);
 }
 
+/* Opens an inner page — clear the fixed nav (home keeps default spacing). */
+.pev--page-start {
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top));
+}
+
 .pev__grid {
   display: grid;
   /* Image-led, type on stone — same family as Location, mirrored weight. */

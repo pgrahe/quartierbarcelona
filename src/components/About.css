@@ -5,6 +5,8 @@
   background: transparent;
   color: var(--stone);
   overflow: visible;
+  /* Page opens here (no PageHero) — clear the fixed nav. */
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + clamp(1.75rem, 4vw, 3rem));
 }
 
 .about__grid {

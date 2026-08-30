@@ -12,17 +12,21 @@ import './PrivateEvents.css'
  * The CTA opens WhatsApp with the enquiry pre-written. Outline on stone, so it
  * never competes with the solid Tickets button.
  *
- * `title` is overridable because on /private-events the page header above
- * already says PRIVATE EVENTS, and a heading should never repeat the line
- * directly above it.
+ * `title` is overridable — on /private-events the block opens the page, so the
+ * heading can be the page-specific line rather than the default eyebrow.
+ *
+ * `pageStart` clears the fixed nav when this block is the first thing on a page.
  */
-export default function PrivateEvents({ title }) {
+export default function PrivateEvents({ title, pageStart = false }) {
   const { t } = useLanguage()
   const pe = t.privateEvents
 
   return (
-    <section id="eventos-privados" className="pev" aria-labelledby="pev-title">
-      <div className="pev__grid">
+    <section
+      id="eventos-privados"
+      className={`pev${pageStart ? ' pev--page-start' : ''}`}
+      aria-labelledby="pev-title"
+    >      <div className="pev__grid">
         <figure className="pev__figure" data-reveal="mask">
           <img
             src="/img/private-events-1400.jpg"
