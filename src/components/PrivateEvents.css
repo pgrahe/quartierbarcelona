@@ -48,8 +48,8 @@
   isolation: isolate;
   display: grid;
   align-items: center;
-  background: var(--stone);
-  color: var(--black);
+  background: var(--black);
+  color: var(--stone);
 }
 
 /* The gilt ground — the shared surface, defined as `.gilt` in base.css. The
@@ -74,7 +74,7 @@
   letter-spacing: 0.14em;
   text-indent: 0.14em;
   text-transform: uppercase;
-  color: var(--black);
+  color: #fff;
 }
 
 .pev__subtitle {
@@ -85,7 +85,7 @@
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--bordeaux);
+  color: var(--gold);
 }
 
 .pev__copy {
@@ -98,7 +98,7 @@
 .pev__body {
   font-size: var(--fs-body);
   line-height: 1.72;
-  color: rgba(0, 0, 0, 0.66);
+  color: var(--stone-70);
   text-wrap: pretty;
 }
 
@@ -107,7 +107,7 @@
   font-weight: var(--w-bold);
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--black);
+  color: #fff;
   text-wrap: balance;
 }
 

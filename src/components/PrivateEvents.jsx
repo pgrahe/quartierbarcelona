@@ -36,7 +36,7 @@ export default function PrivateEvents({ title }) {
           />
         </figure>
 
-        <div className="pev__panel on-stone">
+        <div className="pev__panel">
           {/* The gilt ground — see `.gilt` in styles/base.css. One empty
               decorative div; the whole surface is generated in CSS. */}
           <div className="gilt" aria-hidden="true" />

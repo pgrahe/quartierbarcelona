@@ -224,26 +224,38 @@ html {
 }
 
 /* -------------------------------------------------------------------------
- * Gilt — the ground under every light panel (VIP, Private Events, About).
+ * Gilt — the ground under VIP, Private Events and About.
  *
  * A decorative, empty div inside a `position: relative; isolation: isolate`
  * panel. The whole surface is generated: no image is downloaded.
  *
- * What makes it read as gold rather than as card tinted yellow is that the
- * HUE SHIFTS along the ramp, not just the lightness. A metal's highlight is
- * nearly white, its midtone is saturated, and its shadow turns warm and
- * olive: #faf4d2 → #f0dfaa → #ddc17a → #c4a45e. The gold is carried by
- * saturation and the sheen bands, not by darkening the panel into the text.
+ * This is gold on a dark ground rather than a gold panel: not a sheet of
+ * gilt, but a dark lacquer with gilt catching the light across it. The type
+ * over it is white and gold.
+ *
+ * The principle is the same one that made the light version work — the HUE
+ * SHIFTS along the ramp instead of only the lightness. Read from the lit
+ * centre outward, #4a3a1c → #241d0f → #0d0b06 → #000000: warm bronze where
+ * the light lands, and the warmth draining out of it, not just the
+ * brightness, as it falls into black. A single dark brown lightened and
+ * darkened reads as mud; a ramp that loses its chroma on the way down reads
+ * as a metal in a dark room.
+ *
+ * The stops are bunched early and reach black at 82% rather than spreading
+ * evenly. Spread out, the gold covers the whole panel and the section reads
+ * as a brown box; concentrated, it reads as a light falling on something
+ * dark, which is the point.
  *
  * The sheen is deliberately asymmetric: one pale warm band and one deeper
  * gold band, not two of the same. Symmetrical highlights read as a gradient
  * laid on top; offset ones read as a surface catching light from an angle.
  *
- * There is no woven grain here on purpose. `soft-light` modulation scales
- * with the chroma of the ground, so a thread that is discreet on a neutral
- * cream reads twice as loud on gold and turns metal into upholstery. All that
- * sits over the gradient is the broad mottling, which exists to stop the ramp
- * looking synthetic rather than to be seen.
+ * The mottling blends in `overlay`, not the `multiply` the light version
+ * used. Multiply over a near-black ground has almost nothing left to take
+ * away; overlay scales the texture by the surface under it, so it shows in
+ * the lit part and disappears into the black — which also means the panel
+ * reaches true black at its own edges and needs no seam against whatever
+ * sits above or below it.
  *
  * `--gilt-pool` is the size and position of the light, set per section,
  * because where the light should fall depends on where that section's type
@@ -258,18 +270,18 @@ html {
     linear-gradient(
       104deg,
       transparent 0%,
-      rgba(255, 248, 210, 0.72) 22%,
+      rgba(255, 230, 160, 0.10) 22%,
       transparent 40%,
       transparent 56%,
-      rgba(176, 128, 36, 0.28) 74%,
+      rgba(168, 120, 32, 0.16) 74%,
       transparent 92%
     ),
     radial-gradient(
       var(--gilt-pool, 135% 78% at 44% 16%),
-      #faf4d2 0%,
-      #f0dfaa 32%,
-      #ddc17a 68%,
-      #c4a45e 100%
+      #4a3a1c 0%,
+      #241d0f 22%,
+      #0d0b06 52%,
+      #000000 82%
     );
 }
 
@@ -280,8 +292,8 @@ html {
   background-image: var(--tex-mottle);
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  mix-blend-mode: multiply;
-  opacity: 0.14;
+  mix-blend-mode: overlay;
+  opacity: 0.4;
 }
 
 /* -------------------------------------------------------------------------

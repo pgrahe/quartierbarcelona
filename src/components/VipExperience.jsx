@@ -17,7 +17,7 @@ export default function VipExperience({ eyebrow }) {
   const vip = t.vipExperience
 
   return (
-    <section id="vip-experience" className="vip section on-stone" aria-labelledby="vip-title">
+    <section id="vip-experience" className="vip section" aria-labelledby="vip-title">
       {/* The gilt ground — see `.gilt` in styles/base.css. One empty
           decorative div; the whole surface is generated in CSS. */}
       <div className="gilt" aria-hidden="true" />

@@ -91,6 +91,12 @@
   --stone: #e7e1d6;
   /* Brand accent — Quartier Bordeaux. Used sparingly on marks and labels. */
   --bordeaux: #5a1820;
+  /* Gilt gold. The accent for type on the dark gilt panels — eyebrows,
+     subtitles, captions. Light enough to clear 4.5:1 against every step of
+     the ramp it sits on, which a saturated "real" gold like #c9a227 does not:
+     that one lands at 3.2:1 on the lit part and fails as small text. */
+  --gold: #d9c085;
+  --gold-70: rgba(217, 192, 133, 0.7);
 
   /* ---- Derived tones (opacity only, no new hues) ---- */
   --stone-90: rgba(231, 225, 214, 0.9);

@@ -3,8 +3,8 @@
   /* The silk layers below blend against this section's own ground, never
      against the sections either side of it. */
   isolation: isolate;
-  background: var(--stone);
-  color: var(--black);
+  background: var(--black);
+  color: var(--stone);
 }
 
 /* The gilt ground — the shared surface, defined as `.gilt` in base.css. All
@@ -33,7 +33,7 @@
 }
 
 .vip__eyebrow {
-  color: var(--bordeaux);
+  color: var(--gold);
 }
 
 /* Same treatment as the Intro and the programme: medium weight, wide
@@ -49,7 +49,7 @@
      visually left. The indent gives it back. */
   text-indent: 0.14em;
   text-transform: uppercase;
-  color: var(--black);
+  color: #fff;
   text-align: center;
 }
 
@@ -63,7 +63,7 @@
   max-width: 34ch;
   font-size: var(--fs-body);
   line-height: 1.72;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--stone-70);
   text-wrap: pretty;
 }
 
@@ -74,16 +74,16 @@
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
-/* 0.62, not the 0.42 this used to be. Small uppercase type needs 4.5:1 and
-   0.42 only reached 2.9:1 even on the flat stone this panel replaced — the
-   deeper gold in the corners of the gilt ramp took it to 2.7:1. At 0.62 it
-   holds 4.6:1 against the darkest point of the ramp and 5.5:1 in the middle,
-   and still reads as a caption rather than as body copy. */
+/* Stone at 70%, not black at 62%. Measured against the brightest point of
+   the gilt ramp — the worst case for light type — 55% only reaches 3.75:1
+   and 70% reaches 5.05:1. It still reads as a caption rather than as body
+   copy because it is half the size and heavily tracked, not because it is
+   faint. */
 .vip__note {
   font-size: var(--fs-label);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.62);
+  color: var(--stone-70);
 }
 
 /* ---- Plate ---- */

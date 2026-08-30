@@ -23,7 +23,7 @@ export default function About({ eyebrow }) {
   const codaDelay = closingDelay + 60
 
   return (
-    <section id="sobre-nosotros" className="about section on-stone">
+    <section id="sobre-nosotros" className="about section">
       {/* The gilt ground — see `.gilt` in styles/base.css. One empty
           decorative div; the whole surface is generated in CSS. */}
       <div className="gilt" aria-hidden="true" />

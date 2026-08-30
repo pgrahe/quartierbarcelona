@@ -3,8 +3,8 @@
   /* The gilt blends against this section's own ground, never against the page
      header above it. */
   isolation: isolate;
-  background: var(--stone);
-  color: var(--black);
+  background: var(--black);
+  color: var(--stone);
   overflow: visible;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .about__eyebrow {
-  color: var(--bordeaux);
+  color: var(--gold);
   opacity: 1;
 }
 
@@ -61,7 +61,7 @@
   margin-top: clamp(2rem, 4vw, 3.25rem);
   font-size: var(--fs-body);
   line-height: 1.72;
-  color: rgba(0, 0, 0, 0.66);
+  color: var(--stone-70);
   text-wrap: pretty;
 }
 
@@ -69,10 +69,10 @@
 .about__lead {
   font-size: var(--fs-lead);
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.86);
+  color: var(--stone-90);
 }
 
-/* The closing line is the payoff: full black, given its own air. */
+/* The closing line is the payoff: full white, given its own air. */
 .about__closing {
   max-width: var(--measure);
   margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -80,7 +80,7 @@
   font-weight: var(--w-bold);
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--black);
+  color: #fff;
   text-wrap: balance;
 }
 
@@ -93,7 +93,7 @@
   margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
   font-size: var(--fs-body);
   line-height: 1.72;
-  color: rgba(0, 0, 0, 0.66);
+  color: var(--stone-70);
   text-wrap: pretty;
 }
 
@@ -104,14 +104,12 @@
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
 }
 
-/* 0.62, not the 0.42 this used to be — the same correction the VIP note
-   needed. Small uppercase type has to hold 4.5:1, and 0.42 managed only
-   2.9:1 even on the flat stone this ground replaces; on the deeper end of
-   the gilt ramp, which is exactly where this caption sits, it fell to 2.7:1.
-   At 0.62 it holds 4.6:1 there. */
+/* Gold, at full strength. On the dark ground this caption no longer needs
+   the opacity it was carrying to stay quiet — the gold is quiet enough on
+   its own, and small uppercase type has no contrast to spare. */
 .about__caption {
-  color: var(--black);
-  opacity: 0.62;
+  color: var(--gold);
+  opacity: 1;
 }
 
 /* ---- Portrait ---- */

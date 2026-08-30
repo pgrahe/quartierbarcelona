@@ -56,8 +56,11 @@ main {
  * into the section under it.
  * ---------------------------------------------------------------------- */
 
-/* Beige grounds: About, VIP, Explore, and a stone detail grid. */
-:is(.about, .vip, .explore, .dgrid--stone) + section::after {
+/* Beige grounds: Explore and a stone detail grid. About and VIP used to be
+   in this list; they are gilt on black now, and the gilt reaches true black
+   at its own edges, so a beige bleed under them would be a light band
+   appearing out of nowhere. */
+:is(.explore, .dgrid--stone) + section::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
