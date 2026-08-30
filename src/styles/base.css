@@ -235,13 +235,13 @@ html {
  *
  * The principle is the same one that made the light version work — the HUE
  * SHIFTS along the ramp instead of only the lightness. Read from the lit
- * centre outward, #4a3a1c → #241d0f → #0d0b06 → #000000: warm bronze where
+ * centre outward, #241c0c → #100d07 → #040403 → #000000: warm bronze where
  * the light lands, and the warmth draining out of it, not just the
  * brightness, as it falls into black. A single dark brown lightened and
  * darkened reads as mud; a ramp that loses its chroma on the way down reads
  * as a metal in a dark room.
  *
- * The stops are bunched early and reach black at 82% rather than spreading
+ * The stops are bunched early and reach black at 68% rather than spreading
  * evenly. Spread out, the gold covers the whole panel and the section reads
  * as a brown box; concentrated, it reads as a light falling on something
  * dark, which is the point.
@@ -278,10 +278,10 @@ html {
     ),
     radial-gradient(
       var(--gilt-pool, 135% 78% at 44% 16%),
-      #4a3a1c 0%,
-      #241d0f 22%,
-      #0d0b06 52%,
-      #000000 82%
+      #241c0c 0%,
+      #100d07 18%,
+      #040403 42%,
+      #000000 68%
     );
 }
 
