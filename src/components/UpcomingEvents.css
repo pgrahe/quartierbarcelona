@@ -1,5 +1,6 @@
 .agenda.section {
-  background: var(--black);
+  /* Ground from base.css texture rule — Intro above keeps its own velvet. */
+  background: transparent;
   color: var(--stone);
   /* Intro above, marquee directly below, both on black. The programme is
      bracketed by the two rather than fenced off from them, so it opens and
@@ -107,9 +108,10 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url('/img/velvet-dark.png');
-  background-size: 256px 256px;
-  background-repeat: repeat;
+  background-image: var(--tex-dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   mix-blend-mode: screen;
 }
 

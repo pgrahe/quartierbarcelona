@@ -1,22 +1,9 @@
 .vip {
   position: relative;
-  /* The silk layers below blend against this section's own ground, never
-     against the sections either side of it. */
   isolation: isolate;
-  background: var(--black);
+  /* Transparent so `.tex` is the visible ground — not a flat black fill. */
+  background: transparent;
   color: var(--stone);
-}
-
-/* The gilt ground — the shared surface, defined as `.gilt` in base.css. All
-   this section sets is where the light falls.
-
-   Mobile: the photograph runs full bleed across the top half, so the pool is
-   placed just below where it ends — as if the light were spilling off the
-   photograph onto the cloth — and the gold deepens toward the foot of the
-   section. Lit from the top of the box instead, the whole pool would sit
-   behind the picture and the type would get only the flat part. */
-.vip .gilt {
-  --gilt-pool: 140% 62% at 50% 56%;
 }
 
 .vip__layout {
@@ -112,12 +99,6 @@
 
 /* Desktop — type left, photograph right. */
 @media (min-width: 901px) {
-  /* The type sits on the left half here, so the pool of light follows it
-     rather than staying centred on a very wide box. */
-  .vip .gilt {
-    --gilt-pool: 52rem 26rem at 36% 46%;
-  }
-
   .vip__layout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     gap: clamp(2.5rem, 5vw, 5rem);

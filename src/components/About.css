@@ -1,23 +1,10 @@
 .about {
   position: relative;
-  /* The gilt blends against this section's own ground, never against the page
-     header above it. */
   isolation: isolate;
-  background: var(--black);
+  /* Transparent so `.tex` is the visible ground. */
+  background: transparent;
   color: var(--stone);
   overflow: visible;
-}
-
-/* The gilt ground — the shared surface, defined as `.gilt` in base.css.
-
-   This section is roughly 1500px tall on a phone — far more than the other
-   two that use it — so the pool is scaled to the section rather than fixed:
-   at a fixed size the light would run out a third of the way down and the
-   whole lower half would sit flat on the darkest step of the ramp. Placed
-   high and stretched, it sits behind the title and the opening paragraph and
-   the gold deepens steadily as the story runs down the page. */
-.about .gilt {
-  --gilt-pool: 145% 95% at 46% 18%;
 }
 
 .about__grid {

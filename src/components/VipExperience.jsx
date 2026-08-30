@@ -18,9 +18,8 @@ export default function VipExperience({ eyebrow }) {
 
   return (
     <section id="vip-experience" className="vip section" aria-labelledby="vip-title">
-      {/* The gilt ground — see `.gilt` in styles/base.css. One empty
-          decorative div; the whole surface is generated in CSS. */}
-      <div className="gilt" aria-hidden="true" />
+      {/* Dark plaster ground — see `.tex` in styles/base.css. */}
+      <div className="tex" aria-hidden="true" />
 
       <div className="shell vip__layout">
         <div className="vip__head">

@@ -24,9 +24,8 @@ export default function About({ eyebrow }) {
 
   return (
     <section id="sobre-nosotros" className="about section">
-      {/* The gilt ground — see `.gilt` in styles/base.css. One empty
-          decorative div; the whole surface is generated in CSS. */}
-      <div className="gilt" aria-hidden="true" />
+      {/* Dark plaster ground — see `.tex` in styles/base.css. */}
+      <div className="tex" aria-hidden="true" />
 
       <div className="shell about__grid">
         <div className="about__text">

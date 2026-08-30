@@ -185,35 +185,22 @@ html {
 }
 
 /* -------------------------------------------------------------------------
- * Velvet
+ * Velvet (beige only)
  *
- * A 256px seamless tile of anisotropic noise — short vertical pile plus a
- * broad low-frequency sheen. Used sparingly: About and Contact only.
- *
- * Two variants, because one blend mode cannot serve both grounds:
- *
- *  - Dark sections screen a near-black tile (values 3–19). Screen over #000
- *    lands the texture between #000 and roughly #161616 — the two palette
- *    darks, so no fourth colour enters. `soft-light` would be pointless here:
- *    over pure black it returns pure black and the texture disappears.
- *  - The beige section soft-lights a mid-grey tile, which is exactly what
- *    soft-light is good at — modulating a light ground without tinting it.
+ * Dark sections no longer use a screened tile over flat black — they use the
+ * shared `.surface-dark` / `.tex` plaster (see below). Soft-light velvet on
+ * stone remains for beige panels (Explore).
  * ---------------------------------------------------------------------- */
-.velvet::before {
+.velvet.on-stone::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url('/img/velvet-dark.png');
-  background-size: 256px 256px;
-  background-repeat: repeat;
-  mix-blend-mode: screen;
-  opacity: 1;
-}
-
-.velvet.on-stone::before {
   background-image: url('/img/velvet.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   mix-blend-mode: soft-light;
   opacity: 0.12;
 }
@@ -224,76 +211,41 @@ html {
 }
 
 /* -------------------------------------------------------------------------
- * Gilt — the ground under VIP, Private Events and About.
+ * Dark plaster ground — VIP, Private Events, About, agenda, contact, page
+ * heroes, detail grids. Intro is excluded (own CSS velvet in Intro.css).
  *
- * A decorative, empty div inside a `position: relative; isolation: isolate`
- * panel. The whole surface is generated: no image is downloaded.
+ * `.tex` is an empty absolute layer (used where markup already has a ground
+ * div). `.surface-dark` paints the same image on the section itself.
  *
- * This is gold on a dark ground rather than a gold panel: not a sheet of
- * gilt, but a dark lacquer with gilt catching the light across it. The type
- * over it is white and gold.
- *
- * The principle is the same one that made the light version work — the HUE
- * SHIFTS along the ramp instead of only the lightness. Read from the lit
- * centre outward, #241c0c → #100d07 → #040403 → #000000: warm bronze where
- * the light lands, and the warmth draining out of it, not just the
- * brightness, as it falls into black. A single dark brown lightened and
- * darkened reads as mud; a ramp that loses its chroma on the way down reads
- * as a metal in a dark room.
- *
- * The stops are bunched early and reach black at 68% rather than spreading
- * evenly. Spread out, the gold covers the whole panel and the section reads
- * as a brown box; concentrated, it reads as a light falling on something
- * dark, which is the point.
- *
- * The sheen is deliberately asymmetric: one pale warm band and one deeper
- * gold band, not two of the same. Symmetrical highlights read as a gradient
- * laid on top; offset ones read as a surface catching light from an angle.
- *
- * The mottling blends in `overlay`, not the `multiply` the light version
- * used. Multiply over a near-black ground has almost nothing left to take
- * away; overlay scales the texture by the surface under it, so it shows in
- * the lit part and disappears into the black — which also means the panel
- * reaches true black at its own edges and needs no seam against whatever
- * sits above or below it.
- *
- * `--gilt-pool` is the size and position of the light, set per section,
- * because where the light should fall depends on where that section's type
- * and photograph are. Everything else is shared.
+ * No gradient, no blend mode, no ::after on top — the texture IS the ground.
  * ---------------------------------------------------------------------- */
-.gilt {
+.tex,
+.surface-dark {
+  background-color: #000;
+  background-image: var(--tex-dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.tex {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    linear-gradient(
-      104deg,
-      transparent 0%,
-      rgba(255, 230, 160, 0.10) 22%,
-      transparent 40%,
-      transparent 56%,
-      rgba(168, 120, 32, 0.16) 74%,
-      transparent 92%
-    ),
-    radial-gradient(
-      var(--gilt-pool, 135% 78% at 44% 16%),
-      #241c0c 0%,
-      #100d07 18%,
-      #040403 42%,
-      #000000 68%
-    );
 }
 
-.gilt::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: var(--tex-mottle);
-  background-size: 100% 100%;
+.velvet:not(.on-stone),
+.phero,
+.specs,
+.dgrid:not(.dgrid--stone),
+.contact.section,
+.agenda.section {
+  background-color: #000;
+  background-image: var(--tex-dark);
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  mix-blend-mode: overlay;
-  opacity: 0.4;
 }
 
 /* -------------------------------------------------------------------------

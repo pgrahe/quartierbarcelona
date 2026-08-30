@@ -1,5 +1,6 @@
 .contact.section {
-  background: var(--black);
+  /* Ground from base.css texture rule. */
+  background: transparent;
   color: var(--stone);
   /* BrandMoment sits just above — less opening air than a full section. */
   padding-block: clamp(2rem, 5vw, 3.5rem) var(--section-y);

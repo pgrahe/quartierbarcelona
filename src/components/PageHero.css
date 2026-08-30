@@ -1,6 +1,11 @@
 .phero {
   position: relative;
-  background: var(--ink);
+  /* Ground from base.css `.phero` texture rule — no flat ink on top. */
+  background-color: #000;
+  background-image: var(--tex-dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--stone);
   padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + clamp(1.75rem, 4vw, 3rem));
   padding-bottom: clamp(2rem, 4.5vw, 3.25rem);

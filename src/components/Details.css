@@ -2,7 +2,9 @@
  * DetailGrid — numbered points
  * ---------------------------------------------------------------------- */
 .dgrid {
-  background: var(--ink);
+  /* Ground comes from `.surface-dark` / `.velvet` in base.css — do not paint
+     a flat ink fill over the plaster texture. */
+  background: transparent;
   color: var(--stone);
 }
 
@@ -84,7 +86,8 @@
  * SpecRows — label / value
  * ---------------------------------------------------------------------- */
 .specs {
-  background: var(--black);
+  /* Ground from base.css `.specs` texture rule. */
+  background: transparent;
   color: var(--stone);
 }
 

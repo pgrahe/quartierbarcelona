@@ -143,7 +143,7 @@ export default function UpcomingEvents() {
   if (!count) return null
 
   return (
-    <section id="agenda" className="agenda section" aria-labelledby="agenda-title">
+    <section id="agenda" className="agenda section velvet" aria-labelledby="agenda-title">
       <div className="shell">
         <div className="agenda__head">
           <h2 className="agenda__title" id="agenda-title" data-reveal>

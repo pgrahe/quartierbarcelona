@@ -37,9 +37,8 @@ export default function PrivateEvents({ title }) {
         </figure>
 
         <div className="pev__panel">
-          {/* The gilt ground — see `.gilt` in styles/base.css. One empty
-              decorative div; the whole surface is generated in CSS. */}
-          <div className="gilt" aria-hidden="true" />
+          {/* Dark plaster ground — see `.tex` in styles/base.css. */}
+          <div className="tex" aria-hidden="true" />
 
           <div className="pev__panel-inner">
             <h2 className="pev__title" id="pev-title" data-reveal>
