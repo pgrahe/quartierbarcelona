@@ -14,8 +14,8 @@
  * from it, so pointing the site at a different domain is a one-line change.
  * ---------------------------------------------------------------------- */
 
-/** No trailing slash. */
-export const SITE_URL = 'https://quartierbarcelona.com'
+/** No trailing slash. Must match the live host (Vercel redirects apex → www). */
+export const SITE_URL = 'https://www.quartierbarcelona.com'
 
 /**
  * URL-addressable languages. Spanish lives at the root and is also the
