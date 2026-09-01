@@ -163,8 +163,8 @@
 }
 
 /* -------------------------------------------------------------------------
- * --tex-dark — exact Quartier plaster artwork, no processing / filters.
- * Intro does not use it (own CSS velvet).
+ * --tex-dark — exact Quartier dark fabric artwork, no processing / filters.
+ * Used by Intro and the other type panels.
  * ---------------------------------------------------------------------- */
 :root {
   --tex-dark: url('/img/texture-dark.jpg?v=6');

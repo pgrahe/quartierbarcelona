@@ -12,17 +12,15 @@ import LocationMap from '../components/LocationMap'
  * Home.
  *
  * Read on a phone, top to bottom: the film, a short word about who we are,
- * the programme, the photographs running past, the table, the room you can
- * take over, the collage, and then how to reach us and where we are.
+ * the programme, the collage, the table, the room you can take over, the
+ * photographs running past, and then how to reach us and where we are.
  *
  * The order is deliberate. Everything that can be booked — a ticket, a table,
- * the whole club — comes before anything that is only there to be looked at.
- * The collage sits at the end as the closing image rather than as the page's
- * first impression, and Contact follows it directly.
+ * the whole club — sits in the middle of the page; the marquee closes into
+ * Contact as the last image beat before the details.
  *
- * Ground: black → black → black → stone → black/stone → ink → black → stone.
- * The seams between changes of ground are written in App.css, per change,
- * not per section, so this list can be reordered without touching them.
+ * Ground seams between sections live in App.css, per change of ground, so
+ * this list can be reordered without touching them.
  */
 export default function HomePage() {
   return (
@@ -30,10 +28,10 @@ export default function HomePage() {
       <Hero />
       <Intro />
       <UpcomingEvents />
-      <PhotoMarquee />
+      <BrandMoment />
       <VipExperience />
       <PrivateEvents />
-      <BrandMoment />
+      <PhotoMarquee />
       <Contact />
       <LocationMap />
     </>

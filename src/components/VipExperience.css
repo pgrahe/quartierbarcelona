@@ -6,6 +6,11 @@
   color: var(--stone);
 }
 
+/* Opens an inner page — clear the fixed nav (home keeps default spacing). */
+.vip--page-start {
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + clamp(1.75rem, 4vw, 3rem));
+}
+
 .vip__layout {
   position: relative;
   z-index: 1;
@@ -86,7 +91,7 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   filter: brightness(1.18) contrast(1.06) saturate(1.05);
   scale: 1.05;
@@ -143,21 +148,25 @@
   /* Plate leads; same stone air under the photo and under the note. */
   .vip.section {
     --vip-stone-pad: clamp(2.75rem, 9vw, 4rem);
-    padding-top: 0;
+    padding-top: var(--vip-stone-pad);
     padding-bottom: var(--vip-stone-pad);
   }
 
+  .vip.section.vip--page-start {
+    padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + var(--vip-stone-pad));
+  }
+
   .vip__layout {
-    justify-items: stretch;
+    justify-items: center;
     gap: 0;
   }
 
-  /* Photo first, full-bleed; type stacks centered under it. */
+  /* Inset plate — texture shows on all four sides; type stacks under it. */
   .vip__plate {
     order: 1;
-    width: 100vw;
-    max-width: none;
-    margin-inline: calc(50% - 50vw);
+    width: min(78%, 20rem);
+    max-width: 20rem;
+    margin-inline: auto;
     margin-bottom: var(--vip-stone-pad);
   }
 
@@ -182,7 +191,6 @@
   }
 
   .vip__plate img {
-    aspect-ratio: 4 / 5;
     object-position: center;
   }
 

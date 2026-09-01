@@ -2,7 +2,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import './Intro.css'
 
 /**
- * The first thing under the film: who we are, in four lines, on black velvet.
+ * The first thing under the film: who we are, in four lines, on stone.
  *
  * Deliberately nothing but type — no eyebrow, no rule, no photograph, no
  * button. The hero has just finished moving; this is the beat where the page
@@ -14,8 +14,7 @@ import './Intro.css'
  * speak with one voice. The paragraph is `about.intro` — the short cut of the
  * long-form copy, written to be read on a phone in one breath.
  *
- * `intro__ground` is the velvet. It is one empty, decorative div: the whole
- * texture is generated in CSS, with no image to download. See Intro.css.
+ * Palette matches the light panels: stone ground, black title, grey body.
  */
 export default function Intro() {
   const { t } = useLanguage()

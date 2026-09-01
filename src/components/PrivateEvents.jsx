@@ -26,7 +26,8 @@ export default function PrivateEvents({ title, pageStart = false }) {
       id="eventos-privados"
       className={`pev${pageStart ? ' pev--page-start' : ''}`}
       aria-labelledby="pev-title"
-    >      <div className="pev__grid">
+    >
+      <div className="pev__grid">
         <figure className="pev__figure" data-reveal="mask">
           <img
             src="/img/private-events-1400.jpg"
@@ -40,10 +41,7 @@ export default function PrivateEvents({ title, pageStart = false }) {
           />
         </figure>
 
-        <div className="pev__panel">
-          {/* Dark plaster ground — see `.tex` in styles/base.css. */}
-          <div className="tex" aria-hidden="true" />
-
+        <div className="pev__panel on-stone">
           <div className="pev__panel-inner">
             <h2 className="pev__title" id="pev-title" data-reveal>
               {title || pe.eyebrow}

@@ -1,7 +1,6 @@
 import { DetailGrid } from '../components/Details'
 import Explore from '../components/Explore'
 import NightStack from '../components/NightStack'
-import PageHero from '../components/PageHero'
 import VipExperience from '../components/VipExperience'
 import { useLanguage } from '../i18n/LanguageContext'
 
@@ -12,9 +11,7 @@ export default function VipPage() {
 
   return (
     <>
-      <PageHero title={page.name} lead={page.lead} />
-
-      <VipExperience eyebrow={page.sectionEyebrow} />
+      <VipExperience eyebrow={page.sectionEyebrow} pageStart />
 
       <DetailGrid
         id="vip-details"

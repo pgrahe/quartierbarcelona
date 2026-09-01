@@ -6,19 +6,23 @@ import './VipExperience.css'
  * VIP experience.
  *
  * On desktop: type on one side, the night photograph on the other.
- * On mobile: full-bleed plate first, then title + pitch left-aligned under it.
+ * On mobile: inset plate first (texture on all sides), then title + pitch under it.
  *
- * `eyebrow` is overridable because on /vip-experience the page header above
- * already says VIP EXPERIENCE, and a label should never repeat the line
- * directly above it.
+ * `eyebrow` is overridable — on /vip-experience the block opens the page, so
+ * the label can be page-specific rather than repeating VIP EXPERIENCE.
+ *
+ * `pageStart` clears the fixed nav when this block is the first thing on a page.
  */
-export default function VipExperience({ eyebrow }) {
+export default function VipExperience({ eyebrow, pageStart = false }) {
   const { t } = useLanguage()
   const vip = t.vipExperience
 
   return (
-    <section id="vip-experience" className="vip section" aria-labelledby="vip-title">
-      {/* Dark plaster ground — see `.tex` in styles/base.css. */}
+    <section
+      id="vip-experience"
+      className={`vip section${pageStart ? ' vip--page-start' : ''}`}
+      aria-labelledby="vip-title"
+    >      {/* Dark plaster ground — see `.tex` in styles/base.css. */}
       <div className="tex" aria-hidden="true" />
 
       <div className="shell vip__layout">
@@ -36,10 +40,10 @@ export default function VipExperience({ eyebrow }) {
           <img
             src="/img/vip-table-1100.jpg"
             srcSet="/img/vip-table-700.jpg 700w, /img/vip-table-1100.jpg 1100w, /img/vip-table-1500.jpg 1500w"
-            sizes="(max-width: 900px) 100vw, 38vw"
+            sizes="(max-width: 900px) 78vw, 38vw"
             alt={vip.imageAlt}
             width="1100"
-            height="1650"
+            height="1376"
             loading="lazy"
             decoding="async"
           />
