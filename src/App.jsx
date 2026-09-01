@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { useLanguage } from './i18n/LanguageContext'
 import { useHeroPassed } from './hooks/useHeroPassed'
 import { useReveal } from './hooks/useReveal'
@@ -88,6 +89,7 @@ export default function App() {
       <Footer />
 
       <TicketsOverlay />
+      <Analytics />
     </>
   )
 }
