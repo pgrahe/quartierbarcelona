@@ -32,10 +32,12 @@
   gap: clamp(1.75rem, 3vw, 2.5rem);
 }
 
+/* A hairline above it, not a box around it — the site sets its blocks with
+   rules and type, and a bordered card here would be the only panel on the
+   whole site with an outline. */
 .legal__card {
-  padding: clamp(1.25rem, 2vw, 1.6rem);
-  border: 1px solid var(--stone-12);
-  background: var(--black-40);
+  padding-top: clamp(1.25rem, 2vw, 1.6rem);
+  border-top: 1px solid var(--stone-12);
 }
 
 .legal__updated {
@@ -75,6 +77,11 @@
   line-height: 1.5;
   color: var(--stone-90);
   text-wrap: pretty;
+}
+
+.legal__index {
+  padding-top: clamp(1.25rem, 2vw, 1.6rem);
+  border-top: 1px solid var(--stone-12);
 }
 
 .legal__index-title {

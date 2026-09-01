@@ -21,6 +21,10 @@
   line-height: 0.98;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  /* The title slides up out of this box, so it has to clip. A line box
+     tighter than the font's own ascent means the accent on a capital Í or É
+     sits above it — the padding gives that ink room inside the clip. */
+  padding-top: 0.14em;
   overflow: hidden;
 }
 

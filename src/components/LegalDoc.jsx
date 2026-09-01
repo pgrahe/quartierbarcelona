@@ -153,9 +153,14 @@ export default function LegalDoc({ doc }) {
               </p>
             )}
 
+            {/* Deliberately no `data-reveal` on the articles. Everywhere else
+                on the site a block fading in as you reach it is the point;
+                here it would mean a legal text that is invisible until it has
+                been scrolled to, and the index above jumps straight past the
+                sections it skips. A legal document is simply present. */}
             <ol className="legal__sections">
               {copy.sections.map((section, i) => (
-                <li className="legal__section" id={`${doc}-${i + 1}`} key={section.title} data-reveal>
+                <li className="legal__section" id={`${doc}-${i + 1}`} key={section.title}>
                   <p className="eyebrow legal__number" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </p>
