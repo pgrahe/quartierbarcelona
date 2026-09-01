@@ -84,6 +84,41 @@ export const CONTACT = {
 }
 
 /* -------------------------------------------------------------------------
+ * The company behind the club.
+ *
+ * The LSSI requires the operator's name, tax number and registered office to
+ * be published, and the RGPD requires the same for the data controller — so
+ * these values are written once here and read by both legal pages. Changing
+ * the company details is a one-line change that updates every language.
+ *
+ * The registered office happens to be the venue's own street today, but it is
+ * kept as its own value rather than derived from LOCATION: a domicilio social
+ * and a venue are different things and either can move without the other.
+ * ---------------------------------------------------------------------- */
+export const COMPANY = {
+  name: 'RETROMUSIC S.L.',
+  nif: 'B62628599',
+  street: 'Calle Santa Caterina de Siena, 28',
+  postalCode: '08034',
+  city: 'Barcelona',
+  country: 'España',
+}
+
+/** Registered office as one line, for running text. */
+export function companyAddress() {
+  return [COMPANY.street, `${COMPANY.postalCode} ${COMPANY.city}`.trim(), COMPANY.country]
+    .filter(Boolean)
+    .join(', ')
+}
+
+/**
+ * When the legal texts were last revised. ISO, so each language can print it
+ * in its own form with Intl instead of four hand-written dates that drift.
+ * Update this whenever either legal page is edited.
+ */
+export const LEGAL_UPDATED = '2026-09-01'
+
+/* -------------------------------------------------------------------------
  * WhatsApp — private events enquiries
  *
  * Derived from CONTACT.phoneHref so there is only ever one phone number in
@@ -166,12 +201,6 @@ export const EVENTS = [
   { id: 'guest-dj', date: '2026-10-09', title: 'GUEST DJ', age: '+20' },
   { id: 'quartier-nights', date: '2026-10-16', title: 'QUARTIER NIGHTS', age: '+20' },
 ]
-
-/** Legal pages are not built yet — these anchors keep the markup honest. */
-export const LEGAL = {
-  privacy: '#',
-  notice: '#',
-}
 
 /* Page URLs are not here — they live in src/router/routes.js, which is the one
    table the navigation, the language switcher, hreflang, the sitemap and the

@@ -87,6 +87,14 @@ export const translations = {
         sectionTitle: 'TU EVENTO EN QUARTIER',
         imageAlt: 'Sala preparada para un evento privado en Quartier Barcelona',
       },
+      privacy: {
+        name: 'POLÍTICA DE PRIVACIDAD',
+        lead: 'Cómo se tratan los datos personales en este sitio web.',
+      },
+      legal: {
+        name: 'AVISO LEGAL',
+        lead: 'Titularidad, condiciones de uso y responsabilidad de este sitio web.',
+      },
     },
     about: {
       eyebrow: 'QUARTIER BARCELONA',
@@ -215,6 +223,188 @@ export const translations = {
       partners: 'PARTNERS',
       instagram: 'Instagram de Quartier Barcelona',
     },
+    /* -------------------------------------------------------------------
+     * The two legal documents.
+     *
+     * `blocks` is the entire document model: a string is a paragraph, an
+     * array of strings is a bullet list. That is enough for both texts and
+     * keeps the copy readable here rather than buried in JSX.
+     *
+     * Nothing about the company is written in this file. {company}, {nif},
+     * {address}, {email} and {phone} are filled in from src/config/site.js
+     * when the page renders, so four languages can never end up disagreeing
+     * about a tax number.
+     * ---------------------------------------------------------------- */
+    legal: {
+      updatedLabel: 'ÚLTIMA ACTUALIZACIÓN',
+      holderLabel: 'TITULAR',
+      nifLabel: 'NIF / CIF',
+      addressLabel: 'DOMICILIO',
+      emailLabel: 'CONTACTO',
+      indexLabel: 'CONTENIDO',
+      privacy: {
+        intro:
+          'La presente Política de Privacidad regula el tratamiento de los datos personales realizado a través de este sitio web, de conformidad con el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (Reglamento General de Protección de Datos — RGPD), la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), y la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE).',
+        sections: [
+          {
+            title: 'Responsable del tratamiento',
+            blocks: [
+              'El responsable del tratamiento de los datos personales recogidos a través de este sitio web es {company}, con NIF/CIF {nif} y domicilio en {address}.',
+              'Para cualquier cuestión relacionada con la protección de datos puede escribir a {email}.',
+            ],
+          },
+          {
+            title: 'Finalidad del tratamiento',
+            blocks: [
+              'Este sitio web tiene como finalidad:',
+              [
+                'Informar sobre los eventos organizados por el titular.',
+                'Facilitar el acceso a la plataforma de venta de entradas.',
+                'Atender las consultas realizadas por los usuarios mediante correo electrónico, teléfono o WhatsApp.',
+                'Obtener estadísticas agregadas sobre el uso del sitio web para mejorar la experiencia de navegación.',
+              ],
+            ],
+          },
+          {
+            title: 'Datos tratados',
+            blocks: [
+              'El titular no solicita el registro de usuarios ni recoge datos personales mediante formularios propios.',
+              'Cuando un usuario contacta mediante correo electrónico, teléfono o WhatsApp, los datos facilitados se utilizan únicamente para responder a su consulta.',
+              'Asimismo, durante la navegación pueden recopilarse determinados datos técnicos y estadísticos necesarios para el funcionamiento y el análisis del sitio web.',
+            ],
+          },
+          {
+            title: 'Base jurídica',
+            blocks: [
+              'Las bases legales del tratamiento son:',
+              [
+                'El interés legítimo del responsable para mantener la seguridad y el funcionamiento del sitio web y conocer su uso mediante estadísticas agregadas.',
+                'El consentimiento del usuario al contactar voluntariamente mediante correo electrónico, teléfono o WhatsApp.',
+                'La ejecución de la relación contractual entre el usuario y Fourvenues cuando éste accede al proceso de compra de entradas.',
+              ],
+            ],
+          },
+          {
+            title: 'Venta de entradas',
+            blocks: [
+              'La compra de entradas se realiza mediante la plataforma Fourvenues.',
+              'Cuando el usuario inicia el proceso de compra, los datos personales son tratados directamente por dicha plataforma conforme a sus propias condiciones legales y políticas de privacidad.',
+              'El titular del presente sitio web no interviene en el tratamiento de los datos personales necesarios para la compra de entradas, salvo aquellos que puedan serle comunicados posteriormente en el marco de la organización del evento.',
+            ],
+          },
+          {
+            title: 'Analítica y servicios de terceros',
+            blocks: [
+              'Este sitio utiliza Vercel Analytics con la finalidad de obtener estadísticas de uso, mejorar el rendimiento del sitio web y conocer de forma agregada la interacción de los usuarios. Este servicio no emplea cookies publicitarias ni identifica individualmente a los visitantes.',
+              'Además, al cargar determinadas partes del sitio se realizan peticiones a los siguientes proveedores, que pueden registrar la dirección IP del visitante como parte del funcionamiento normal de sus servicios:',
+              [
+                'Vercel, como proveedor de alojamiento y de la analítica agregada.',
+                'Fourvenues, cuando se abre la venta de entradas integrada en el sitio.',
+                'OpenStreetMap y CARTO, que suministran las imágenes del mapa de la ubicación.',
+              ],
+            ],
+          },
+          {
+            title: 'Conservación de los datos',
+            blocks: [
+              'Los datos recibidos mediante correo electrónico, teléfono o WhatsApp se conservan únicamente durante el tiempo necesario para atender la consulta o cumplir con las obligaciones legales que resulten aplicables.',
+            ],
+          },
+          {
+            title: 'Destinatarios',
+            blocks: [
+              'No se comunicarán datos personales a terceros salvo obligación legal o cuando resulte necesario para la prestación de los servicios solicitados por el usuario.',
+            ],
+          },
+          {
+            title: 'Derechos',
+            blocks: [
+              'Los usuarios pueden ejercer sus derechos de:',
+              [
+                'Acceso.',
+                'Rectificación.',
+                'Supresión.',
+                'Oposición.',
+                'Limitación del tratamiento.',
+                'Portabilidad.',
+              ],
+              'Para ello podrán enviar una solicitud a {email}, indicando el derecho que desean ejercer.',
+              'Asimismo, tienen derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es) si consideran que el tratamiento de sus datos no se ajusta a la normativa vigente.',
+            ],
+          },
+          {
+            title: 'Fotografías de eventos',
+            blocks: [
+              'En esta web pueden publicarse fotografías y vídeos correspondientes a eventos organizados por el titular.',
+              'La asistencia a dichos eventos puede implicar la captación y utilización de imágenes con fines promocionales, informativos y publicitarios, conforme a las condiciones aceptadas por los asistentes durante la adquisición de entradas.',
+              'Las personas que aparezcan en alguna imagen y consideren que la publicación afecta a sus derechos podrán solicitar su revisión o retirada escribiendo a {email}.',
+            ],
+          },
+          {
+            title: 'Modificaciones',
+            blocks: [
+              'El titular podrá modificar la presente Política de Privacidad para adaptarla a cambios legislativos o técnicos.',
+              'La versión publicada en el sitio web será siempre la vigente.',
+            ],
+          },
+        ],
+      },
+      notice: {
+        intro:
+          'En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de los datos identificativos del titular de este sitio web y de las condiciones que rigen su uso.',
+        sections: [
+          {
+            title: 'Titular del sitio web',
+            blocks: [
+              'El presente sitio web es titularidad de {company}, con NIF/CIF {nif} y domicilio en {address}.',
+              'Correo electrónico de contacto: {email}. Teléfono: {phone}.',
+            ],
+          },
+          {
+            title: 'Objeto',
+            blocks: [
+              'El presente sitio web tiene como finalidad ofrecer información sobre los eventos organizados por el titular, facilitar la consulta de información relacionada con dichos eventos y permitir el acceso a la plataforma externa de venta de entradas.',
+            ],
+          },
+          {
+            title: 'Venta de entradas',
+            blocks: [
+              'La adquisición de entradas se realiza a través de la plataforma Fourvenues, integrada mediante enlaces o iframe.',
+              'El proceso de compra, el tratamiento de los datos personales y las condiciones de contratación correspondientes son responsabilidad de Fourvenues, siendo de aplicación sus propias condiciones de uso y política de privacidad.',
+            ],
+          },
+          {
+            title: 'Propiedad intelectual',
+            blocks: [
+              'Todos los contenidos del sitio web, incluyendo textos, fotografías, vídeos, logotipos, diseño gráfico y demás elementos, son propiedad del titular o se utilizan con la correspondiente autorización.',
+              'Queda prohibida su reproducción, distribución o utilización sin autorización previa, salvo en los casos permitidos por la legislación vigente.',
+            ],
+          },
+          {
+            title: 'Fotografías y material audiovisual',
+            blocks: [
+              'Las imágenes y vídeos publicados en esta web corresponden a eventos organizados por el titular.',
+              'La asistencia a dichos eventos puede implicar la captación y utilización de imágenes con fines informativos, promocionales y publicitarios, de acuerdo con las condiciones aceptadas por los asistentes durante el proceso de adquisición de entradas y con la normativa vigente.',
+              'Cualquier persona que considere que una imagen publicada afecta a sus derechos podrá solicitar su revisión o retirada escribiendo a {email}.',
+            ],
+          },
+          {
+            title: 'Responsabilidad',
+            blocks: [
+              'El titular no garantiza la ausencia de errores en los contenidos publicados, aunque adoptará las medidas razonables para corregirlos cuando sean detectados.',
+              'Tampoco será responsable de la disponibilidad, funcionamiento o contenido de los servicios prestados por terceros a los que pueda accederse mediante enlaces o integraciones presentes en este sitio web.',
+            ],
+          },
+          {
+            title: 'Legislación aplicable',
+            blocks: [
+              'El presente Aviso Legal se rige por la legislación española.',
+              'Para cualquier controversia derivada del uso del sitio web serán competentes los Juzgados y Tribunales que correspondan conforme a la normativa aplicable.',
+            ],
+          },
+        ],
+      },
+    },
   },
 
   en: {
@@ -263,6 +453,14 @@ export const translations = {
         lead: 'A singular space to celebrate your way.',
         sectionTitle: 'YOUR EVENT AT QUARTIER',
         imageAlt: 'The room set up for a private event at Quartier Barcelona',
+      },
+      privacy: {
+        name: 'PRIVACY POLICY',
+        lead: 'How personal data is handled on this website.',
+      },
+      legal: {
+        name: 'LEGAL NOTICE',
+        lead: 'Ownership, terms of use and liability for this website.',
       },
     },
     about: {
@@ -384,6 +582,180 @@ export const translations = {
       partners: 'PARTNERS',
       instagram: 'Quartier Barcelona on Instagram',
     },
+    legal: {
+      updatedLabel: 'LAST UPDATED',
+      holderLabel: 'OPERATOR',
+      nifLabel: 'TAX ID',
+      addressLabel: 'REGISTERED OFFICE',
+      emailLabel: 'CONTACT',
+      indexLabel: 'CONTENTS',
+      /* The company is Spanish and the binding text is the Spanish one. Every
+         translation says so rather than pretending to be the original. */
+      prevail:
+        'This is a translation provided for convenience. In the event of any discrepancy, the Spanish version of this text prevails.',
+      privacy: {
+        intro:
+          'This Privacy Policy governs the processing of personal data carried out through this website, in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (General Data Protection Regulation — GDPR), Spanish Organic Law 3/2018 of 5 December on the Protection of Personal Data and the guarantee of digital rights (LOPDGDD), and Spanish Law 34/2002 of 11 July on Information Society Services and Electronic Commerce (LSSI-CE).',
+        sections: [
+          {
+            title: 'Data controller',
+            blocks: [
+              'The controller of the personal data collected through this website is {company}, tax ID {nif}, with registered office at {address}.',
+              'For any question relating to data protection you can write to {email}.',
+            ],
+          },
+          {
+            title: 'Purpose of the processing',
+            blocks: [
+              'The purpose of this website is to:',
+              [
+                'Provide information about the events organised by the operator.',
+                'Give access to the ticketing platform.',
+                'Answer enquiries sent by users via email, telephone or WhatsApp.',
+                'Obtain aggregated statistics on the use of the website in order to improve the browsing experience.',
+              ],
+            ],
+          },
+          {
+            title: 'Data processed',
+            blocks: [
+              'The operator does not ask users to register and does not collect personal data through forms of its own.',
+              'When a user gets in touch by email, telephone or WhatsApp, the data provided is used solely to answer that enquiry.',
+              'In addition, certain technical and statistical data required for the operation and analysis of the website may be collected while browsing.',
+            ],
+          },
+          {
+            title: 'Legal basis',
+            blocks: [
+              'The legal bases for the processing are:',
+              [
+                'The legitimate interest of the controller in maintaining the security and operation of the website and understanding its use through aggregated statistics.',
+                'The consent of the user when voluntarily getting in touch by email, telephone or WhatsApp.',
+                'The performance of the contractual relationship between the user and Fourvenues when the user enters the ticket purchase process.',
+              ],
+            ],
+          },
+          {
+            title: 'Ticket sales',
+            blocks: [
+              'Tickets are purchased through the Fourvenues platform.',
+              'Once the user starts the purchase process, personal data is processed directly by that platform under its own terms and privacy policy.',
+              'The operator of this website does not take part in the processing of the personal data required to buy a ticket, other than any data subsequently passed on to it in the course of organising the event.',
+            ],
+          },
+          {
+            title: 'Analytics and third-party services',
+            blocks: [
+              'This site uses Vercel Analytics to obtain usage statistics, improve the performance of the website and understand visitor interaction in aggregate. The service does not use advertising cookies and does not identify individual visitors.',
+              'Loading certain parts of the site also makes requests to the following providers, which may log the visitor’s IP address as part of the normal operation of their services:',
+              [
+                'Vercel, as hosting provider and provider of the aggregated analytics.',
+                'Fourvenues, when the ticketing embedded in the site is opened.',
+                'OpenStreetMap and CARTO, which supply the imagery for the location map.',
+              ],
+            ],
+          },
+          {
+            title: 'Data retention',
+            blocks: [
+              'Data received by email, telephone or WhatsApp is kept only for as long as is necessary to deal with the enquiry or to comply with any applicable legal obligation.',
+            ],
+          },
+          {
+            title: 'Recipients',
+            blocks: [
+              'Personal data will not be disclosed to third parties except where required by law or where necessary to provide the services requested by the user.',
+            ],
+          },
+          {
+            title: 'Your rights',
+            blocks: [
+              'Users may exercise their rights of:',
+              [
+                'Access.',
+                'Rectification.',
+                'Erasure.',
+                'Objection.',
+                'Restriction of processing.',
+                'Portability.',
+              ],
+              'To do so, send a request to {email} stating which right you wish to exercise.',
+              'Users also have the right to lodge a complaint with the Spanish Data Protection Agency (www.aepd.es) if they believe that the processing of their data does not comply with the applicable regulations.',
+            ],
+          },
+          {
+            title: 'Event photography',
+            blocks: [
+              'Photographs and videos of events organised by the operator may be published on this website.',
+              'Attending those events may involve images being captured and used for promotional, informational and advertising purposes, in accordance with the conditions accepted by attendees when purchasing tickets.',
+              'Anyone appearing in an image who believes its publication affects their rights may request that it be reviewed or removed by writing to {email}.',
+            ],
+          },
+          {
+            title: 'Changes',
+            blocks: [
+              'The operator may amend this Privacy Policy to reflect legislative or technical changes.',
+              'The version published on the website is always the version in force.',
+            ],
+          },
+        ],
+      },
+      notice: {
+        intro:
+          'In compliance with Spanish Law 34/2002 of 11 July on Information Society Services and Electronic Commerce (LSSI-CE), the identifying details of the operator of this website and the terms governing its use are set out below.',
+        sections: [
+          {
+            title: 'Website operator',
+            blocks: [
+              'This website is owned by {company}, tax ID {nif}, with registered office at {address}.',
+              'Contact email: {email}. Telephone: {phone}.',
+            ],
+          },
+          {
+            title: 'Purpose',
+            blocks: [
+              'The purpose of this website is to provide information about the events organised by the operator, to make information related to those events available, and to give access to the external ticketing platform.',
+            ],
+          },
+          {
+            title: 'Ticket sales',
+            blocks: [
+              'Tickets are purchased through the Fourvenues platform, integrated by means of links or an iframe.',
+              'The purchase process, the processing of personal data and the corresponding contractual terms are the responsibility of Fourvenues, and its own terms of use and privacy policy apply.',
+            ],
+          },
+          {
+            title: 'Intellectual property',
+            blocks: [
+              'All content on the website — including text, photographs, videos, logos, graphic design and any other element — belongs to the operator or is used under the corresponding licence.',
+              'Reproduction, distribution or use without prior authorisation is prohibited, except in the cases permitted by the applicable legislation.',
+            ],
+          },
+          {
+            title: 'Photographs and audiovisual material',
+            blocks: [
+              'The images and videos published on this website relate to events organised by the operator.',
+              'Attending those events may involve images being captured and used for informational, promotional and advertising purposes, in accordance with the conditions accepted by attendees during the ticket purchase process and with the applicable regulations.',
+              'Anyone who believes that a published image affects their rights may request that it be reviewed or removed by writing to {email}.',
+            ],
+          },
+          {
+            title: 'Liability',
+            blocks: [
+              'The operator does not guarantee that the published content is free of errors, but will take reasonable steps to correct them once detected.',
+              'Nor is the operator responsible for the availability, operation or content of services provided by third parties that may be reached through links or integrations present on this website.',
+            ],
+          },
+          {
+            title: 'Governing law',
+            blocks: [
+              'This Legal Notice is governed by Spanish law.',
+              'Any dispute arising from the use of the website shall be settled by the courts and tribunals designated under the applicable regulations.',
+            ],
+          },
+        ],
+      },
+    },
   },
 
   fr: {
@@ -432,6 +804,14 @@ export const translations = {
         lead: 'Un lieu singulier pour célébrer à votre façon.',
         sectionTitle: 'VOTRE ÉVÉNEMENT AU QUARTIER',
         imageAlt: 'Salle préparée pour un événement privé au Quartier Barcelona',
+      },
+      privacy: {
+        name: 'POLITIQUE DE CONFIDENTIALITÉ',
+        lead: 'Comment les données personnelles sont traitées sur ce site.',
+      },
+      legal: {
+        name: 'MENTIONS LÉGALES',
+        lead: 'Éditeur, conditions d’utilisation et responsabilité de ce site.',
       },
     },
     about: {
@@ -553,6 +933,178 @@ export const translations = {
       partners: 'PARTENAIRES',
       instagram: 'Quartier Barcelona sur Instagram',
     },
+    legal: {
+      updatedLabel: 'DERNIÈRE MISE À JOUR',
+      holderLabel: 'ÉDITEUR',
+      nifLabel: 'NIF / CIF',
+      addressLabel: 'SIÈGE SOCIAL',
+      emailLabel: 'CONTACT',
+      indexLabel: 'SOMMAIRE',
+      prevail:
+        'Traduction fournie à titre indicatif. En cas de divergence, la version espagnole de ce texte prévaut.',
+      privacy: {
+        intro:
+          'La présente Politique de Confidentialité régit le traitement des données personnelles effectué via ce site web, conformément au Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 (Règlement général sur la protection des données — RGPD), à la Loi organique espagnole 3/2018 du 5 décembre relative à la protection des données personnelles et à la garantie des droits numériques (LOPDGDD) et à la Loi espagnole 34/2002 du 11 juillet relative aux services de la société de l’information et au commerce électronique (LSSI-CE).',
+        sections: [
+          {
+            title: 'Responsable du traitement',
+            blocks: [
+              'Le responsable du traitement des données personnelles collectées via ce site web est {company}, NIF/CIF {nif}, dont le siège social est situé {address}.',
+              'Pour toute question relative à la protection des données, vous pouvez écrire à {email}.',
+            ],
+          },
+          {
+            title: 'Finalité du traitement',
+            blocks: [
+              'Ce site web a pour finalité de :',
+              [
+                'Informer sur les événements organisés par l’éditeur.',
+                'Faciliter l’accès à la plateforme de billetterie.',
+                'Répondre aux demandes des utilisateurs par e-mail, téléphone ou WhatsApp.',
+                'Obtenir des statistiques agrégées sur l’utilisation du site afin d’améliorer l’expérience de navigation.',
+              ],
+            ],
+          },
+          {
+            title: 'Données traitées',
+            blocks: [
+              'L’éditeur ne demande pas la création de comptes et ne collecte pas de données personnelles au moyen de formulaires propres.',
+              'Lorsqu’un utilisateur prend contact par e-mail, téléphone ou WhatsApp, les données communiquées sont utilisées uniquement pour répondre à sa demande.',
+              'Par ailleurs, certaines données techniques et statistiques nécessaires au fonctionnement et à l’analyse du site peuvent être collectées pendant la navigation.',
+            ],
+          },
+          {
+            title: 'Base juridique',
+            blocks: [
+              'Les bases légales du traitement sont :',
+              [
+                'L’intérêt légitime du responsable à assurer la sécurité et le fonctionnement du site et à en connaître l’usage au moyen de statistiques agrégées.',
+                'Le consentement de l’utilisateur lorsqu’il prend volontairement contact par e-mail, téléphone ou WhatsApp.',
+                'L’exécution de la relation contractuelle entre l’utilisateur et Fourvenues lorsque celui-ci accède au processus d’achat de billets.',
+              ],
+            ],
+          },
+          {
+            title: 'Billetterie',
+            blocks: [
+              'L’achat de billets s’effectue via la plateforme Fourvenues.',
+              'Dès que l’utilisateur engage le processus d’achat, les données personnelles sont traitées directement par cette plateforme, selon ses propres conditions et sa politique de confidentialité.',
+              'L’éditeur du présent site n’intervient pas dans le traitement des données personnelles nécessaires à l’achat de billets, à l’exception de celles qui peuvent lui être communiquées ensuite dans le cadre de l’organisation de l’événement.',
+            ],
+          },
+          {
+            title: 'Analyse d’audience et services tiers',
+            blocks: [
+              'Ce site utilise Vercel Analytics afin d’obtenir des statistiques d’utilisation, d’améliorer les performances du site et de connaître de manière agrégée l’interaction des visiteurs. Ce service n’utilise pas de cookies publicitaires et n’identifie pas individuellement les visiteurs.',
+              'Le chargement de certaines parties du site entraîne également des requêtes vers les prestataires suivants, susceptibles d’enregistrer l’adresse IP du visiteur dans le cadre du fonctionnement normal de leurs services :',
+              [
+                'Vercel, hébergeur du site et fournisseur de l’analyse agrégée.',
+                'Fourvenues, lorsque la billetterie intégrée au site est ouverte.',
+                'OpenStreetMap et CARTO, qui fournissent les images de la carte de localisation.',
+              ],
+            ],
+          },
+          {
+            title: 'Conservation des données',
+            blocks: [
+              'Les données reçues par e-mail, téléphone ou WhatsApp sont conservées uniquement pendant la durée nécessaire au traitement de la demande ou au respect des obligations légales applicables.',
+            ],
+          },
+          {
+            title: 'Destinataires',
+            blocks: [
+              'Aucune donnée personnelle n’est communiquée à des tiers, sauf obligation légale ou lorsque cela est nécessaire à la fourniture des services demandés par l’utilisateur.',
+            ],
+          },
+          {
+            title: 'Droits',
+            blocks: [
+              'Les utilisateurs peuvent exercer leurs droits :',
+              [
+                'D’accès.',
+                'De rectification.',
+                'D’effacement.',
+                'D’opposition.',
+                'À la limitation du traitement.',
+                'À la portabilité.',
+              ],
+              'Pour ce faire, ils peuvent adresser une demande à {email} en indiquant le droit qu’ils souhaitent exercer.',
+              'Ils disposent également du droit d’introduire une réclamation auprès de l’Agence espagnole de protection des données (www.aepd.es) s’ils estiment que le traitement de leurs données n’est pas conforme à la réglementation en vigueur.',
+            ],
+          },
+          {
+            title: 'Photographies d’événements',
+            blocks: [
+              'Des photographies et des vidéos correspondant à des événements organisés par l’éditeur peuvent être publiées sur ce site.',
+              'La participation à ces événements peut impliquer la captation et l’utilisation d’images à des fins promotionnelles, informatives et publicitaires, conformément aux conditions acceptées par les participants lors de l’achat des billets.',
+              'Toute personne apparaissant sur une image et estimant que sa publication porte atteinte à ses droits peut en demander la révision ou le retrait en écrivant à {email}.',
+            ],
+          },
+          {
+            title: 'Modifications',
+            blocks: [
+              'L’éditeur peut modifier la présente Politique de Confidentialité afin de l’adapter à des évolutions législatives ou techniques.',
+              'La version publiée sur le site est toujours celle en vigueur.',
+            ],
+          },
+        ],
+      },
+      notice: {
+        intro:
+          'Conformément à la Loi espagnole 34/2002 du 11 juillet relative aux services de la société de l’information et au commerce électronique (LSSI-CE), les informations d’identification de l’éditeur de ce site et les conditions régissant son utilisation sont indiquées ci-dessous.',
+        sections: [
+          {
+            title: 'Éditeur du site',
+            blocks: [
+              'Le présent site web est édité par {company}, NIF/CIF {nif}, dont le siège social est situé {address}.',
+              'Adresse e-mail de contact : {email}. Téléphone : {phone}.',
+            ],
+          },
+          {
+            title: 'Objet',
+            blocks: [
+              'Le présent site a pour objet de présenter les événements organisés par l’éditeur, de permettre la consultation des informations qui s’y rapportent et de donner accès à la plateforme externe de billetterie.',
+            ],
+          },
+          {
+            title: 'Billetterie',
+            blocks: [
+              'L’achat de billets s’effectue via la plateforme Fourvenues, intégrée au moyen de liens ou d’un iframe.',
+              'Le processus d’achat, le traitement des données personnelles et les conditions contractuelles correspondantes relèvent de la responsabilité de Fourvenues, dont les propres conditions d’utilisation et politique de confidentialité s’appliquent.',
+            ],
+          },
+          {
+            title: 'Propriété intellectuelle',
+            blocks: [
+              'L’ensemble des contenus du site — textes, photographies, vidéos, logotypes, création graphique et tout autre élément — appartient à l’éditeur ou est utilisé avec l’autorisation correspondante.',
+              'Toute reproduction, distribution ou utilisation sans autorisation préalable est interdite, sauf dans les cas permis par la législation en vigueur.',
+            ],
+          },
+          {
+            title: 'Photographies et matériel audiovisuel',
+            blocks: [
+              'Les images et vidéos publiées sur ce site correspondent à des événements organisés par l’éditeur.',
+              'La participation à ces événements peut impliquer la captation et l’utilisation d’images à des fins informatives, promotionnelles et publicitaires, conformément aux conditions acceptées par les participants lors de l’achat des billets et à la réglementation en vigueur.',
+              'Toute personne estimant qu’une image publiée porte atteinte à ses droits peut en demander la révision ou le retrait en écrivant à {email}.',
+            ],
+          },
+          {
+            title: 'Responsabilité',
+            blocks: [
+              'L’éditeur ne garantit pas l’absence d’erreurs dans les contenus publiés, mais prendra les mesures raisonnables pour les corriger dès qu’elles seront détectées.',
+              'Il n’est pas davantage responsable de la disponibilité, du fonctionnement ou du contenu des services fournis par des tiers accessibles via des liens ou des intégrations présents sur ce site.',
+            ],
+          },
+          {
+            title: 'Droit applicable',
+            blocks: [
+              'Les présentes Mentions Légales sont régies par le droit espagnol.',
+              'Tout litige découlant de l’utilisation du site relèvera des juridictions compétentes en vertu de la réglementation applicable.',
+            ],
+          },
+        ],
+      },
+    },
   },
 
   de: {
@@ -601,6 +1153,14 @@ export const translations = {
         lead: 'Ein besonderer Ort, um auf Ihre Art zu feiern.',
         sectionTitle: 'IHR EVENT IM QUARTIER',
         imageAlt: 'Für ein privates Event vorbereiteter Saal im Quartier Barcelona',
+      },
+      privacy: {
+        name: 'DATENSCHUTZERKLÄRUNG',
+        lead: 'Wie personenbezogene Daten auf dieser Website verarbeitet werden.',
+      },
+      legal: {
+        name: 'IMPRESSUM',
+        lead: 'Anbieter, Nutzungsbedingungen und Haftung dieser Website.',
       },
     },
     about: {
@@ -721,6 +1281,178 @@ export const translations = {
       rights: 'QUARTIER BARCELONA',
       partners: 'PARTNER',
       instagram: 'Quartier Barcelona auf Instagram',
+    },
+    legal: {
+      updatedLabel: 'LETZTE AKTUALISIERUNG',
+      holderLabel: 'ANBIETER',
+      nifLabel: 'STEUERNUMMER',
+      addressLabel: 'SITZ',
+      emailLabel: 'KONTAKT',
+      indexLabel: 'INHALT',
+      prevail:
+        'Diese Übersetzung dient der besseren Verständlichkeit. Im Falle von Abweichungen ist die spanische Fassung dieses Textes maßgeblich.',
+      privacy: {
+        intro:
+          'Diese Datenschutzerklärung regelt die Verarbeitung personenbezogener Daten über diese Website gemäß der Verordnung (EU) 2016/679 des Europäischen Parlaments und des Rates vom 27. April 2016 (Datenschutz-Grundverordnung — DSGVO), dem spanischen Organgesetz 3/2018 vom 5. Dezember über den Schutz personenbezogener Daten und die Gewährleistung digitaler Rechte (LOPDGDD) sowie dem spanischen Gesetz 34/2002 vom 11. Juli über Dienste der Informationsgesellschaft und den elektronischen Geschäftsverkehr (LSSI-CE).',
+        sections: [
+          {
+            title: 'Verantwortlicher',
+            blocks: [
+              'Verantwortlich für die Verarbeitung der über diese Website erhobenen personenbezogenen Daten ist {company}, Steuernummer {nif}, mit Sitz in {address}.',
+              'Bei Fragen zum Datenschutz können Sie sich an {email} wenden.',
+            ],
+          },
+          {
+            title: 'Zweck der Verarbeitung',
+            blocks: [
+              'Diese Website dient dazu:',
+              [
+                'Über die vom Anbieter organisierten Veranstaltungen zu informieren.',
+                'Den Zugang zur Ticketplattform zu ermöglichen.',
+                'Anfragen der Nutzer per E-Mail, Telefon oder WhatsApp zu beantworten.',
+                'Aggregierte Statistiken über die Nutzung der Website zu erhalten, um das Nutzungserlebnis zu verbessern.',
+              ],
+            ],
+          },
+          {
+            title: 'Verarbeitete Daten',
+            blocks: [
+              'Der Anbieter verlangt keine Registrierung und erhebt keine personenbezogenen Daten über eigene Formulare.',
+              'Wenn ein Nutzer per E-Mail, Telefon oder WhatsApp Kontakt aufnimmt, werden die übermittelten Daten ausschließlich zur Beantwortung dieser Anfrage verwendet.',
+              'Darüber hinaus können während des Besuchs bestimmte technische und statistische Daten erhoben werden, die für den Betrieb und die Auswertung der Website erforderlich sind.',
+            ],
+          },
+          {
+            title: 'Rechtsgrundlage',
+            blocks: [
+              'Die Rechtsgrundlagen der Verarbeitung sind:',
+              [
+                'Das berechtigte Interesse des Verantwortlichen an der Sicherheit und dem Betrieb der Website sowie an der Kenntnis ihrer Nutzung anhand aggregierter Statistiken.',
+                'Die Einwilligung des Nutzers, wenn er freiwillig per E-Mail, Telefon oder WhatsApp Kontakt aufnimmt.',
+                'Die Erfüllung des Vertragsverhältnisses zwischen dem Nutzer und Fourvenues, sobald dieser den Ticketkauf startet.',
+              ],
+            ],
+          },
+          {
+            title: 'Ticketverkauf',
+            blocks: [
+              'Der Ticketkauf erfolgt über die Plattform Fourvenues.',
+              'Sobald der Nutzer den Kaufvorgang beginnt, werden die personenbezogenen Daten unmittelbar von dieser Plattform nach deren eigenen Bedingungen und Datenschutzbestimmungen verarbeitet.',
+              'Der Anbieter dieser Website ist an der Verarbeitung der für den Ticketkauf erforderlichen personenbezogenen Daten nicht beteiligt, mit Ausnahme jener Daten, die ihm im Rahmen der Veranstaltungsorganisation nachträglich übermittelt werden.',
+            ],
+          },
+          {
+            title: 'Analyse und Dienste Dritter',
+            blocks: [
+              'Diese Website nutzt Vercel Analytics, um Nutzungsstatistiken zu erhalten, die Leistung der Website zu verbessern und die Interaktion der Besucher in aggregierter Form zu verstehen. Der Dienst verwendet keine Werbe-Cookies und identifiziert keine einzelnen Besucher.',
+              'Beim Laden bestimmter Teile der Website werden zudem Anfragen an die folgenden Anbieter gestellt, die im Rahmen des normalen Betriebs ihrer Dienste die IP-Adresse des Besuchers protokollieren können:',
+              [
+                'Vercel als Hosting-Anbieter und Anbieter der aggregierten Analyse.',
+                'Fourvenues, sobald der in die Website eingebundene Ticketverkauf geöffnet wird.',
+                'OpenStreetMap und CARTO, die das Kartenmaterial für den Standort bereitstellen.',
+              ],
+            ],
+          },
+          {
+            title: 'Speicherdauer',
+            blocks: [
+              'Per E-Mail, Telefon oder WhatsApp erhaltene Daten werden nur so lange gespeichert, wie es zur Bearbeitung der Anfrage oder zur Erfüllung geltender gesetzlicher Pflichten erforderlich ist.',
+            ],
+          },
+          {
+            title: 'Empfänger',
+            blocks: [
+              'Personenbezogene Daten werden nicht an Dritte weitergegeben, außer aufgrund einer gesetzlichen Verpflichtung oder soweit dies für die vom Nutzer angeforderten Leistungen erforderlich ist.',
+            ],
+          },
+          {
+            title: 'Rechte',
+            blocks: [
+              'Nutzer können folgende Rechte geltend machen:',
+              [
+                'Auskunft.',
+                'Berichtigung.',
+                'Löschung.',
+                'Widerspruch.',
+                'Einschränkung der Verarbeitung.',
+                'Datenübertragbarkeit.',
+              ],
+              'Dazu genügt eine Anfrage an {email} unter Angabe des Rechts, das ausgeübt werden soll.',
+              'Darüber hinaus besteht das Recht, bei der spanischen Datenschutzbehörde (www.aepd.es) Beschwerde einzulegen, wenn die Verarbeitung der Daten aus Sicht des Nutzers nicht den geltenden Vorschriften entspricht.',
+            ],
+          },
+          {
+            title: 'Veranstaltungsfotos',
+            blocks: [
+              'Auf dieser Website können Fotos und Videos von Veranstaltungen des Anbieters veröffentlicht werden.',
+              'Die Teilnahme an diesen Veranstaltungen kann die Aufnahme und Verwendung von Bildern zu Werbe-, Informations- und Publizitätszwecken umfassen, entsprechend den beim Ticketkauf akzeptierten Bedingungen.',
+              'Wer auf einer Aufnahme zu sehen ist und der Auffassung ist, dass die Veröffentlichung seine Rechte berührt, kann deren Überprüfung oder Entfernung unter {email} verlangen.',
+            ],
+          },
+          {
+            title: 'Änderungen',
+            blocks: [
+              'Der Anbieter kann diese Datenschutzerklärung ändern, um sie an gesetzliche oder technische Entwicklungen anzupassen.',
+              'Maßgeblich ist stets die auf der Website veröffentlichte Fassung.',
+            ],
+          },
+        ],
+      },
+      notice: {
+        intro:
+          'In Erfüllung des spanischen Gesetzes 34/2002 vom 11. Juli über Dienste der Informationsgesellschaft und den elektronischen Geschäftsverkehr (LSSI-CE) werden nachstehend die Angaben zum Anbieter dieser Website sowie die Bedingungen ihrer Nutzung mitgeteilt.',
+        sections: [
+          {
+            title: 'Anbieter der Website',
+            blocks: [
+              'Diese Website wird betrieben von {company}, Steuernummer {nif}, mit Sitz in {address}.',
+              'Kontakt-E-Mail: {email}. Telefon: {phone}.',
+            ],
+          },
+          {
+            title: 'Gegenstand',
+            blocks: [
+              'Diese Website dient dazu, über die vom Anbieter organisierten Veranstaltungen zu informieren, zugehörige Informationen abrufbar zu machen und den Zugang zur externen Ticketplattform zu ermöglichen.',
+            ],
+          },
+          {
+            title: 'Ticketverkauf',
+            blocks: [
+              'Der Erwerb von Tickets erfolgt über die Plattform Fourvenues, die per Link oder iframe eingebunden ist.',
+              'Der Kaufvorgang, die Verarbeitung der personenbezogenen Daten und die entsprechenden Vertragsbedingungen liegen in der Verantwortung von Fourvenues; es gelten deren eigene Nutzungsbedingungen und Datenschutzerklärung.',
+            ],
+          },
+          {
+            title: 'Urheberrecht',
+            blocks: [
+              'Sämtliche Inhalte der Website — Texte, Fotos, Videos, Logos, grafische Gestaltung und alle weiteren Elemente — sind Eigentum des Anbieters oder werden mit entsprechender Genehmigung genutzt.',
+              'Ihre Vervielfältigung, Verbreitung oder Nutzung ohne vorherige Genehmigung ist untersagt, außer in den gesetzlich zulässigen Fällen.',
+            ],
+          },
+          {
+            title: 'Fotos und audiovisuelles Material',
+            blocks: [
+              'Die auf dieser Website veröffentlichten Bilder und Videos stammen von Veranstaltungen des Anbieters.',
+              'Die Teilnahme an diesen Veranstaltungen kann die Aufnahme und Verwendung von Bildern zu Informations-, Werbe- und Publizitätszwecken umfassen, entsprechend den beim Ticketkauf akzeptierten Bedingungen und den geltenden Vorschriften.',
+              'Wer der Auffassung ist, dass ein veröffentlichtes Bild seine Rechte berührt, kann dessen Überprüfung oder Entfernung unter {email} verlangen.',
+            ],
+          },
+          {
+            title: 'Haftung',
+            blocks: [
+              'Der Anbieter übernimmt keine Gewähr für die Fehlerfreiheit der veröffentlichten Inhalte, wird jedoch angemessene Maßnahmen ergreifen, um erkannte Fehler zu beheben.',
+              'Ebenso wenig haftet der Anbieter für Verfügbarkeit, Funktion oder Inhalt der Dienste Dritter, die über Links oder Einbindungen auf dieser Website erreichbar sind.',
+            ],
+          },
+          {
+            title: 'Anwendbares Recht',
+            blocks: [
+              'Dieses Impressum unterliegt spanischem Recht.',
+              'Für Streitigkeiten aus der Nutzung der Website sind die nach den anwendbaren Vorschriften zuständigen Gerichte berufen.',
+            ],
+          },
+        ],
+      },
     },
   },
 }

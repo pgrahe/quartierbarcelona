@@ -155,6 +155,17 @@ for (const { locale, routeId, path: urlPath } of pages) {
 
 /* ---- sitemap.xml ---- */
 const lastmod = new Date().toISOString().slice(0, 10)
+
+/* The legal pages belong in the sitemap — they are real, indexable documents
+   and Google reads their presence as a trust signal — but they are not what
+   the site is for, and they change once a year rather than weekly. */
+const LEGAL_ROUTES = new Set(['privacy', 'legal'])
+
+function sitemapPriority(routeId, locale) {
+  if (LEGAL_ROUTES.has(routeId)) return locale.isDefault ? '0.3' : '0.2'
+  if (routeId === 'home') return locale.isDefault ? '1.0' : '0.8'
+  return locale.isDefault ? '0.8' : '0.6'
+}
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -168,8 +179,8 @@ ${LOCALES.map(
 ).join('\n')}
     <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(pathFor(routeId, 'es'))}" />
     <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>${routeId === 'home' ? (locale.isDefault ? '1.0' : '0.8') : locale.isDefault ? '0.8' : '0.6'}</priority>
+    <changefreq>${LEGAL_ROUTES.has(routeId) ? 'yearly' : 'weekly'}</changefreq>
+    <priority>${sitemapPriority(routeId, locale)}</priority>
   </url>`,
   )
   .join('\n')}

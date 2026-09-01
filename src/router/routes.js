@@ -3,10 +3,12 @@
  *
  * The site is a set of real, separately indexable pages:
  *
- *   /                     home            (also /en/  /fr/  /de/)
- *   /sobre-nosotros       about           (/en/about, /fr/a-propos, /de/ueber-uns)
- *   /vip-experience       vip             (same slug in every language — brand)
- *   /private-events       events          (same slug in every language — brand)
+ *   /                        home       (also /en/  /fr/  /de/)
+ *   /sobre-nosotros          about      (/en/about, /fr/a-propos, /de/ueber-uns)
+ *   /vip-experience          vip        (same slug in every language — brand)
+ *   /private-events          events     (same slug in every language — brand)
+ *   /politica-de-privacidad  privacy    (/en/privacy-policy, …)
+ *   /aviso-legal             legal      (/en/legal-notice, …)
  *
  * Slugs are per language wherever the word is genuinely translated, and
  * identical wherever the label is brand English that already appears
@@ -30,6 +32,22 @@ export const ROUTES = [
   {
     id: 'events',
     slugs: { es: 'private-events', en: 'private-events', fr: 'private-events', de: 'private-events' },
+  },
+  /* The legal pages. Translated slugs, because these are the words a visitor
+     scans the footer for in their own language — and because "Impressum" is
+     the term a German visitor expects to find in a URL, not "aviso-legal". */
+  {
+    id: 'privacy',
+    slugs: {
+      es: 'politica-de-privacidad',
+      en: 'privacy-policy',
+      fr: 'politique-de-confidentialite',
+      de: 'datenschutz',
+    },
+  },
+  {
+    id: 'legal',
+    slugs: { es: 'aviso-legal', en: 'legal-notice', fr: 'mentions-legales', de: 'impressum' },
   },
 ]
 

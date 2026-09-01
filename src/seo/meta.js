@@ -37,6 +37,18 @@ export const SEO = {
         'Celebra tu evento privado, corporativo o tu fiesta en Quartier Barcelona. Un espacio único en Pedralbes, a tu medida. Solicita información.',
       ogImageAlt: 'Espacio para eventos privados en Quartier Barcelona',
     },
+    privacy: {
+      title: 'Política de privacidad | Quartier Barcelona',
+      description:
+        'Cómo se tratan los datos personales en quartierbarcelona.com: responsable, finalidades, base jurídica, conservación y ejercicio de derechos.',
+      ogImageAlt: 'Quartier Barcelona, club en Pedralbes',
+    },
+    legal: {
+      title: 'Aviso legal | Quartier Barcelona',
+      description:
+        'Datos identificativos del titular de quartierbarcelona.com, objeto del sitio, propiedad intelectual, responsabilidad y legislación aplicable.',
+      ogImageAlt: 'Quartier Barcelona, club en Pedralbes',
+    },
   },
 
   en: {
@@ -63,6 +75,18 @@ export const SEO = {
       description:
         'Host your private event, corporate occasion or celebration at Quartier Barcelona. A singular space in Pedralbes, made yours. Get in touch.',
       ogImageAlt: 'Private events space at Quartier Barcelona',
+    },
+    privacy: {
+      title: 'Privacy policy | Quartier Barcelona',
+      description:
+        'How personal data is handled on quartierbarcelona.com: the controller, purposes, legal basis, retention and how to exercise your rights.',
+      ogImageAlt: 'Quartier Barcelona, a club in Pedralbes',
+    },
+    legal: {
+      title: 'Legal notice | Quartier Barcelona',
+      description:
+        'Identifying details of the operator of quartierbarcelona.com, the purpose of the site, intellectual property, liability and governing law.',
+      ogImageAlt: 'Quartier Barcelona, a club in Pedralbes',
     },
   },
 
@@ -91,6 +115,18 @@ export const SEO = {
         'Organisez votre événement privé, professionnel ou votre célébration au Quartier Barcelona. Un lieu singulier à Pedralbes, à votre mesure.',
       ogImageAlt: 'Espace pour événements privés au Quartier Barcelona',
     },
+    privacy: {
+      title: 'Politique de confidentialité | Quartier Barcelona',
+      description:
+        'Le traitement des données personnelles sur quartierbarcelona.com : responsable, finalités, base juridique, conservation et exercice des droits.',
+      ogImageAlt: 'Quartier Barcelona, club à Pedralbes',
+    },
+    legal: {
+      title: 'Mentions légales | Quartier Barcelona',
+      description:
+        'Identification de l’éditeur de quartierbarcelona.com, objet du site, propriété intellectuelle, responsabilité et droit applicable.',
+      ogImageAlt: 'Quartier Barcelona, club à Pedralbes',
+    },
   },
 
   de: {
@@ -117,6 +153,18 @@ export const SEO = {
       description:
         'Feiern Sie Ihr privates Event, Ihre Firmenfeier oder Ihren Anlass im Quartier Barcelona. Ein besonderer Ort in Pedralbes, ganz nach Ihnen.',
       ogImageAlt: 'Raum für private Events im Quartier Barcelona',
+    },
+    privacy: {
+      title: 'Datenschutzerklärung | Quartier Barcelona',
+      description:
+        'Verarbeitung personenbezogener Daten auf quartierbarcelona.com: Verantwortlicher, Zwecke, Rechtsgrundlage, Speicherdauer und Ihre Rechte.',
+      ogImageAlt: 'Quartier Barcelona, Club in Pedralbes',
+    },
+    legal: {
+      title: 'Impressum | Quartier Barcelona',
+      description:
+        'Angaben zum Anbieter von quartierbarcelona.com, Gegenstand der Website, Urheberrecht, Haftung und anwendbares Recht.',
+      ogImageAlt: 'Quartier Barcelona, Club in Pedralbes',
     },
   },
 }

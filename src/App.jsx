@@ -15,6 +15,8 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import VipPage from './pages/VipPage'
 import EventsPage from './pages/EventsPage'
+import PrivacyPage from './pages/PrivacyPage'
+import LegalPage from './pages/LegalPage'
 
 import './App.css'
 
@@ -23,6 +25,8 @@ const PAGES = {
   about: AboutPage,
   vip: VipPage,
   events: EventsPage,
+  privacy: PrivacyPage,
+  legal: LegalPage,
 }
 
 export default function App() {
