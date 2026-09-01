@@ -1,48 +1,132 @@
 /* -------------------------------------------------------------------------
- * Intro — opening line on stone, same palette as the light type panels.
- *
- * Background #E7E1D6 (--stone), title black, body grey.
+ * Intro — stone editorial under the hero (hero-perfection About layout).
  * ---------------------------------------------------------------------- */
 .intro.section {
   position: relative;
   isolation: isolate;
-  background: #e7e1d6;
+  background: var(--stone);
   color: var(--black);
-  padding-block: clamp(5rem, 17vw, 9.5rem) clamp(3.5rem, 11vw, 6.5rem);
+  overflow: visible;
 }
 
-/* No dark velvet layers on this beat — the ground is flat stone. */
-.intro__ground {
-  display: none;
-}
-
-.intro__inner {
+.intro__grid {
   position: relative;
   z-index: 1;
   display: grid;
-  justify-items: center;
-  text-align: center;
+  grid-template-columns: minmax(0, 6.5fr) minmax(0, 5fr);
+  gap: clamp(2.5rem, 6vw, 7rem);
+  align-items: center;
+}
+
+.intro__text {
+  padding-top: clamp(0rem, 3vw, 2.5rem);
+}
+
+.intro__eyebrow {
+  color: var(--bordeaux);
 }
 
 .intro__title {
   display: grid;
-  gap: 0.2em;
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
   font-family: var(--font-body);
-  font-size: clamp(1.6rem, 8.4vw, 3.25rem);
+  font-size: var(--fs-display);
   font-weight: var(--w-bold);
-  line-height: 1;
-  letter-spacing: 0.15em;
-  text-indent: 0.15em;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
   color: var(--black);
+  text-indent: 0;
+}
+
+.intro__title span:last-child {
+  padding-left: clamp(0rem, 4vw, 3.5rem);
 }
 
 .intro__body {
-  /* Wider measure so the pitch reads in fewer lines on a phone. */
-  max-width: min(42ch, 22.5rem);
-  margin-top: clamp(1.75rem, 6vw, 2.75rem);
-  font-size: clamp(0.9375rem, 3.8vw, 1rem);
-  line-height: 1.75;
-  color: rgba(0, 0, 0, 0.55);
+  display: grid;
+  gap: 1.25em;
+  max-width: var(--measure);
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+  font-size: var(--fs-body);
+  line-height: 1.72;
+  color: rgba(0, 0, 0, 0.66);
   text-wrap: pretty;
+}
+
+.intro__lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+.intro__closing {
+  max-width: var(--measure);
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-size: var(--fs-lead);
+  font-weight: var(--w-bold);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  text-wrap: balance;
+}
+
+.intro__meta {
+  display: grid;
+  gap: 1.25rem;
+  max-width: var(--measure);
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.intro__caption {
+  color: var(--black);
+  opacity: 0.42;
+}
+
+.intro__figure {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--ink);
+  margin: 0;
+}
+
+.intro__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% center;
+  scale: 1.06;
+  transition: scale 1.6s var(--ease-out);
+}
+
+.intro__figure[data-revealed='true'] img {
+  scale: 1;
+}
+
+@media (max-width: 900px) {
+  .intro__grid {
+    grid-template-columns: 1fr;
+    gap: clamp(2.75rem, 9vw, 4rem);
+    align-items: start;
+  }
+
+  .intro__text {
+    padding-top: 0;
+  }
+
+  .intro__figure {
+    aspect-ratio: 4 / 5;
+  }
+
+  .intro__title span:last-child {
+    padding-left: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__figure img {
+    scale: 1;
+    transition: none;
+  }
 }

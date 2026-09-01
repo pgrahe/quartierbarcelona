@@ -7,10 +7,10 @@ import './Navbar.css'
 /**
  * Desktop navigation.
  *
- * Floats transparently over the hero, then settles into a near-solid bar with
- * a hairline rule once the hero is behind us. On mobile it carries only the
- * hamburger, and only after the hero — the hero itself keeps its own minimal
- * logo + CTA pair (see Hero).
+ * Floats transparent over the page. Logo, links and hamburger use
+ * `mix-blend-mode: difference` so they read black on light grounds and white
+ * on dark ones — no solid bar. On mobile the chrome only appears once the
+ * hero has scrolled past (`solid`); the hero keeps its own logo + CTA until then.
  *
  * Every link is a real URL. Home and Contact point at the home page, Contact
  * with a hash, so it scrolls when you are already there and navigates first

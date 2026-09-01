@@ -11,7 +11,7 @@ import LocationMap from '../components/LocationMap'
 /**
  * Home.
  *
- * Read on a phone, top to bottom: the film, a short word about who we are,
+ * Read on a phone, top to bottom: the film, the stone A NEW CHAPTER editorial,
  * the programme, the collage, the table, the room you can take over, the
  * photographs running past, and then how to reach us and where we are.
  *

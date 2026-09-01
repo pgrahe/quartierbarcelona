@@ -60,7 +60,7 @@ main {
    in this list; they are gilt on black now, and the gilt reaches true black
    at its own edges, so a beige bleed under them would be a light band
    appearing out of nowhere. */
-:is(.explore, .dgrid--stone) + section::after {
+:is(.explore, .dgrid--stone, .intro) + section::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;

@@ -6,34 +6,17 @@
   padding-top: env(safe-area-inset-top);
   height: calc(var(--nav-h) + env(safe-area-inset-top));
   background: transparent;
-  transition:
-    background-color var(--t-base) var(--ease),
-    backdrop-filter var(--t-base) var(--ease),
-    border-color var(--t-base) var(--ease);
   border-bottom: 1px solid transparent;
+  pointer-events: none;
+  /* Blend the whole fixed bar with the page: white chrome → black on light,
+     white on dark. Must live on the fixed element itself — on children it
+     only composites against the empty bar and stays white. */
+  mix-blend-mode: difference;
 }
 
-/* Settles once the hero is behind us. Not glass — just black with enough
-   translucency that the page keeps moving underneath. */
-.nav[data-solid='true'] {
-  background: rgba(0, 0, 0, 0.82);
-  border-bottom-color: var(--stone-06);
-}
-
-@supports (backdrop-filter: blur(1px)) {
-  .nav[data-solid='true'] {
-    background: rgba(0, 0, 0, 0.62);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-  }
-}
-
-/* Behind the fullscreen menu the bar itself must not paint. */
 .nav[data-menu-open='true'] {
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom-color: transparent;
+  /* Fullscreen menu is dark under the bar — keep mark + X white. */
+  mix-blend-mode: normal;
 }
 
 .nav__inner {
@@ -44,6 +27,11 @@
   max-width: var(--maxw);
   margin-inline: auto;
   padding-inline: var(--gutter);
+  pointer-events: none;
+}
+
+.nav__inner > * {
+  pointer-events: auto;
 }
 
 /* ---- Logo ---- */
@@ -53,9 +41,11 @@
   transition: opacity var(--t-fast) var(--ease);
 }
 
+/* Force a pure-white mark so difference inverts to true black on stone. */
 .nav__logo img {
   width: clamp(112px, 11vw, 168px);
   height: auto;
+  filter: brightness(0) invert(1);
 }
 
 @media (hover: hover) {
@@ -80,11 +70,10 @@
   letter-spacing: var(--tr-nav);
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--stone-70);
-  transition: color var(--t-fast) var(--ease), translate var(--t-fast) var(--ease);
+  color: #fff;
+  transition: translate var(--t-fast) var(--ease);
 }
 
-/* Hairline that draws in from the left. */
 .nav__link::after {
   content: '';
   position: absolute;
@@ -100,7 +89,6 @@
 
 @media (hover: hover) {
   .nav__link:hover {
-    color: var(--stone);
     translate: 0 -1px;
   }
   .nav__link:hover::after {
@@ -108,15 +96,9 @@
   }
 }
 
-/* The page you are on keeps the rule drawn, so the bar always says where you
-   are. Full stone rather than the hover colour — this is state, not a hover. */
-.nav__link[data-active='true'] {
-  color: var(--stone);
-}
-
 .nav__link[data-active='true']::after {
   scale: 1 1;
-  background: var(--stone-40);
+  opacity: 0.45;
 }
 
 /* ---- Right end ---- */
@@ -125,6 +107,11 @@
   align-items: center;
   gap: clamp(1.25rem, 2.4vw, 2.25rem);
   flex: 0 0 auto;
+}
+
+.nav__langs .langs__btn,
+.nav__langs .langs__sep {
+  color: #fff;
 }
 
 /* ---- Hamburger (mobile only) ---- */
@@ -146,7 +133,7 @@
 .nav__burger-bars i {
   display: block;
   height: 1px;
-  background: var(--stone);
+  background: #fff;
   transition: translate var(--t-base) var(--ease-out), rotate var(--t-base) var(--ease-out);
 }
 
@@ -162,11 +149,6 @@
 
 /* -------------------------------------------------------------------------
  * Narrow desktop
- *
- * Between the mobile breakpoint and ~1200px the bar carries four links, the
- * language selector and the CTA. Measured at 901px it overflowed by 121px, so
- * the spacing tightens here rather than letting items collide. Paired with the
- * shortened "EVENTOS" label the Navbar uses (see Navbar.jsx).
  * ---------------------------------------------------------------------- */
 @media (min-width: 901px) and (max-width: 1200px) {
   .nav__inner {
@@ -194,8 +176,9 @@
 /* -------------------------------------------------------------------------
  * Mobile
  *
- * During the hero the bar is empty: the hero carries its own logo + CTA. Once
- * the hero is behind us the bar takes over, and the hamburger fades in.
+ * During the hero the bar is empty: the hero carries its own logo + CTA.
+ * `data-solid` only means "hero is behind us" — used to reveal the chrome,
+ * not to paint a bar background.
  * ---------------------------------------------------------------------- */
 @media (max-width: 900px) {
   .nav__links,
@@ -207,8 +190,6 @@
     display: grid;
   }
 
-  /* Hero state: nothing painted, nothing shown — and the empty bar must not
-     steal taps from the hero's own logo + CTA sitting underneath (z-index 3). */
   .nav:not([data-solid='true']):not([data-menu-open='true']) {
     pointer-events: none;
   }

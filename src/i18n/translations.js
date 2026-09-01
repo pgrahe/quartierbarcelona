@@ -101,7 +101,7 @@ export const translations = {
         'Durante décadas, este lugar ha formado parte de la noche de Barcelona. Hoy, esa historia continúa bajo una nueva identidad.',
         'Quartier nace para llevar ese legado al presente: un espacio completamente renovado, un nuevo diseño y una nueva forma de vivir la noche. Un punto de encuentro donde la música, el diseño, la gente y la energía se unen para crear algo único.',
       ],
-      closing: 'Una nueva etapa. Una nueva identidad. Una nueva generación.',
+      closing: 'Porque salir es solo el principio.',
       coda: [
         'Aquí la música es solo el inicio. Cada noche está pensada para convertirse en una experiencia: desde quienes están detrás de la cabina hasta cada detalle del espacio y cada persona que lo hace posible.',
       ],
@@ -276,7 +276,7 @@ export const translations = {
         'For decades, this place has been part of the nights of Barcelona. Today that story continues under a new identity.',
         'Quartier exists to carry that legacy into the present: a completely renovated space, a new design and a new way of living the night. A meeting point where music, design, people and energy come together to create something singular.',
       ],
-      closing: 'A new chapter. A new identity. A new generation.',
+      closing: 'Because going out is only the beginning.',
       coda: [
         'Here the music is only the beginning. Every night is built to become an experience: from whoever is behind the booth to every detail of the space and every person who makes it possible.',
       ],
@@ -445,7 +445,7 @@ export const translations = {
         'Pendant des décennies, ce lieu a fait partie des nuits de Barcelone. Aujourd’hui, cette histoire se poursuit sous une nouvelle identité.',
         'Quartier naît pour amener cet héritage jusqu’au présent : un espace entièrement rénové, un nouveau design et une nouvelle façon de vivre la nuit. Un point de rencontre où la musique, le design, les gens et l’énergie se réunissent pour créer quelque chose d’unique.',
       ],
-      closing: 'Une nouvelle étape. Une nouvelle identité. Une nouvelle génération.',
+      closing: "Parce que sortir n'est que le commencement.",
       coda: [
         'Ici, la musique n’est qu’un début. Chaque nuit est pensée pour devenir une expérience : de celles et ceux qui sont derrière la cabine jusqu’au moindre détail du lieu et à chaque personne qui le rend possible.',
       ],
@@ -614,7 +614,7 @@ export const translations = {
         'Jahrzehntelang war dieser Ort Teil der Nächte Barcelonas. Heute wird diese Geschichte unter einer neuen Identität fortgeschrieben.',
         'Quartier bringt dieses Erbe in die Gegenwart: ein vollständig erneuerter Raum, ein neues Design und eine neue Art, die Nacht zu erleben. Ein Treffpunkt, an dem Musik, Design, Menschen und Energie zusammenkommen und etwas Einzigartiges entsteht.',
       ],
-      closing: 'Ein neues Kapitel. Eine neue Identität. Eine neue Generation.',
+      closing: 'Denn Ausgehen ist erst der Anfang.',
       coda: [
         'Hier ist die Musik nur der Anfang. Jede Nacht ist darauf angelegt, ein Erlebnis zu werden: von allen hinter dem Pult bis zu jedem Detail des Raums und jeder Person, die ihn möglich macht.',
       ],

@@ -70,9 +70,8 @@ export default function App() {
         {t.nav.skipToContent}
       </a>
 
-      {/* Only the home page opens on the video hero, so only the home page has
-          a transparent bar to begin with. Everywhere else the page starts with
-          a header the bar has to sit legibly on top of. */}
+      {/* On home, `solid` flips once the hero scrolls past (mobile chrome
+          reveal). The bar stays transparent everywhere — contrast is blend. */}
       <Navbar solid={!isHome || heroPassed} menuOpen={menuOpen} onToggleMenu={toggleMenu} />
       <MobileMenu open={menuOpen} onClose={closeMenu} />
 

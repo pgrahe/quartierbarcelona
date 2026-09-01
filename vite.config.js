@@ -193,8 +193,23 @@ function pinAssetsPlugin() {
   }
 }
 
+/** Email-footer asset: exact path without extension → PNG in public/. */
+function emailLogoPlugin() {
+  return {
+    name: 'email-logo-url',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.split('?')[0] === '/logo_sinfondo_quartier_negro') {
+          req.url = '/logo_sinfondo_quartier_negro.png'
+        }
+        next()
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [pinAssetsPlugin(), react()],
+  plugins: [pinAssetsPlugin(), emailLogoPlugin(), react()],
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-dom/client', 'leaflet'],
   },

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 /**
  * True once the hero has scrolled past the given threshold.
  *
- * Drives two things: the navbar going from transparent to solid, and the
- * mobile hamburger appearing only after the hero. Uses an IntersectionObserver
- * on a sentinel rather than a scroll listener, so it costs nothing per frame.
+ * On mobile this reveals the navbar chrome (logo + hamburger) after the hero;
+ * the bar itself stays transparent and contrasts via mix-blend-mode. Uses an
+ * IntersectionObserver on a sentinel rather than a scroll listener.
  *
  * `resetKey` exists because the hero is not on every page: pass the current
  * route and the sentinel is torn down when we leave the home page and built
