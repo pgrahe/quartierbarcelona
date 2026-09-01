@@ -1,6 +1,6 @@
 # Quartier Barcelona — site
 
-Four pages in four languages — sixteen real, prerendered HTML documents. No CMS,
+Six pages in four languages — twenty-four real, prerendered HTML documents. No CMS,
 no router dependency: the router is ~120 lines in `src/router/`.
 
 | Page | ES | EN | FR | DE |
@@ -9,6 +9,8 @@ no router dependency: the router is ~120 lines in `src/router/`.
 | About | `/sobre-nosotros` | `/en/about` | `/fr/a-propos` | `/de/ueber-uns` |
 | VIP | `/vip-experience` | `/en/vip-experience` | … | … |
 | Private events | `/private-events` | `/en/private-events` | … | … |
+| Privacy | `/politica-de-privacidad` | `/en/privacy-policy` | `/fr/politique-de-confidentialite` | `/de/datenschutz` |
+| Legal notice | `/aviso-legal` | `/en/legal-notice` | `/fr/mentions-legales` | `/de/impressum` |
 
 Contact and location stay on the home page, at the bottom — `/#contacto`.
 
@@ -33,6 +35,8 @@ is CSS transitions.
 | **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` / `about.coda` (×4 languages) |
 | **The programme (PRÓXIMOS EVENTOS)** | `src/config/site.js` → `EVENTS` — currently placeholder test nights |
 | **URLs / adding a page** | `src/router/routes.js` — one table drives navigation, hreflang, the sitemap and the build |
+| **Company details on the legal pages** | `src/config/site.js` → `COMPANY` (name, NIF, registered office) |
+| **Legal texts** | `src/i18n/translations.js` → `legal.privacy` / `legal.notice` (×4 languages) — bump `LEGAL_UPDATED` in `src/config/site.js` whenever you edit one |
 
 Each is defined once and consumed everywhere — no duplicated strings.
 
@@ -50,8 +54,6 @@ Replace them with the real line-up.
 
 ## Still placeholder
 
-- **Legal pages** — `PRIVACIDAD` / `AVISO LEGAL` link to `#` (`LEGAL` in
-  `src/config/site.js`). The pages themselves aren't built.
 - **Athena Bold** — not present in the project. See `public/fonts/README.md`.
 
 ## Ticketing
@@ -67,7 +69,7 @@ gracefully without JavaScript.
 
 ## SEO
 
-Sixteen indexable, prerendered documents — every page in every language.
+Twenty-four indexable, prerendered documents — every page in every language.
 `npm run build` renders each one to real HTML with its own title, description,
 canonical, hreflang set, Open Graph, Twitter card, `NightClub` + `WebPage`
 JSON-LD (plus a `BreadcrumbList` on the inner pages) and an LCP `<link

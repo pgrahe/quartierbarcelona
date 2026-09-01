@@ -84,7 +84,9 @@ function Flyer({ event, lang, labels, ticketsLabel }) {
         {date && (
           <p className="flyer__date">
             <time dateTime={date.iso}>
-              <span className="flyer__day">{date.day}</span>
+              <span className={`flyer__day${event.blurDay ? ' flyer__day--blur' : ''}`}>
+                {date.day}
+              </span>
               <span className="flyer__month">
                 {date.month}
                 <span className="flyer__year">{date.year}</span>

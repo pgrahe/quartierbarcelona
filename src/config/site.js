@@ -67,7 +67,7 @@ export const OG_IMAGE = '/img/og-quartier-barcelona.jpg'
 /** Fourvenues account slug. Drives the embedded calendar. */
 export const FOURVENUES_SLUG = 'quartier-club'
 
-export const FOURVENUES_EMBED_SRC = `https://www.fourvenues.com/assets/iframe/${FOURVENUES_SLUG}/calendar@`
+export const FOURVENUES_EMBED_SRC = `https://www.fourvenues.com/assets/iframe/${FOURVENUES_SLUG}/calendar@?theme=dark`
 
 /**
  * Public Fourvenues page. Used as the CTA's real `href`, so cmd/middle-click
@@ -191,15 +191,14 @@ export function mapDirectionsUrl() {
  *   date   ISO date, YYYY-MM-DD. Weekday / day / month are derived with Intl.
  *   title  the night's name — brand, shown as written, not translated
  *   age    required age, printed top-left on the flyer (e.g. '+20')
+ *   blurDay optional — softens the day numeral when the exact date is TBA
  *   slug   optional Fourvenues event path; when set, the overlay can deep-link
  *          to that night. Left off → calendar listing.
  *
  * Empty the array and the whole section stops rendering.
  * ---------------------------------------------------------------------- */
 export const EVENTS = [
-  { id: 'opening', date: '2026-10-02', title: 'OPENING', age: '+20' },
-  { id: 'guest-dj', date: '2026-10-09', title: 'GUEST DJ', age: '+20' },
-  { id: 'quartier-nights', date: '2026-10-16', title: 'QUARTIER NIGHTS', age: '+20' },
+  { id: 'opening', date: '2026-09-25', title: 'OPENING', age: '+20', blurDay: true },
 ]
 
 /* Page URLs are not here — they live in src/router/routes.js, which is the one

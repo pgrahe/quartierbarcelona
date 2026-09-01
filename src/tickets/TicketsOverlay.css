@@ -84,14 +84,13 @@
   padding: clamp(1rem, 3vw, 2.5rem) var(--gutter) calc(2.5rem + env(safe-area-inset-bottom));
 }
 
-/* The Fourvenues widget renders on its own light ground, so it sits on a
-   stone sheet rather than straight on black — the seam then reads as part of
-   the palette instead of as a white box dropped on the page. */
+/* Fourvenues calendar runs in dark theme (`?theme=dark` on the embed).
+   Sheet stays near-black so the widget doesn't sit on a light plate. */
 .tickets__sheet {
   max-width: 1120px;
   margin-inline: auto;
   padding: clamp(0.5rem, 1.6vw, 1.25rem);
-  background: var(--stone);
+  background: #0a0a0a;
   border-radius: var(--radius);
 }
 

@@ -188,6 +188,13 @@
   color: var(--stone);
 }
 
+/* Soften the day figure so the date reads as TBA without dropping the layout. */
+.flyer__day--blur {
+  filter: blur(0.42em);
+  user-select: none;
+  opacity: 0.85;
+}
+
 .flyer__month {
   display: grid;
   gap: 0.3rem;
