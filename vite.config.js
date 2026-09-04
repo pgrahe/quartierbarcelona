@@ -200,9 +200,16 @@ async function assertReferencedImagesExist() {
 
   for (const file of srcFiles) {
     if (!/\.(js|jsx|ts|tsx|css)$/.test(file)) continue
-    const text = await readFile(file, 'utf8')
+    let text = await readFile(file, 'utf8')
+    // Drop block + line comments so doc examples are not treated as assets.
+    text = text.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/(^|[^:])\/\/.*$/gm, '$1')
     let m
-    while ((m = re.exec(text))) refs.add(m[1].split('?')[0])
+    while ((m = re.exec(text))) {
+      const name = m[1].split('?')[0]
+      // Skip template-literal fragments like `marquee-${id}-1200.jpg`.
+      if (name.includes('${') || name.startsWith('-')) continue
+      refs.add(name)
+    }
   }
 
   const absent = []
