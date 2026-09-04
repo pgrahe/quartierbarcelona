@@ -167,7 +167,7 @@
  * Used by Intro and the other type panels.
  * ---------------------------------------------------------------------- */
 :root {
-  --tex-dark: url('/img/texture-dark.jpg?v=6');
+  --tex-dark: url('/img/texture-dark.jpg?v=4');
 }
 
 @supports (height: 100dvh) {

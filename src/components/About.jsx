@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import './About.css'
 
 /**
@@ -83,8 +84,12 @@ export default function About({ eyebrow }) {
 
         <figure className="about__figure" data-reveal="mask" style={{ '--reveal-delay': '120ms' }}>
           <img
-            src="/img/about-portrait-1200.jpg"
-            srcSet="/img/about-portrait-800.jpg 800w, /img/about-portrait-1200.jpg 1200w, /img/about-portrait-1600.jpg 1600w"
+            src={img('/img/about-portrait-1200.jpg')}
+            srcSet={imgSrcSet([
+              ['/img/about-portrait-800.jpg', '800w'],
+              ['/img/about-portrait-1200.jpg', '1200w'],
+              ['/img/about-portrait-1600.jpg', '1600w'],
+            ])}
             sizes="(max-width: 900px) 100vw, 38vw"
             alt={t.about.imageAlt}
             width="1200"

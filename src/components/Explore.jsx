@@ -1,5 +1,6 @@
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink } from '../router/RouteContext'
+import { img, imgSrcSet } from '../lib/img'
 import './Explore.css'
 
 /**
@@ -16,9 +17,12 @@ const CARDS = [
     navKey: 'about',
     copyKey: 'about',
     altKey: 'aboutImageAlt',
-    src: '/img/about-portrait-1200.jpg',
-    srcSet:
-      '/img/about-portrait-800.jpg 800w, /img/about-portrait-1200.jpg 1200w, /img/about-portrait-1600.jpg 1600w',
+    src: img('/img/about-portrait-1200.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/about-portrait-800.jpg', '800w'],
+      ['/img/about-portrait-1200.jpg', '1200w'],
+      ['/img/about-portrait-1600.jpg', '1600w'],
+    ]),
     width: 1200,
     height: 1800,
   },
@@ -27,8 +31,12 @@ const CARDS = [
     navKey: 'vipExperience',
     copyKey: 'vip',
     altKey: 'vipImageAlt',
-    src: '/img/vip-bottles-1100.jpg',
-    srcSet: '/img/vip-bottles-700.jpg 700w, /img/vip-bottles-1100.jpg 1100w, /img/vip-bottles-1500.jpg 1500w',
+    src: img('/img/vip-bottles-1100.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/vip-bottles-700.jpg', '700w'],
+      ['/img/vip-bottles-1100.jpg', '1100w'],
+      ['/img/vip-bottles-1500.jpg', '1500w'],
+    ]),
     width: 1100,
     height: 1527,
   },
@@ -37,9 +45,12 @@ const CARDS = [
     navKey: 'privateEvents',
     copyKey: 'events',
     altKey: 'eventsImageAlt',
-    src: '/img/private-events-1400.jpg?v=3',
-    srcSet:
-      '/img/private-events-900.jpg?v=3 900w, /img/private-events-1400.jpg?v=3 1400w, /img/private-events-1900.jpg?v=3 1900w',
+    src: img('/img/private-events-1400.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/private-events-900.jpg', '900w'],
+      ['/img/private-events-1400.jpg', '1400w'],
+      ['/img/private-events-1900.jpg', '1900w'],
+    ]),
     width: 1400,
     height: 788,
   },

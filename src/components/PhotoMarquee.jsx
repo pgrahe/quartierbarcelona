@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import './PhotoMarquee.css'
 
 /**
@@ -22,8 +23,11 @@ function Track({ alts, ariaHidden }) {
       {FRAMES.map((frame) => (
         <figure key={`${ariaHidden ? 'b' : 'a'}-${frame.id}`} className="marquee__plate">
           <img
-            src={`/img/marquee-${frame.id}-1200.jpg`}
-            srcSet={`/img/marquee-${frame.id}-800.jpg 800w, /img/marquee-${frame.id}-1200.jpg 1200w`}
+            src={img(`/img/marquee-${frame.id}-1200.jpg`)}
+            srcSet={imgSrcSet([
+              [`/img/marquee-${frame.id}-800.jpg`, '800w'],
+              [`/img/marquee-${frame.id}-1200.jpg`, '1200w'],
+            ])}
             sizes="(max-width: 900px) 52vw, 18rem"
             alt={ariaHidden ? '' : alts[frame.altKey]}
             width="1200"

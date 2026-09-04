@@ -101,12 +101,14 @@ async function restoreLocal(relFromRoot) {
   }
 }
 
-/** Force-download / repair iCloud placeholders in public/ before Vite touches them.
- *  Also fails the build if src references an /img/ file that is not on disk —
- *  that is what shipped a live site with 404 BrandMoment / marquee frames. */
-export async function pinAssets() {
+/**
+ * Repair iCloud placeholders in public/ before Vite touches them.
+ * `strict` (production builds only) also fails if src references a missing /img/.
+ * Dev skips full file reads — reading dataless stubs from iCloud times out and
+ * kills the server.
+ */
+export async function pinAssets({ strict = false } = {}) {
   const started = Date.now()
-  const files = await walk(publicDir)
   const prev = await loadManifest()
   const next = {}
   let bytes = 0
@@ -158,8 +160,9 @@ export async function pinAssets() {
       continue
     }
 
-    const buf = await readFile(file)
-    bytes += buf.length
+    // Stat is enough for the pin manifest. Avoid readFile here — on iCloud
+    // Desktop it blocks forever on dataless stubs and takes the server down.
+    bytes += info.size
     pinned += 1
   }
 
@@ -169,7 +172,7 @@ export async function pinAssets() {
   const mb = (bytes / (1024 * 1024)).toFixed(1)
   const ms = Date.now() - started
   const parts = []
-  if (pinned) parts.push(`${pinned} read`)
+  if (pinned) parts.push(`${pinned} checked`)
   if (skipped) parts.push(`${skipped} cached`)
   if (restored) parts.push(`${restored} restored`)
   const detail = parts.length ? parts.join(', ') : `all ${freshFiles.length} assets already local`
@@ -185,7 +188,7 @@ export async function pinAssets() {
     throw new Error(`${missing.length} public asset(s) not available locally`)
   }
 
-  await assertReferencedImagesExist()
+  if (strict) await assertReferencedImagesExist()
 }
 
 /** Fail fast when source points at /img/… files that are not under public/. */
@@ -223,10 +226,16 @@ async function assertReferencedImagesExist() {
 }
 
 function pinAssetsPlugin() {
+  let command = 'serve'
   return {
     name: 'pin-assets',
+    configResolved(config) {
+      command = config.command
+    },
+    // Strict missing-/img checks only on `vite build` (Vercel). Dev must not
+    // read every public file — iCloud dataless stubs time out and kill Vite.
     async buildStart() {
-      await pinAssets()
+      await pinAssets({ strict: command === 'build' })
     },
   }
 }

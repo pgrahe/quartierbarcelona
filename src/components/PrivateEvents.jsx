@@ -1,5 +1,6 @@
 import { whatsappUrl } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import './PrivateEvents.css'
 
 /**
@@ -30,8 +31,12 @@ export default function PrivateEvents({ title, pageStart = false }) {
       <div className="pev__grid">
         <figure className="pev__figure" data-reveal="mask">
           <img
-            src="/img/private-events-1400.jpg?v=3"
-            srcSet="/img/private-events-900.jpg?v=3 900w, /img/private-events-1400.jpg?v=3 1400w, /img/private-events-1900.jpg?v=3 1900w"
+            src={img('/img/private-events-1400.jpg')}
+            srcSet={imgSrcSet([
+              ['/img/private-events-900.jpg', '900w'],
+              ['/img/private-events-1400.jpg', '1400w'],
+              ['/img/private-events-1900.jpg', '1900w'],
+            ])}
             sizes="(max-width: 900px) 100vw, 58vw"
             alt={pe.imageAlt}
             width="1400"

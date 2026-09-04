@@ -197,7 +197,7 @@ html {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: url('/img/velvet.png');
+  background-image: url('/img/velvet.png?v=4');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

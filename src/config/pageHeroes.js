@@ -10,25 +10,36 @@
  * The alt text is not here — it is copy, and lives per language in
  * translations.js under `pages.<route>.imageAlt`.
  * ---------------------------------------------------------------------- */
+import { img, imgSrcSet } from '../lib/img'
+
 export const PAGE_HEROES = {
   about: {
-    src: '/img/brand-moment-wide-1800.jpg',
-    srcSet:
-      '/img/brand-moment-wide-1200.jpg 1200w, /img/brand-moment-wide-1800.jpg 1800w, /img/brand-moment-wide-2400.jpg 2400w',
+    src: img('/img/brand-moment-wide-1800.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-wide-1200.jpg', '1200w'],
+      ['/img/brand-moment-wide-1800.jpg', '1800w'],
+      ['/img/brand-moment-wide-2400.jpg', '2400w'],
+    ]),
     width: 2400,
     height: 1200,
   },
   vip: {
-    src: '/img/brand-moment-2-wide-1800.jpg',
-    srcSet:
-      '/img/brand-moment-2-wide-1200.jpg 1200w, /img/brand-moment-2-wide-1800.jpg 1800w, /img/brand-moment-2-wide-2400.jpg 2400w',
+    src: img('/img/brand-moment-2-wide-1800.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-2-wide-1200.jpg', '1200w'],
+      ['/img/brand-moment-2-wide-1800.jpg', '1800w'],
+      ['/img/brand-moment-2-wide-2400.jpg', '2400w'],
+    ]),
     width: 2400,
     height: 1200,
   },
   events: {
-    src: '/img/brand-moment-3-wide-1800.jpg',
-    srcSet:
-      '/img/brand-moment-3-wide-1200.jpg 1200w, /img/brand-moment-3-wide-1800.jpg 1800w, /img/brand-moment-3-wide-2400.jpg 2400w',
+    src: img('/img/brand-moment-3-wide-1800.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-3-wide-1200.jpg', '1200w'],
+      ['/img/brand-moment-3-wide-1800.jpg', '1800w'],
+      ['/img/brand-moment-3-wide-2400.jpg', '2400w'],
+    ]),
     width: 2400,
     height: 1200,
   },

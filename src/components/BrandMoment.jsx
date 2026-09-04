@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import './BrandMoment.css'
 
 /**
@@ -37,16 +38,25 @@ const LAYERS = [
 
 const FRAMES = [
   {
-    src: '/img/brand-moment-1000.jpg?v=3',
-    srcSet: '/img/brand-moment-1000.jpg?v=3 1000w, /img/brand-moment-1600.jpg?v=3 1600w',
+    src: img('/img/brand-moment-1000.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-1000.jpg', '1000w'],
+      ['/img/brand-moment-1600.jpg', '1600w'],
+    ]),
   },
   {
-    src: '/img/brand-moment-2-1000.jpg?v=3',
-    srcSet: '/img/brand-moment-2-1000.jpg?v=3 1000w, /img/brand-moment-2-1600.jpg?v=3 1600w',
+    src: img('/img/brand-moment-2-1000.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-2-1000.jpg', '1000w'],
+      ['/img/brand-moment-2-1600.jpg', '1600w'],
+    ]),
   },
   {
-    src: '/img/brand-moment-3-1000.jpg?v=3',
-    srcSet: '/img/brand-moment-3-1000.jpg?v=3 1000w, /img/brand-moment-3-1600.jpg?v=3 1600w',
+    src: img('/img/brand-moment-3-1000.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/brand-moment-3-1000.jpg', '1000w'],
+      ['/img/brand-moment-3-1600.jpg', '1600w'],
+    ]),
   },
 ]
 

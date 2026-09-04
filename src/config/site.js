@@ -53,7 +53,7 @@ export const GSC_VERIFICATION = ''
 
 /** The image used when the site is shared. 1200x630, the size every platform
  *  crops toward. */
-export const OG_IMAGE = '/img/og-quartier-barcelona.jpg'
+export const OG_IMAGE = '/img/og-quartier-barcelona.jpg?v=4'
 
 /* -------------------------------------------------------------------------
  * Ticketing — Fourvenues

@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import TicketsCta from './TicketsCta'
 import './VipExperience.css'
 
@@ -38,8 +39,12 @@ export default function VipExperience({ eyebrow, pageStart = false }) {
 
         <figure className="vip__plate" data-reveal="mask">
           <img
-            src="/img/vip-table-1100.jpg"
-            srcSet="/img/vip-table-700.jpg 700w, /img/vip-table-1100.jpg 1100w, /img/vip-table-1500.jpg 1500w"
+            src={img('/img/vip-table-1100.jpg')}
+            srcSet={imgSrcSet([
+              ['/img/vip-table-700.jpg', '700w'],
+              ['/img/vip-table-1100.jpg', '1100w'],
+              ['/img/vip-table-1500.jpg', '1500w'],
+            ])}
             sizes="(max-width: 900px) 78vw, 38vw"
             alt={vip.imageAlt}
             width="1100"

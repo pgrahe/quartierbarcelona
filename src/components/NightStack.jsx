@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { img, imgSrcSet } from '../lib/img'
 import './NightStack.css'
 
 /**
@@ -10,18 +11,27 @@ import './NightStack.css'
 
 const FRAMES = [
   {
-    src: '/img/night-stack-a-1100.jpg',
-    srcSet: '/img/night-stack-a-700.jpg 700w, /img/night-stack-a-1100.jpg 1100w',
+    src: img('/img/night-stack-a-1100.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/night-stack-a-700.jpg', '700w'],
+      ['/img/night-stack-a-1100.jpg', '1100w'],
+    ]),
     altKey: 'imageAlt',
   },
   {
-    src: '/img/night-stack-b-1100.jpg',
-    srcSet: '/img/night-stack-b-700.jpg 700w, /img/night-stack-b-1100.jpg 1100w',
+    src: img('/img/night-stack-b-1100.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/night-stack-b-700.jpg', '700w'],
+      ['/img/night-stack-b-1100.jpg', '1100w'],
+    ]),
     altKey: 'imageAlt2',
   },
   {
-    src: '/img/night-stack-c-1100.jpg',
-    srcSet: '/img/night-stack-c-700.jpg 700w, /img/night-stack-c-1100.jpg 1100w',
+    src: img('/img/night-stack-c-1100.jpg'),
+    srcSet: imgSrcSet([
+      ['/img/night-stack-c-700.jpg', '700w'],
+      ['/img/night-stack-c-1100.jpg', '1100w'],
+    ]),
     altKey: 'imageAlt3',
   },
 ]
