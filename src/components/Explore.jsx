@@ -37,9 +37,9 @@ const CARDS = [
     navKey: 'privateEvents',
     copyKey: 'events',
     altKey: 'eventsImageAlt',
-    src: '/img/private-events-1400.jpg',
+    src: '/img/private-events-1400.jpg?v=3',
     srcSet:
-      '/img/private-events-900.jpg 900w, /img/private-events-1400.jpg 1400w, /img/private-events-1900.jpg 1900w',
+      '/img/private-events-900.jpg?v=3 900w, /img/private-events-1400.jpg?v=3 1400w, /img/private-events-1900.jpg?v=3 1900w',
     width: 1400,
     height: 788,
   },
