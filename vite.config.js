@@ -101,7 +101,9 @@ async function restoreLocal(relFromRoot) {
   }
 }
 
-/** Force-download / repair iCloud placeholders in public/ before Vite touches them. */
+/** Force-download / repair iCloud placeholders in public/ before Vite touches them.
+ *  Also fails the build if src references an /img/ file that is not on disk —
+ *  that is what shipped a live site with 404 BrandMoment / marquee frames. */
 export async function pinAssets() {
   const started = Date.now()
   const files = await walk(publicDir)
@@ -181,6 +183,42 @@ export async function pinAssets() {
     )
     console.error('  or move the repo outside iCloud Desktop.\n')
     throw new Error(`${missing.length} public asset(s) not available locally`)
+  }
+
+  await assertReferencedImagesExist()
+}
+
+/** Fail fast when source points at /img/… files that are not under public/. */
+async function assertReferencedImagesExist() {
+  const srcDir = path.join(root, 'src')
+  const srcFiles = await walk(srcDir)
+  const refs = new Set()
+  const re = /\/img\/([A-Za-z0-9._@%-]+\.(?:jpg|jpeg|png|webp|gif|svg))/g
+
+  for (const file of srcFiles) {
+    if (!/\.(js|jsx|ts|tsx|css)$/.test(file)) continue
+    const text = await readFile(file, 'utf8')
+    let m
+    while ((m = re.exec(text))) refs.add(m[1].split('?')[0])
+  }
+
+  const absent = []
+  for (const name of refs) {
+    try {
+      const info = await stat(path.join(publicDir, 'img', name))
+      if (info.size === 0) absent.push(name)
+    } catch {
+      absent.push(name)
+    }
+  }
+
+  if (absent.length) {
+    console.error('\n  ⚠️  Source references /img/ files missing from public/img:')
+    absent.sort().forEach((f) => console.error(`     · ${f}`))
+    console.error(
+      '\n  Restore them into public/img (and commit) before deploying.\n',
+    )
+    throw new Error(`${absent.length} referenced image(s) missing from public/img`)
   }
 }
 
