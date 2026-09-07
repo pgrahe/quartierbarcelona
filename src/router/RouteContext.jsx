@@ -1,6 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
-import { HOME_ROUTE, pathFor, routeFromPath } from './routes'
+import {
+  COUNTDOWN_ROUTE,
+  HERO_ROUTE_IDS,
+  HOME_ROUTE,
+  isOpenRoute,
+  pathFor,
+  publicRouteId,
+  routeFromPath,
+} from './routes'
 import { navOffset, scrollToSection, scrollToSectionWhenReady } from '../lib/scrollTo'
 
 /* -------------------------------------------------------------------------
@@ -24,6 +32,14 @@ export function pushPath(url) {
   const [path] = url.split('#')
   if (window.location.pathname + window.location.hash !== url) {
     window.history.pushState({ path }, '', url)
+  }
+  window.dispatchEvent(new CustomEvent(NAV_EVENT, { detail: { path } }))
+}
+
+function replacePath(url) {
+  const [path] = url.split('#')
+  if (window.location.pathname + window.location.hash !== url) {
+    window.history.replaceState({ path }, '', url)
   }
   window.dispatchEvent(new CustomEvent(NAV_EVENT, { detail: { path } }))
 }
@@ -52,6 +68,16 @@ export function RouteProvider({ children, initialPath }) {
   }, [])
 
   const { routeId, lang } = useMemo(() => routeFromPath(path), [path])
+
+  /* Opening gate: every address except countdown, privacy and legal notice
+     is rewritten to /countdown (same language, replace so Back cannot loop).
+     `#contacto` is kept — that section lives on the teaser. */
+  useEffect(() => {
+    if (isOpenRoute(routeId)) return
+    const hash = window.location.hash.slice(1)
+    const next = pathFor(COUNTDOWN_ROUTE, lang)
+    replacePath(hash === 'contacto' ? `${next}#${hash}` : next)
+  }, [path, routeId, lang])
 
   /* A URL that arrives with a hash — shared, bookmarked, or typed — has to be
      honoured once, on mount. The browser's own anchor handling runs against an
@@ -109,7 +135,14 @@ export function RouteProvider({ children, initialPath }) {
   )
 
   const value = useMemo(
-    () => ({ path, routeId, lang, navigate, isHome: routeId === HOME_ROUTE }),
+    () => ({
+      path,
+      routeId,
+      lang,
+      navigate,
+      isHome: routeId === HOME_ROUTE,
+      hasHero: HERO_ROUTE_IDS.has(routeId),
+    }),
     [path, routeId, lang, navigate],
   )
 
@@ -138,7 +171,7 @@ export function useRoute() {
  */
 export function RouteLink({ to, hash, lang, delay = 0, className, children, onClick, ...rest }) {
   const route = useRoute()
-  const target = pathFor(to, lang || route.lang)
+  const target = pathFor(publicRouteId(to), lang || route.lang)
   const href = hash ? `${target}#${hash}` : target
 
   const handleClick = (e) => {

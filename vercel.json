@@ -3,6 +3,34 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/", "destination": "/countdown", "permanent": false },
+    { "source": "/home", "destination": "/countdown", "permanent": false },
+    { "source": "/sobre-nosotros", "destination": "/countdown", "permanent": false },
+    { "source": "/vip-experience", "destination": "/countdown", "permanent": false },
+    { "source": "/private-events", "destination": "/countdown", "permanent": false },
+
+    { "source": "/en", "destination": "/en/countdown", "permanent": false },
+    { "source": "/en/", "destination": "/en/countdown", "permanent": false },
+    { "source": "/en/home", "destination": "/en/countdown", "permanent": false },
+    { "source": "/en/about", "destination": "/en/countdown", "permanent": false },
+    { "source": "/en/vip-experience", "destination": "/en/countdown", "permanent": false },
+    { "source": "/en/private-events", "destination": "/en/countdown", "permanent": false },
+
+    { "source": "/fr", "destination": "/fr/countdown", "permanent": false },
+    { "source": "/fr/", "destination": "/fr/countdown", "permanent": false },
+    { "source": "/fr/home", "destination": "/fr/countdown", "permanent": false },
+    { "source": "/fr/a-propos", "destination": "/fr/countdown", "permanent": false },
+    { "source": "/fr/vip-experience", "destination": "/fr/countdown", "permanent": false },
+    { "source": "/fr/private-events", "destination": "/fr/countdown", "permanent": false },
+
+    { "source": "/de", "destination": "/de/countdown", "permanent": false },
+    { "source": "/de/", "destination": "/de/countdown", "permanent": false },
+    { "source": "/de/home", "destination": "/de/countdown", "permanent": false },
+    { "source": "/de/ueber-uns", "destination": "/de/countdown", "permanent": false },
+    { "source": "/de/vip-experience", "destination": "/de/countdown", "permanent": false },
+    { "source": "/de/private-events", "destination": "/de/countdown", "permanent": false }
+  ],
   "rewrites": [
     {
       "source": "/logo_sinfondo_quartier_negro",

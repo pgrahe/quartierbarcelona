@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { DEFAULT_LANGUAGE, LANGUAGES, translations } from './translations'
 import { LOCALES } from '../config/site'
 import { NAV_EVENT, pushPath } from '../router/RouteContext'
-import { pathFor, routeFromPath } from '../router/routes'
+import { pathFor, publicRouteId, routeFromPath } from '../router/routes'
 
 const STORAGE_KEY = 'quartier.lang'
 const CODES = LANGUAGES.map((l) => l.code)
@@ -61,7 +61,7 @@ export function LanguageProvider({ children, initialLanguage }) {
     }
 
     const { routeId } = routeFromPath(window.location.pathname)
-    const next = pathFor(routeId, code)
+    const next = pathFor(publicRouteId(routeId), code)
     if (window.location.pathname !== next) {
       pushPath(next + window.location.hash)
     }

@@ -38,7 +38,9 @@ const {
   GSC_VERIFICATION,
   absoluteUrl,
   allPaths,
+  isOpenRoute,
   pathFor,
+  publicRouteId,
   PAGE_HEROES,
   HERO_POSTERS,
   seoFor,
@@ -76,7 +78,7 @@ function alternatesFor(routeId) {
  * different one.
  */
 function preloadFor(routeId) {
-  if (routeId === 'home') {
+  if (routeId === 'home' || routeId === 'countdown') {
     return [
       `    <link rel="preload" as="image" href="${HERO_POSTERS.desktop}" fetchpriority="high" media="(min-width: 901px)" />`,
       `    <link rel="preload" as="image" href="${HERO_POSTERS.mobile}" fetchpriority="high" media="(max-width: 900px)" />`,
@@ -135,12 +137,13 @@ function headFor(locale, routeId, url) {
 const pages = allPaths()
 
 for (const { locale, routeId, path: urlPath } of pages) {
-  const seo = seoFor(locale.code, routeId)
-  const url = absoluteUrl(urlPath)
+  const pageId = publicRouteId(routeId)
+  const seo = seoFor(locale.code, pageId)
+  const url = absoluteUrl(pathFor(pageId, locale.code))
 
   const html = template
-    .replace('<!--seo-head-->', headFor(locale, routeId, url))
-    .replace('<!--lcp-preload-->', preloadFor(routeId))
+    .replace('<!--seo-head-->', headFor(locale, pageId, url))
+    .replace('<!--lcp-preload-->', preloadFor(pageId))
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`)
     .replace('<html lang="es">', `<html lang="${locale.hreflang}">`)
     .replace('<!--app-html-->', render(locale.code, urlPath))
@@ -163,13 +166,14 @@ const LEGAL_ROUTES = new Set(['privacy', 'legal'])
 
 function sitemapPriority(routeId, locale) {
   if (LEGAL_ROUTES.has(routeId)) return locale.isDefault ? '0.3' : '0.2'
-  if (routeId === 'home') return locale.isDefault ? '1.0' : '0.8'
+  if (routeId === 'countdown') return locale.isDefault ? '1.0' : '0.8'
   return locale.isDefault ? '0.8' : '0.6'
 }
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${pages
+  .filter(({ routeId }) => isOpenRoute(routeId))
   .map(
     ({ locale, routeId, path: urlPath }) => `  <url>
     <loc>${absoluteUrl(urlPath)}</loc>

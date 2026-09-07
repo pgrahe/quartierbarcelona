@@ -201,6 +201,14 @@ export const EVENTS = [
   { id: 'opening', date: '2026-09-25', title: 'OPENING', age: '+20', blurDay: true },
 ]
 
+/**
+ * Opening night the /countdown page counts down to.
+ *
+ * Midnight Europe/Madrid on 1 October 2026 (CEST, UTC+2). Change only here —
+ * the clock, the accessible label and the SEO copy all read from this.
+ */
+export const OPENING_AT = '2026-10-01T00:00:00+02:00'
+
 /* Page URLs are not here — they live in src/router/routes.js, which is the one
    table the navigation, the language switcher, hreflang, the sitemap and the
    build all read from. Section anchors within the home page (`#contacto`) are

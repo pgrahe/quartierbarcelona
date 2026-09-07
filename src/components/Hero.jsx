@@ -3,6 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import { SLOGAN, SLOGAN_ARTICLE, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink } from '../router/RouteContext'
+import OpeningCountdown from './OpeningCountdown'
 import TicketsCta from './TicketsCta'
 import './Hero.css'
 
@@ -87,7 +88,8 @@ function initialIntro() {
   return 'hold'
 }
 
-export default function Hero() {
+export default function Hero({ variant = 'home' }) {
+  const isCountdown = variant === 'countdown'
   const { t } = useLanguage()
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
@@ -235,7 +237,12 @@ export default function Hero() {
   const showCentreBrand = intro === 'hold' || intro === 'fade'
 
   return (
-    <section id="inicio" className="hero" data-intro={intro} aria-label="Quartier Barcelona">
+    <section
+      id="inicio"
+      className={isCountdown ? 'hero hero--countdown' : 'hero'}
+      data-intro={intro}
+      aria-label="Quartier Barcelona"
+    >
       <div className="hero__media" data-playing={playing}>
         <img
           className="hero__poster"
@@ -270,8 +277,14 @@ export default function Hero() {
         <RouteLink to="home" className="hero__logo" aria-label="Quartier Barcelona">
           <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
         </RouteLink>
-        <TicketsCta className="hero__cta" />
+        {!isCountdown && <TicketsCta className="hero__cta" />}
       </div>
+
+      {isCountdown && (
+        <div className="hero__clock" data-ready={intro === 'done'}>
+          <OpeningCountdown entered={entered} />
+        </div>
+      )}
 
       <div className="hero__body">
         {/* Large centred mark — fades out in place; the bar logo fades in separately. */}
@@ -281,7 +294,8 @@ export default function Hero() {
           </div>
         )}
 
-        {/* The page's single H1. Visually it is only the slogan, but a bare
+        <div className="hero__copy" data-ready={intro === 'done'}>
+          {/* The page's single H1. Visually it is only the slogan, but a bare
             "MORE THAN A CLUB" tells a search engine nothing about who this
             is. The brand name leads the heading in the document and in the
             accessible name; the slogan keeps the visual stage.
@@ -290,51 +304,52 @@ export default function Hero() {
             it matches the <title>, and it is what a screen reader announces.
             The moving fragments below are aria-hidden so the heading is not
             read out as three shuffling pieces. */}
-        <h1 className="hero__slogan" data-entered={entered} data-ready={intro === 'done'}>
-          <span className="visually-hidden">Quartier Barcelona — {SLOGAN}</span>
+          <h1 className="hero__slogan" data-entered={entered} data-ready={intro === 'done'}>
+            <span className="visually-hidden">Quartier Barcelona — {SLOGAN}</span>
 
-          <span className="hero__slogan-lead" aria-hidden="true">
-            <span>{SLOGAN_LEAD}</span>
-          </span>
-
-          <span className="hero__slogan-tail" aria-hidden="true">
-            <span className="hero__slogan-article">
-              <span>{SLOGAN_ARTICLE}</span>
+            <span className="hero__slogan-lead" aria-hidden="true">
+              <span>{SLOGAN_LEAD}</span>
             </span>
 
-            <span
-              className="hero__slogan-rotator"
-              ref={rotatorRef}
-              style={widths[active] ? { width: `${widths[active]}px` } : undefined}
-            >
-              {/* Baseline strut. Every rotating word is absolutely positioned,
-                  which leaves this box with no baseline of its own — flexbox
-                  then synthesises one from its bottom edge and the fixed "A"
-                  ends up sitting ~9px below the word. A zero-width character
-                  in normal flow gives the box a real text baseline, so
-                  `align-items: baseline` lines the two up properly. */}
-              <span className="hero__slogan-strut" aria-hidden="true">
-                {'​'}
+            <span className="hero__slogan-tail" aria-hidden="true">
+              <span className="hero__slogan-article">
+                <span>{SLOGAN_ARTICLE}</span>
               </span>
-              {SLOGAN_ROTATIONS.map((slogan, i) => (
-                <span
-                  key={slogan.id}
-                  className="hero__slogan-wrap"
-                  data-active={i === active && entered}
-                >
-                  <span
-                    className="hero__slogan-word"
-                    ref={(el) => {
-                      wordRefs.current[i] = el
-                    }}
-                  >
-                    {slogan.word}
-                  </span>
+
+              <span
+                className="hero__slogan-rotator"
+                ref={rotatorRef}
+                style={widths[active] ? { width: `${widths[active]}px` } : undefined}
+              >
+                {/* Baseline strut. Every rotating word is absolutely positioned,
+                    which leaves this box with no baseline of its own — flexbox
+                    then synthesises one from its bottom edge and the fixed "A"
+                    ends up sitting ~9px below the word. A zero-width character
+                    in normal flow gives the box a real text baseline, so
+                    `align-items: baseline` lines the two up properly. */}
+                <span className="hero__slogan-strut" aria-hidden="true">
+                  {'​'}
                 </span>
-              ))}
+                {SLOGAN_ROTATIONS.map((slogan, i) => (
+                  <span
+                    key={slogan.id}
+                    className="hero__slogan-wrap"
+                    data-active={i === active && entered}
+                  >
+                    <span
+                      className="hero__slogan-word"
+                      ref={(el) => {
+                        wordRefs.current[i] = el
+                      }}
+                    >
+                      {slogan.word}
+                    </span>
+                  </span>
+                ))}
+              </span>
             </span>
-          </span>
-        </h1>
+          </h1>
+        </div>
       </div>
     </section>
   )

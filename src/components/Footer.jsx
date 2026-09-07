@@ -1,14 +1,16 @@
 import { CONTACT, INSTAGRAM_URL, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
-import { RouteLink } from '../router/RouteContext'
+import { RouteLink, useRoute } from '../router/RouteContext'
 import { useTickets } from '../tickets/TicketsContext'
 import LanguageSelector from './LanguageSelector'
 import './Footer.css'
 
 export default function Footer() {
   const { t } = useLanguage()
+  const { routeId } = useRoute()
   const { openTickets } = useTickets()
   const year = new Date().getFullYear()
+  const showTickets = routeId !== 'countdown'
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
@@ -34,19 +36,21 @@ export default function Footer() {
                   {l.label}
                 </RouteLink>
               ))}
-              <a
-                href={TICKETS_VIP_URL}
-                className="foot__link foot__link--accent"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-                  e.preventDefault()
-                  openTickets()
-                }}
-              >
-                {t.nav.tickets}
-              </a>
+              {showTickets && (
+                <a
+                  href={TICKETS_VIP_URL}
+                  className="foot__link foot__link--accent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+                    e.preventDefault()
+                    openTickets()
+                  }}
+                >
+                  {t.nav.tickets}
+                </a>
+              )}
             </nav>
 
             <div className="foot__col">

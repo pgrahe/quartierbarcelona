@@ -7,7 +7,7 @@ import App from './App'
 /* Re-exported so scripts/prerender.mjs has a single SSR bundle to import and
    the build cannot drift from the app's own config. */
 export { LOCALES, SITE_URL, OG_IMAGE, GSC_VERIFICATION, absoluteUrl } from './config/site'
-export { ROUTES, allPaths, pathFor } from './router/routes'
+export { ROUTES, allPaths, isOpenRoute, pathFor, publicRouteId } from './router/routes'
 export { PAGE_HEROES, HERO_POSTERS } from './config/pageHeroes'
 export { seoFor } from './seo/meta'
 export { buildJsonLd } from './seo/jsonld'

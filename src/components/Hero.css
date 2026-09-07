@@ -138,6 +138,29 @@
   padding-top: clamp(2rem, 7vh, 6rem);
 }
 
+.hero__copy {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+}
+
+.hero--countdown .hero__bar {
+  justify-content: flex-start;
+}
+
+/* Clock sits under the chrome; the slogan keeps the home hero's centre. */
+.hero__clock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--nav-h) + clamp(1.25rem, 3.2vh, 2.5rem));
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  padding-inline: var(--gutter);
+  pointer-events: none;
+}
+
 .hero__slogan {
   --hero-slogan-size: clamp(1.35rem, 2.9vw, 2.75rem);
   --hero-slogan-lh: 1.08;
@@ -270,8 +293,18 @@
   }
 
   .hero__brand,
-  .hero__slogan {
+  .hero__copy {
     grid-area: 1 / 1;
+  }
+
+  .hero__clock {
+    top: calc(env(safe-area-inset-top) + 5.5rem);
+    transition: opacity 480ms var(--ease);
+  }
+
+  .hero__clock:not([data-ready='true']) {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .hero__brand {
@@ -299,10 +332,16 @@
     transition: opacity 480ms var(--ease);
   }
 
-  /* Hold the slogan invisible until the centre mark has faded. */
+  /* Hold the slogan (and the countdown, when present) invisible until
+     the centre mark has faded. */
+  .hero__copy:not([data-ready='true']),
   .hero__slogan:not([data-ready='true']) {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .hero__copy {
+    transition: opacity 480ms var(--ease);
   }
 }
 
@@ -325,6 +364,8 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__logo,
   .hero__brand,
+  .hero__clock,
+  .hero__copy,
   .hero__slogan {
     transition: none !important;
   }

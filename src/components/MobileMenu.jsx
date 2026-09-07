@@ -103,7 +103,7 @@ export default function MobileMenu({ open, onClose }) {
               to={l.to}
               hash={l.hash}
               className="mmenu__link"
-              data-active={!l.hash && l.to === routeId}
+              data-active={!l.hash && l.key === 'home' && routeId === 'countdown'}
               delay={260}
               style={{ '--i': i }}
               onClick={onClose}
@@ -114,7 +114,9 @@ export default function MobileMenu({ open, onClose }) {
         </nav>
 
         <div className="mmenu__foot">
-          <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} />
+          {routeId !== 'countdown' && (
+            <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} />
+          )}
           <hr className="rule mmenu__rule" />
           <LanguageSelector size="md" className="mmenu__langs" />
         </div>

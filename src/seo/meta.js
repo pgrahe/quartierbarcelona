@@ -19,6 +19,12 @@ export const SEO = {
         'Quartier Barcelona, club premium en Pedralbes. Música, ambiente y una nueva forma de vivir la noche. Reserva tickets y mesas VIP.',
       ogImageAlt: 'Interior de Quartier Barcelona, club en Pedralbes',
     },
+    countdown: {
+      title: '1 de octubre | Quartier Barcelona',
+      description:
+        'Quartier Barcelona abre el 1 de octubre. Cuenta atrás para el club premium de Pedralbes.',
+      ogImageAlt: 'Interior de Quartier Barcelona, club en Pedralbes',
+    },
     about: {
       title: 'Sobre nosotros | Quartier Barcelona',
       description:
@@ -56,6 +62,12 @@ export const SEO = {
       title: 'Quartier Barcelona | Club in Pedralbes',
       description:
         'Quartier Barcelona, a premium club in Pedralbes. Music, atmosphere and a new way to experience Barcelona nightlife. Tickets and VIP tables.',
+      ogImageAlt: 'Interior of Quartier Barcelona, a club in Pedralbes',
+    },
+    countdown: {
+      title: '1 October | Quartier Barcelona',
+      description:
+        'Quartier Barcelona opens on 1 October. Countdown to the premium club in Pedralbes.',
       ogImageAlt: 'Interior of Quartier Barcelona, a club in Pedralbes',
     },
     about: {
@@ -97,6 +109,12 @@ export const SEO = {
         'Quartier Barcelona, club premium à Pedralbes. Musique, ambiance et une nouvelle façon de vivre la nuit barcelonaise. Billets et tables VIP.',
       ogImageAlt: 'Intérieur du Quartier Barcelona, club à Pedralbes',
     },
+    countdown: {
+      title: '1er octobre | Quartier Barcelona',
+      description:
+        'Quartier Barcelona ouvre le 1er octobre. Compte à rebours pour le club premium de Pedralbes.',
+      ogImageAlt: 'Intérieur du Quartier Barcelona, club à Pedralbes',
+    },
     about: {
       title: 'À propos | Quartier Barcelona',
       description:
@@ -134,6 +152,12 @@ export const SEO = {
       title: 'Quartier Barcelona | Club in Pedralbes',
       description:
         'Quartier Barcelona, Premium-Club in Pedralbes. Musik, Atmosphäre und eine neue Art, das Nachtleben Barcelonas zu erleben. Tickets und VIP-Tische.',
+      ogImageAlt: 'Innenraum des Quartier Barcelona, Club in Pedralbes',
+    },
+    countdown: {
+      title: '1. Oktober | Quartier Barcelona',
+      description:
+        'Quartier Barcelona öffnet am 1. Oktober. Countdown für den Premium-Club in Pedralbes.',
       ogImageAlt: 'Innenraum des Quartier Barcelona, Club in Pedralbes',
     },
     about: {

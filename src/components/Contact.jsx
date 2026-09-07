@@ -7,7 +7,7 @@ import './Contact.css'
  * Contact. Two facts, set large, and the CTA. No form, no hours, no social —
  * nothing that isn't confirmed by the project material.
  */
-export default function Contact() {
+export default function Contact({ showTickets = true }) {
   const { t } = useLanguage()
 
   return (
@@ -41,10 +41,12 @@ export default function Contact() {
           </div>
         </dl>
 
-        <div className="contact__cta" data-reveal style={{ '--reveal-delay': '300ms' }}>
-          <TicketsCta variant="outline" size="md" />
-          <p className="contact__cta-note">{t.contact.ticketsLine}</p>
-        </div>
+        {showTickets && (
+          <div className="contact__cta" data-reveal style={{ '--reveal-delay': '300ms' }}>
+            <TicketsCta variant="outline" size="md" />
+            <p className="contact__cta-note">{t.contact.ticketsLine}</p>
+          </div>
+        )}
       </div>
     </section>
   )

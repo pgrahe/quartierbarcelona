@@ -43,7 +43,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
               to={l.to}
               hash={l.hash}
               className="nav__link"
-              data-active={!l.hash && l.to === routeId}
+              data-active={!l.hash && l.key === 'home' && routeId === 'countdown'}
             >
               {l.label}
             </RouteLink>
@@ -52,7 +52,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
         <div className="nav__end">
           <LanguageSelector className="nav__langs" />
-          <TicketsCta className="nav__cta" />
+          {routeId !== 'countdown' && <TicketsCta className="nav__cta" />}
         </div>
 
         {/* Mobile only, and only once the hero is behind us. */}

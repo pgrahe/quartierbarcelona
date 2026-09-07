@@ -4,11 +4,16 @@
  * The site is a set of real, separately indexable pages:
  *
  *   /                        home       (also /en/  /fr/  /de/)
+ *   /countdown               countdown  (same slug in every language)
  *   /sobre-nosotros          about      (/en/about, /fr/a-propos, /de/ueber-uns)
  *   /vip-experience          vip        (same slug in every language — brand)
  *   /private-events          events     (same slug in every language — brand)
  *   /politica-de-privacidad  privacy    (/en/privacy-policy, …)
  *   /aviso-legal             legal      (/en/legal-notice, …)
+ *
+ * While the opening clock is up, `publicRouteId` sends every route except
+ * countdown / privacy / legal to /countdown. The table above stays complete
+ * so the gate can come off without rewriting slugs.
  *
  * Slugs are per language wherever the word is genuinely translated, and
  * identical wherever the label is brand English that already appears
@@ -21,6 +26,10 @@ import { LOCALES, localeFor } from '../config/site'
 
 export const ROUTES = [
   { id: 'home', slugs: { es: '', en: '', fr: '', de: '' } },
+  {
+    id: 'countdown',
+    slugs: { es: 'countdown', en: 'countdown', fr: 'countdown', de: 'countdown' },
+  },
   {
     id: 'about',
     slugs: { es: 'sobre-nosotros', en: 'about', fr: 'a-propos', de: 'ueber-uns' },
@@ -52,6 +61,22 @@ export const ROUTES = [
 ]
 
 export const HOME_ROUTE = 'home'
+export const COUNTDOWN_ROUTE = 'countdown'
+
+/** The only addresses that stay reachable while the opening clock is up. */
+export const OPEN_ROUTE_IDS = new Set(['countdown', 'privacy', 'legal'])
+
+/** Pages that open on the video hero — navbar stays transparent until it scrolls past. */
+export const HERO_ROUTE_IDS = new Set(['home', 'countdown'])
+
+export function isOpenRoute(routeId) {
+  return OPEN_ROUTE_IDS.has(routeId)
+}
+
+/** Home, about, VIP, events — and anything unknown — resolve to the teaser. */
+export function publicRouteId(routeId) {
+  return isOpenRoute(routeId) ? routeId : COUNTDOWN_ROUTE
+}
 
 const CODES = LOCALES.map((l) => l.code)
 
