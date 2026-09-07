@@ -116,7 +116,7 @@ export function companyAddress() {
  * in its own form with Intl instead of four hand-written dates that drift.
  * Update this whenever either legal page is edited.
  */
-export const LEGAL_UPDATED = '2026-09-01'
+export const LEGAL_UPDATED = '2026-09-07'
 
 /* -------------------------------------------------------------------------
  * WhatsApp — private events enquiries

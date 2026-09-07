@@ -308,7 +308,7 @@ export const translations = {
               [
                 'Vercel, como proveedor de alojamiento y de la analítica agregada.',
                 'Fourvenues, cuando se abre la venta de entradas integrada en el sitio.',
-                'OpenStreetMap y CARTO, que suministran las imágenes del mapa de la ubicación.',
+                'OpenStreetMap, que suministra las imágenes del mapa de la ubicación.',
               ],
             ],
           },
@@ -667,7 +667,7 @@ export const translations = {
               [
                 'Vercel, as hosting provider and provider of the aggregated analytics.',
                 'Fourvenues, when the ticketing embedded in the site is opened.',
-                'OpenStreetMap and CARTO, which supply the imagery for the location map.',
+                'OpenStreetMap, which supplies the imagery for the location map.',
               ],
             ],
           },
@@ -1024,7 +1024,7 @@ export const translations = {
               [
                 'Vercel, hébergeur du site et fournisseur de l’analyse agrégée.',
                 'Fourvenues, lorsque la billetterie intégrée au site est ouverte.',
-                'OpenStreetMap et CARTO, qui fournissent les images de la carte de localisation.',
+                'OpenStreetMap, qui fournit les images de la carte de localisation.',
               ],
             ],
           },
@@ -1381,7 +1381,7 @@ export const translations = {
               [
                 'Vercel als Hosting-Anbieter und Anbieter der aggregierten Analyse.',
                 'Fourvenues, sobald der in die Website eingebundene Ticketverkauf geöffnet wird.',
-                'OpenStreetMap und CARTO, die das Kartenmaterial für den Standort bereitstellen.',
+                'OpenStreetMap, das das Kartenmaterial für den Standort bereitstellt.',
               ],
             ],
           },

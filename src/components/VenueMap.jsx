@@ -2,8 +2,7 @@ import { useEffect, useRef } from 'react'
 import { LOCATION } from '../config/site'
 
 /**
- * Leaflet map on Carto Positron tiles — the light monochrome OSM look
- * (same family as the Sutton-style reference), with a brand-dark pin.
+ * Leaflet map on OpenStreetMap tiles, with a brand-dark pin.
  *
  * Leaflet is loaded inside the effect (not at module top level) so the 450 KB
  * CJS build stays off the critical path. Vite must pre-bundle it (see
@@ -43,11 +42,10 @@ export default function VenueMap({ title }) {
         attributionControl: true,
       }).setView([LOCATION.lat, LOCATION.lng], LOCATION.zoom)
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20,
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
       }).addTo(map)
 
       const pin = L.divIcon({

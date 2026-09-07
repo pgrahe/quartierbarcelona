@@ -6,7 +6,7 @@ import './LocationMap.css'
 /**
  * Location.
  *
- * A beige type panel and a monochrome Leaflet map sit in one grid, so the map
+ * A beige type panel and a Leaflet map sit in one grid, so the map
  * reads as part of the page rather than as a pasted Google iframe.
  *
  * Address, map pin and directions link all derive from LOCATION in

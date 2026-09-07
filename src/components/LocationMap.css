@@ -84,6 +84,12 @@
   font: inherit;
 }
 
+/* OSM in colour underneath; tiles only go to black and white so the
+   bordeaux pin and the zoom chrome stay as they are. */
+.loc__map .leaflet-tile-pane {
+  filter: grayscale(1) contrast(1.06);
+}
+
 /* Brand pin — solid ink disc, same idea as the reference marker. */
 .loc__pin {
   background: none;
