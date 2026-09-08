@@ -20,9 +20,9 @@ export const SEO = {
       ogImageAlt: 'Interior de Quartier Barcelona, club en Pedralbes',
     },
     countdown: {
-      title: '1 de octubre | Quartier Barcelona',
+      title: 'Quartier Barcelona | Club en Pedralbes',
       description:
-        'Quartier Barcelona abre el 1 de octubre. Cuenta atrás para el club premium de Pedralbes.',
+        'Quartier Barcelona es una discoteca situada en Pedralbes ofreciendo exclusividad y las mejores noches.',
       ogImageAlt: 'Interior de Quartier Barcelona, club en Pedralbes',
     },
     about: {
@@ -65,9 +65,9 @@ export const SEO = {
       ogImageAlt: 'Interior of Quartier Barcelona, a club in Pedralbes',
     },
     countdown: {
-      title: '1 October | Quartier Barcelona',
+      title: 'Quartier Barcelona | Club in Pedralbes',
       description:
-        'Quartier Barcelona opens on 1 October. Countdown to the premium club in Pedralbes.',
+        'Quartier Barcelona is a nightclub in Pedralbes, offering exclusivity and the best nights in the city.',
       ogImageAlt: 'Interior of Quartier Barcelona, a club in Pedralbes',
     },
     about: {
@@ -110,9 +110,9 @@ export const SEO = {
       ogImageAlt: 'Intérieur du Quartier Barcelona, club à Pedralbes',
     },
     countdown: {
-      title: '1er octobre | Quartier Barcelona',
+      title: 'Quartier Barcelona | Club à Pedralbes',
       description:
-        'Quartier Barcelona ouvre le 1er octobre. Compte à rebours pour le club premium de Pedralbes.',
+        'Quartier Barcelona est une discothèque à Pedralbes, pour des nuits exclusives et inoubliables.',
       ogImageAlt: 'Intérieur du Quartier Barcelona, club à Pedralbes',
     },
     about: {
@@ -155,9 +155,9 @@ export const SEO = {
       ogImageAlt: 'Innenraum des Quartier Barcelona, Club in Pedralbes',
     },
     countdown: {
-      title: '1. Oktober | Quartier Barcelona',
+      title: 'Quartier Barcelona | Club in Pedralbes',
       description:
-        'Quartier Barcelona öffnet am 1. Oktober. Countdown für den Premium-Club in Pedralbes.',
+        'Quartier Barcelona ist ein Club in Pedralbes – exklusiv, mit den besten Nächten der Stadt.',
       ogImageAlt: 'Innenraum des Quartier Barcelona, Club in Pedralbes',
     },
     about: {
