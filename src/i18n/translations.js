@@ -65,12 +65,12 @@ export const translations = {
       scroll: 'DESLIZA',
     },
     countdown: {
-      date: '1 DE OCTUBRE',
+      date: '10 DE OCTUBRE',
       days: 'Días',
       hours: 'Hrs',
       minutes: 'Min',
       seconds: 'Seg',
-      aria: 'Cuenta atrás para el 1 de octubre',
+      aria: 'Cuenta atrás para el 10 de octubre',
     },
     /* Headers of the three inner pages. `name` is the page's H1, `lead` the
        line under it, `sectionEyebrow` / `sectionTitle` the label the reused
@@ -443,12 +443,12 @@ export const translations = {
       scroll: 'SCROLL',
     },
     countdown: {
-      date: '1 OCTOBER',
+      date: '10 OCTOBER',
       days: 'Days',
       hours: 'Hrs',
       minutes: 'Min',
       seconds: 'Sec',
-      aria: 'Countdown to 1 October',
+      aria: 'Countdown to 10 October',
     },
     pages: {
       eyebrow: 'QUARTIER BARCELONA',
@@ -802,12 +802,12 @@ export const translations = {
       scroll: 'FAITES DÉFILER',
     },
     countdown: {
-      date: '1ER OCTOBRE',
+      date: '10 OCTOBRE',
       days: 'Jrs',
       hours: 'Hrs',
       minutes: 'Min',
       seconds: 'Sec',
-      aria: 'Compte à rebours jusqu’au 1er octobre',
+      aria: 'Compte à rebours jusqu’au 10 octobre',
     },
     pages: {
       eyebrow: 'QUARTIER BARCELONA',
@@ -1159,12 +1159,12 @@ export const translations = {
       scroll: 'SCROLLEN',
     },
     countdown: {
-      date: '1. OKTOBER',
+      date: '10. OKTOBER',
       days: 'Tage',
       hours: 'Std',
       minutes: 'Min',
       seconds: 'Sek',
-      aria: 'Countdown bis zum 1. Oktober',
+      aria: 'Countdown bis zum 10. Oktober',
     },
     pages: {
       eyebrow: 'QUARTIER BARCELONA',

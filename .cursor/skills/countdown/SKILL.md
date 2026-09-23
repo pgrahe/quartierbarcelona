@@ -1,6 +1,6 @@
 ---
 name: countdown
-description: Maintain the /countdown teaser landing — video hero with opening clock, photo marquee, contact and location, no tickets CTA in the chrome. Use when working on /countdown, the opening countdown, OpeningCountdown, CountdownPage, or the 1 October clock.
+description: Maintain the /countdown teaser landing — video hero with opening clock, photo marquee, contact and location, no tickets CTA in the chrome. Use when working on /countdown, the opening countdown, OpeningCountdown, CountdownPage, or the 10 October clock.
 ---
 
 # /countdown
@@ -23,7 +23,7 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 - Reuse `Hero`. Do not fork the video, slogan rotation or mobile intro.
 - Clock sits **above** the rotating slogan; both sit **lower** than the home hero (`.hero--countdown`).
 - No `TicketsCta` in the hero bar, the navbar or the mobile menu on this route.
-- Opening instant is `OPENING_AT` in `src/config/site.js` (1 October 2026, midnight Europe/Madrid). Change only there.
+- Opening instant is `OPENING_AT` in `src/config/site.js` (10 October 2026, midnight Europe/Madrid). Change only there.
 
 ## Clock
 

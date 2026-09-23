@@ -204,10 +204,10 @@ export const EVENTS = [
 /**
  * Opening night the /countdown page counts down to.
  *
- * Midnight Europe/Madrid on 1 October 2026 (CEST, UTC+2). Change only here —
+ * Midnight Europe/Madrid on 10 October 2026 (CEST, UTC+2). Change only here —
  * the clock, the accessible label and the SEO copy all read from this.
  */
-export const OPENING_AT = '2026-10-01T00:00:00+02:00'
+export const OPENING_AT = '2026-10-10T00:00:00+02:00'
 
 /* Page URLs are not here — they live in src/router/routes.js, which is the one
    table the navigation, the language switcher, hreflang, the sitemap and the
