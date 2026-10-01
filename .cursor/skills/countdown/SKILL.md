@@ -1,6 +1,6 @@
 ---
 name: countdown
-description: Maintain the /countdown teaser landing — video hero with opening clock, photo marquee, contact and location, no tickets CTA in the chrome. Use when working on /countdown, the opening countdown, OpeningCountdown, CountdownPage, or the 10 October clock.
+description: Maintain the /countdown teaser landing — video hero with opening clock, photo marquee, contact and location, no tickets CTA in the chrome. Use when working on /countdown, the opening countdown, OpeningCountdown, CountdownPage, or the 15 October clock.
 ---
 
 # /countdown
@@ -23,7 +23,7 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 - Reuse `Hero`. Do not fork the video, slogan rotation or mobile intro.
 - Clock sits **above** the rotating slogan; both sit **lower** than the home hero (`.hero--countdown`).
 - No `TicketsCta` in the hero bar, the navbar or the mobile menu on this route.
-- Opening instant is `OPENING_AT` in `src/config/site.js` (10 October 2026, midnight Europe/Madrid). Change only there.
+- Opening instant is `OPENING_AT` in `src/config/site.js` (15 October 2026, midnight Europe/Madrid). Change only there.
 
 ## Clock
 
@@ -38,9 +38,10 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 
 ## Opening gate
 
-While the clock is up, only `countdown`, `privacy` and `legal` stay reachable.
+While the clock is up, only `countdown`, `about`, `privacy` and `legal` stay reachable.
 
-- `publicRouteId()` in `src/router/routes.js` is the single switch — home, about, VIP, events and unknown URLs resolve to countdown
+- `publicRouteId()` in `src/router/routes.js` is the single switch — home, VIP, events and unknown URLs resolve to countdown
+- About is not in the desktop navbar or the footer; the hamburger is the only chrome that links to it
 - `RouteLink` and the language switcher go through that helper, so footer / nav / logo / Contact (`#contacto`) land on `/countdown`
 - `RouteProvider` `replaceState`s a typed or bookmarked gated URL to `/countdown` (keeps `#contacto`)
 - `vercel.json` has matching temporary redirects for production

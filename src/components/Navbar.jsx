@@ -22,7 +22,6 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about },
     { key: 'vip', to: 'vip', label: t.nav.vipExperienceShort },
     // Short label here only: the full one overflows the bar around 900–1024px.
     { key: 'events', to: 'events', label: t.nav.privateEventsShort },

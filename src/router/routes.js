@@ -12,8 +12,8 @@
  *   /aviso-legal             legal      (/en/legal-notice, …)
  *
  * While the opening clock is up, `publicRouteId` sends every route except
- * countdown / privacy / legal to /countdown. The table above stays complete
- * so the gate can come off without rewriting slugs.
+ * countdown / about / privacy / legal to /countdown. About is reachable
+ * from the hamburger only — it is not in the desktop bar or the footer.
  *
  * Slugs are per language wherever the word is genuinely translated, and
  * identical wherever the label is brand English that already appears
@@ -64,7 +64,7 @@ export const HOME_ROUTE = 'home'
 export const COUNTDOWN_ROUTE = 'countdown'
 
 /** The only addresses that stay reachable while the opening clock is up. */
-export const OPEN_ROUTE_IDS = new Set(['countdown', 'privacy', 'legal'])
+export const OPEN_ROUTE_IDS = new Set(['countdown', 'about', 'privacy', 'legal'])
 
 /** Pages that open on the video hero — navbar stays transparent until it scrolls past. */
 export const HERO_ROUTE_IDS = new Set(['home', 'countdown'])
@@ -73,7 +73,7 @@ export function isOpenRoute(routeId) {
   return OPEN_ROUTE_IDS.has(routeId)
 }
 
-/** Home, about, VIP, events — and anything unknown — resolve to the teaser. */
+/** Home, VIP, events — and anything unknown — resolve to the teaser. */
 export function publicRouteId(routeId) {
   return isOpenRoute(routeId) ? routeId : COUNTDOWN_ROUTE
 }

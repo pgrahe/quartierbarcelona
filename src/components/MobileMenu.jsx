@@ -103,7 +103,10 @@ export default function MobileMenu({ open, onClose }) {
               to={l.to}
               hash={l.hash}
               className="mmenu__link"
-              data-active={!l.hash && l.key === 'home' && routeId === 'countdown'}
+              data-active={
+                !l.hash &&
+                ((l.key === 'home' && routeId === 'countdown') || l.to === routeId)
+              }
               delay={260}
               style={{ '--i': i }}
               onClick={onClose}

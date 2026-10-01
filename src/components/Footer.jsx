@@ -14,7 +14,6 @@ export default function Footer() {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about },
     { key: 'vip', to: 'vip', label: t.nav.vipExperience },
     { key: 'events', to: 'events', label: t.nav.privateEvents },
     { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
