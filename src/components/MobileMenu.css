@@ -64,6 +64,14 @@
   opacity: 0.6;
 }
 
+.mmenu__link[aria-disabled='true'] {
+  cursor: default;
+}
+
+.mmenu__link[aria-disabled='true']:active {
+  opacity: 1;
+}
+
 /* ---- Foot ---- */
 .mmenu__foot {
   display: flex;

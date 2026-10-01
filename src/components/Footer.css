@@ -105,6 +105,17 @@
   .foot__link:hover::after {
     scale: 1 1;
   }
+
+  .foot__link[aria-disabled='true']:hover {
+    color: var(--stone-70);
+  }
+  .foot__link[aria-disabled='true']:hover::after {
+    scale: 0 1;
+  }
+}
+
+.foot__link[aria-disabled='true'] {
+  cursor: default;
 }
 
 /* ---- Bottom ---- */

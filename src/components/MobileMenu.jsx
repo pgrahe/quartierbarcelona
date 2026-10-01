@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
-import { RouteLink, useRoute } from '../router/RouteContext'
+import { useRoute } from '../router/RouteContext'
+import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
 import TicketsCta from './TicketsCta'
 import './MobileMenu.css'
@@ -20,7 +21,7 @@ export default function MobileMenu({ open, onClose }) {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about },
+    { key: 'about', to: 'about', label: t.nav.about, live: true },
     { key: 'vip', to: 'vip', label: t.nav.vipExperience },
     { key: 'events', to: 'events', label: t.nav.privateEvents },
     { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
@@ -98,21 +99,19 @@ export default function MobileMenu({ open, onClose }) {
       <div className="mmenu__inner">
         <nav className="mmenu__links" aria-label={t.nav.menu}>
           {links.map((l, i) => (
-            <RouteLink
+            <ChromeNavLink
               key={l.key}
+              live={l.live}
               to={l.to}
               hash={l.hash}
               className="mmenu__link"
-              data-active={
-                !l.hash &&
-                ((l.key === 'home' && routeId === 'countdown') || l.to === routeId)
-              }
+              data-active={!l.hash && l.live && l.to === routeId}
               delay={260}
               style={{ '--i': i }}
               onClick={onClose}
             >
               {l.label}
-            </RouteLink>
+            </ChromeNavLink>
           ))}
         </nav>
 

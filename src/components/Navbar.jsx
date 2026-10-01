@@ -1,5 +1,6 @@
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink, useRoute } from '../router/RouteContext'
+import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
 import TicketsCta from './TicketsCta'
 import './Navbar.css'
@@ -12,9 +13,8 @@ import './Navbar.css'
  * on dark ones — no solid bar. On mobile the chrome only appears once the
  * hero has scrolled past (`solid`); the hero keeps its own logo + CTA until then.
  *
- * Every link is a real URL. Home and Contact point at the home page, Contact
- * with a hash, so it scrolls when you are already there and navigates first
- * when you are not.
+ * Every destination is listed. During the countdown only About is a real
+ * link; the rest stay visible and do not navigate.
  */
 export default function Navbar({ solid, menuOpen, onToggleMenu }) {
   const { t } = useLanguage()
@@ -22,6 +22,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
+    { key: 'about', to: 'about', label: t.nav.about, live: true },
     { key: 'vip', to: 'vip', label: t.nav.vipExperienceShort },
     // Short label here only: the full one overflows the bar around 900–1024px.
     { key: 'events', to: 'events', label: t.nav.privateEventsShort },
@@ -37,15 +38,16 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
         <nav className="nav__links" aria-label={t.nav.menu}>
           {links.map((l) => (
-            <RouteLink
+            <ChromeNavLink
               key={l.key}
+              live={l.live}
               to={l.to}
               hash={l.hash}
               className="nav__link"
-              data-active={!l.hash && l.key === 'home' && routeId === 'countdown'}
+              data-active={!l.hash && l.live && l.to === routeId}
             >
               {l.label}
-            </RouteLink>
+            </ChromeNavLink>
           ))}
         </nav>
 

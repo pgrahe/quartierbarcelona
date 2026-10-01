@@ -109,13 +109,21 @@
 }
 
 @media (hover: hover) {
-  .ecard:hover .ecard__figure img {
+  .ecard[data-linked='true']:hover .ecard__figure img {
     scale: 1.06;
   }
 
-  .ecard:hover .ecard__arrow {
+  .ecard[data-linked='true']:hover .ecard__arrow {
     translate: 4px 0;
   }
+}
+
+.ecard[data-linked='false'] {
+  cursor: default;
+}
+
+.ecard[data-linked='false'] .ecard__more {
+  opacity: 0.35;
 }
 
 @media (max-width: 520px) {

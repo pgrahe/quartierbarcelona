@@ -2,6 +2,7 @@ import { CONTACT, INSTAGRAM_URL, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink, useRoute } from '../router/RouteContext'
 import { useTickets } from '../tickets/TicketsContext'
+import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
 import './Footer.css'
 
@@ -14,6 +15,7 @@ export default function Footer() {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
+    { key: 'about', to: 'about', label: t.nav.about, live: true },
     { key: 'vip', to: 'vip', label: t.nav.vipExperience },
     { key: 'events', to: 'events', label: t.nav.privateEvents },
     { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
@@ -31,9 +33,15 @@ export default function Footer() {
             <nav className="foot__col" aria-label={t.footer.navTitle}>
               <p className="eyebrow foot__col-title">{t.footer.navTitle}</p>
               {links.map((l) => (
-                <RouteLink key={l.key} to={l.to} hash={l.hash} className="foot__link">
+                <ChromeNavLink
+                  key={l.key}
+                  live={l.live}
+                  to={l.to}
+                  hash={l.hash}
+                  className="foot__link"
+                >
                   {l.label}
-                </RouteLink>
+                </ChromeNavLink>
               ))}
               {showTickets && (
                 <a

@@ -12,8 +12,9 @@
  *   /aviso-legal             legal      (/en/legal-notice, …)
  *
  * While the opening clock is up, `publicRouteId` sends every route except
- * countdown / about / privacy / legal to /countdown. About is reachable
- * from the hamburger only — it is not in the desktop bar or the footer.
+ * countdown / about / privacy / legal to /countdown. About is the only
+ * content page linked from the chrome; the other nav labels stay visible
+ * but do not navigate.
  *
  * Slugs are per language wherever the word is genuinely translated, and
  * identical wherever the label is brand English that already appears

@@ -94,6 +94,17 @@
   .nav__link:hover::after {
     scale: 1 1;
   }
+
+  .nav__link[aria-disabled='true']:hover {
+    translate: none;
+  }
+  .nav__link[aria-disabled='true']:hover::after {
+    scale: 0 1;
+  }
+}
+
+.nav__link[aria-disabled='true'] {
+  cursor: default;
 }
 
 .nav__link[data-active='true']::after {

@@ -56,8 +56,9 @@ const CARDS = [
   },
 ]
 
-/** `exclude` is the route the visitor is already on. */
-export default function Explore({ exclude }) {
+/** `exclude` is the route the visitor is already on. `linked` false keeps
+ *  the strips visible without turning them into destinations. */
+export default function Explore({ exclude, linked = true }) {
   const { t } = useLanguage()
   const ex = t.explore
   const cards = CARDS.filter((c) => c.route !== exclude)
@@ -85,7 +86,7 @@ export default function Explore({ exclude }) {
         <ul className="explore__list" data-count={cards.length}>
           {cards.map((card, i) => (
             <li key={card.route} className="explore__item" data-reveal style={{ '--reveal-delay': `${i * 70}ms` }}>
-              <article className="ecard">
+              <article className="ecard" data-linked={linked}>
                 <figure className="ecard__figure">
                   <img
                     src={card.src}
@@ -105,9 +106,13 @@ export default function Explore({ exclude }) {
                   </p>
 
                   <h3 className="ecard__title">
-                    <RouteLink to={card.route} className="ecard__link">
-                      {t.nav[card.navKey]}
-                    </RouteLink>
+                    {linked ? (
+                      <RouteLink to={card.route} className="ecard__link">
+                        {t.nav[card.navKey]}
+                      </RouteLink>
+                    ) : (
+                      <span className="ecard__name">{t.nav[card.navKey]}</span>
+                    )}
                   </h3>
 
                   <p className="ecard__copy">{ex[card.copyKey]}</p>

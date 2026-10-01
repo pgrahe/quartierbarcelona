@@ -41,8 +41,9 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 While the clock is up, only `countdown`, `about`, `privacy` and `legal` stay reachable.
 
 - `publicRouteId()` in `src/router/routes.js` is the single switch — home, VIP, events and unknown URLs resolve to countdown
-- About is not in the desktop navbar or the footer; the hamburger is the only chrome that links to it
-- `RouteLink` and the language switcher go through that helper, so footer / nav / logo / Contact (`#contacto`) land on `/countdown`
+- Navbar, footer and hamburger list every route; only About is a real link (`ChromeNavLink`)
+- On `/sobre-nosotros`, Explore (`SIGUE EXPLORANDO`) is visible and not linked (`linked={false}`)
+- `RouteLink` and the language switcher go through that helper, so footer / nav / logo / Contact (`#contacto`) land on `/countdown` except About
 - `RouteProvider` `replaceState`s a typed or bookmarked gated URL to `/countdown` (keeps `#contacto`)
 - `vercel.json` has matching temporary redirects for production
 - Sitemap lists only the open routes
