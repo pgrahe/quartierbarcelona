@@ -1,5 +1,6 @@
 import { CONTACT, INSTAGRAM_URL, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
+import { img } from '../lib/img'
 import { RouteLink, useRoute } from '../router/RouteContext'
 import { useTickets } from '../tickets/TicketsContext'
 import ChromeNavLink from './ChromeNavLink'
@@ -26,7 +27,7 @@ export default function Footer() {
       <div className="shell">
         <div className="foot__top">
           <RouteLink to="home" className="foot__logo" aria-label="Quartier Barcelona">
-            <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
+            <img src={img('/brand/quartier-beige.png')} alt="" width="1600" height="448" />
           </RouteLink>
 
           <div className="foot__cols">

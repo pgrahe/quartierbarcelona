@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { FOURVENUES_EMBED_SRC, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
+import { img } from '../lib/img'
 import { useTickets } from './TicketsContext'
 import './TicketsOverlay.css'
 
@@ -87,10 +88,10 @@ export default function TicketsOverlay() {
       <header className="tickets__bar">
         <img
           className="tickets__logo"
-          src="/brand/quartier-beige.png"
+          src={img('/brand/quartier-beige.png')}
           alt="Quartier Barcelona"
           width="1600"
-          height="381"
+          height="448"
         />
 
         <p className="eyebrow tickets__title">{t.nav.tickets}</p>

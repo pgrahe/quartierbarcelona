@@ -178,7 +178,7 @@
   max-width: 100%;
   margin-inline: auto;
   font-family: var(--font-display);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   font-size: var(--hero-slogan-size);
   line-height: var(--hero-slogan-lh);
   letter-spacing: 0.005em;

@@ -29,9 +29,9 @@
 .intro__title {
   display: grid;
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   line-height: 0.98;
   letter-spacing: -0.025em;
   text-transform: uppercase;

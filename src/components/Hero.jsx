@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+import { img } from '../lib/img'
 import { SLOGAN, SLOGAN_ARTICLE, SLOGAN_LEAD, SLOGAN_ROTATIONS } from '../i18n/translations'
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink } from '../router/RouteContext'
@@ -275,7 +276,7 @@ export default function Hero({ variant = 'home' }) {
       {/* Mobile-only chrome: logo left, CTA right. Nothing else above the fold. */}
       <div className="hero__bar">
         <RouteLink to="home" className="hero__logo" aria-label="Quartier Barcelona">
-          <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
+          <img src={img('/brand/quartier-beige.png')} alt="" width="1600" height="448" />
         </RouteLink>
         {!isCountdown && <TicketsCta className="hero__cta" />}
       </div>
@@ -290,7 +291,7 @@ export default function Hero({ variant = 'home' }) {
         {/* Large centred mark — fades out in place; the bar logo fades in separately. */}
         {showCentreBrand && (
           <div className="hero__brand" aria-hidden="true">
-            <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
+            <img src={img('/brand/quartier-beige.png')} alt="" width="1600" height="448" />
           </div>
         )}
 

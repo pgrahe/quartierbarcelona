@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { EVENTS } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { formatEventDate } from '../lib/eventDate'
+import { img } from '../lib/img'
 import { useTickets } from '../tickets/TicketsContext'
 import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
@@ -70,10 +71,10 @@ function Flyer({ event, lang, labels, ticketsLabel }) {
 
       <div className="flyer__mark" aria-hidden="true">
         <img
-          src="/brand/quartier-beige.png"
+          src={img('/brand/quartier-beige.png')}
           alt=""
           width="1600"
-          height="381"
+          height="448"
           loading="lazy"
           decoding="async"
           draggable="false"

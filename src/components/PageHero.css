@@ -16,8 +16,9 @@
 }
 
 .phero__title {
+  font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.4vw, 3rem);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   line-height: 0.98;
   letter-spacing: -0.03em;
   text-transform: uppercase;

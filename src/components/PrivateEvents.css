@@ -64,9 +64,9 @@
 /* Medium weight, wide tracking — the treatment shared by the Intro, the
    programme and the VIP block. */
 .pev__title {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: clamp(1.35rem, 6.2vw, 3rem);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   line-height: 1.16;
   letter-spacing: 0.14em;
   text-indent: 0.14em;

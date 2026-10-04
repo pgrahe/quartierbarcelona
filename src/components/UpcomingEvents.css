@@ -17,8 +17,9 @@
 /* Wide tracking at a medium weight rather than tight tracking at a heavy one —
    the same treatment the Intro headline uses, so the two read as one voice. */
 .agenda__title {
+  font-family: var(--font-display);
   font-size: clamp(1.35rem, 6.2vw, 2.5rem);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   line-height: 1.16;
   /* Tracking is added after the last letter too, which pulls a centred line
      visually left. The indent gives it back. */
@@ -181,7 +182,7 @@
 
 .flyer__day {
   font-family: var(--font-display);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   font-size: clamp(2.5rem, 4.6vw, 3.5rem);
   line-height: 0.82;
   letter-spacing: -0.02em;
@@ -210,8 +211,9 @@
 }
 
 .flyer__title {
+  font-family: var(--font-display);
   font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
-  font-weight: var(--w-bold);
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: 0.02em;
   text-transform: uppercase;

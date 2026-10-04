@@ -1,4 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext'
+import { img } from '../lib/img'
 import { RouteLink, useRoute } from '../router/RouteContext'
 import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
@@ -33,7 +34,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
     <header className="nav" data-solid={solid} data-menu-open={menuOpen}>
       <div className="nav__inner">
         <RouteLink to="home" className="nav__logo" aria-label="Quartier Barcelona">
-          <img src="/brand/quartier-beige.png" alt="" width="1600" height="381" />
+          <img src={img('/brand/quartier-beige.png')} alt="" width="1600" height="448" />
         </RouteLink>
 
         <nav className="nav__links" aria-label={t.nav.menu}>
