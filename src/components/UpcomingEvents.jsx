@@ -1,110 +1,55 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { EVENTS } from '../config/site'
+import { CONTACT, LOCATION, TICKETS_VIP_URL } from '../config/site'
+import { useEvents } from '../hooks/useEvents'
 import { useLanguage } from '../i18n/LanguageContext'
 import { formatEventDate } from '../lib/eventDate'
-import { img } from '../lib/img'
-import { useTickets } from '../tickets/TicketsContext'
-import TicketsCta from './TicketsCta'
+import './TicketsCta.css'
 import './UpcomingEvents.css'
 
 /**
- * PRÓXIMOS EVENTOS — the programme as flyers.
+ * THIS WEEK — cards from the OpenSheet API.
  *
- * Mobile: one flyer at a time; the visitor swipes sideways (no autoplay).
- * Desktop: all flyers in a row. Dots track the swipe on small screens.
- * The CTA opens the on-site Fourvenues calendar overlay.
+ * Desktop 4 / tablet 2 / mobile 1. Each row is titulo, fecha, imagen,
+ * fourvenues. Nothing is hardcoded.
  */
 
-function Flyer({ event, lang, labels, ticketsLabel }) {
-  const { openTickets } = useTickets()
-  const date = formatEventDate(event.date, lang)
-  const startRef = useRef(null)
-
-  const accessibleName = [
-    labels.cardLabel,
-    event.title,
-    date?.full,
-  ]
+function EventCard({ event, lang, labels }) {
+  const spoken = event.date ? formatEventDate(event.date, lang) : null
+  const accessibleName = [labels.cardLabel, event.title, spoken?.full || event.fecha]
     .filter(Boolean)
     .join(' — ')
 
-  const onPointerDown = (e) => {
-    startRef.current = { x: e.clientX, y: e.clientY }
-  }
+  const body = (
+    <div className="agenda__media">
+      {event.image ? (
+        <img
+          src={event.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span className="agenda__media-empty" aria-hidden="true" />
+      )}
+    </div>
+  )
 
-  const onActivate = (e) => {
-    const start = startRef.current
-    startRef.current = null
-    // Ignore the gesture if it was a scroll/swipe, not a tap.
-    if (start) {
-      const dx = Math.abs(e.clientX - start.x)
-      const dy = Math.abs(e.clientY - start.y)
-      if (dx > 10 || dy > 10) return
-    }
-    openTickets()
-  }
-
-  const onKeyDown = (e) => {
-    if (e.key !== 'Enter' && e.key !== ' ') return
-    e.preventDefault()
-    openTickets()
+  if (event.href) {
+    return (
+      <a
+        className="agenda__card"
+        href={event.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={accessibleName}
+      >
+        {body}
+      </a>
+    )
   }
 
   return (
-    <article
-      className="flyer"
-      role="button"
-      tabIndex={0}
-      aria-label={accessibleName}
-      onPointerDown={onPointerDown}
-      onClick={onActivate}
-      onKeyDown={onKeyDown}
-    >
-      <span className="flyer__glow" aria-hidden="true" />
-      <span className="flyer__grain" aria-hidden="true" />
-      <span className="flyer__sheen" aria-hidden="true" />
-
-      <div className="flyer__top" aria-hidden="true">
-        <span className="eyebrow flyer__tag">{event.age}</span>
-        {date && <span className="eyebrow flyer__weekday">{date.weekday}</span>}
-      </div>
-
-      <div className="flyer__mark" aria-hidden="true">
-        <img
-          src={img('/brand/quartier-beige.png')}
-          alt=""
-          width="1600"
-          height="448"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-        />
-      </div>
-
-      <div className="flyer__foot" aria-hidden="true">
-        {date && (
-          <p className="flyer__date">
-            <time dateTime={date.iso}>
-              <span className={`flyer__day${event.blurDay ? ' flyer__day--blur' : ''}`}>
-                {date.day}
-              </span>
-              <span className="flyer__month">
-                {date.month}
-                <span className="flyer__year">{date.year}</span>
-              </span>
-            </time>
-          </p>
-        )}
-
-        <h3 className="flyer__title">{event.title}</h3>
-
-        <p className="flyer__action">
-          <span className="flyer__action-label">{ticketsLabel}</span>
-          <svg className="flyer__arrow" viewBox="0 0 24 12" focusable="false">
-            <path d="M0 6h21M16 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1" />
-          </svg>
-        </p>
-      </div>
+    <article className="agenda__card" aria-label={accessibleName}>
+      {body}
     </article>
   )
 }
@@ -112,80 +57,43 @@ function Flyer({ event, lang, labels, ticketsLabel }) {
 export default function UpcomingEvents() {
   const { t, lang } = useLanguage()
   const a = t.agenda
-  const ticketsLabel = t.nav.tickets
-  const [index, setIndex] = useState(0)
-  const viewportRef = useRef(null)
-  const count = EVENTS.length
+  const { events, status } = useEvents()
 
-  const goTo = useCallback((i) => {
-    const viewport = viewportRef.current
-    if (!viewport || !count) return
-    const next = ((i % count) + count) % count
-    const item = viewport.querySelectorAll('.agenda__item')[next]
-    if (item) {
-      item.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
-    }
-    setIndex(next)
-  }, [count])
+  if (status === 'loading') return null
 
-  // Keep the dots in sync with a manual swipe.
-  useEffect(() => {
-    const viewport = viewportRef.current
-    if (!viewport || count < 2) return
-
-    const onScroll = () => {
-      const w = viewport.clientWidth || 1
-      const i = Math.round(viewport.scrollLeft / w)
-      setIndex(Math.max(0, Math.min(count - 1, i)))
-    }
-
-    viewport.addEventListener('scroll', onScroll, { passive: true })
-    return () => viewport.removeEventListener('scroll', onScroll)
-  }, [count])
-
-  if (!count) return null
+  const street = LOCATION.street.replace(/^Carrer de\s+/i, '').toUpperCase()
 
   return (
-    <section id="agenda" className="agenda section velvet" aria-labelledby="agenda-title">
+    <section id="agenda" className="agenda section" aria-labelledby="agenda-title">
       <div className="shell">
-        <div className="agenda__head">
-          <h2 className="agenda__title" id="agenda-title" data-reveal>
-            {a.title}
-          </h2>
-        </div>
+        <h2 className="agenda__title" id="agenda-title" data-reveal>
+          {a.title}
+        </h2>
 
-        <div className="agenda__carousel" data-reveal style={{ '--reveal-delay': '200ms' }}>
-          <div className="agenda__viewport" ref={viewportRef}>
-            <ul className="agenda__track">
-              {EVENTS.map((event) => (
-                <li key={event.id} className="agenda__item">
-                  <Flyer event={event} lang={lang} labels={a} ticketsLabel={ticketsLabel} />
-                </li>
-              ))}
-            </ul>
-          </div>
+        {events.length > 0 && (
+          <ul className="agenda__grid" data-reveal style={{ '--reveal-delay': '160ms' }}>
+            {events.map((event) => (
+              <li key={event.id}>
+                <EventCard event={event} lang={lang} labels={a} />
+              </li>
+            ))}
+          </ul>
+        )}
 
-          {count > 1 && (
-            <div className="agenda__dots" role="tablist" aria-label={a.title}>
-              {EVENTS.map((event, i) => (
-                <button
-                  key={event.id}
-                  type="button"
-                  role="tab"
-                  className="agenda__dot"
-                  aria-selected={i === index}
-                  aria-label={event.title}
-                  onClick={() => goTo(i)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="agenda__foot" data-reveal>
-          <TicketsCta variant="outline" size="md" label={a.cta} className="agenda__cta" />
-          <p className="agenda__note">{a.note}</p>
-        </div>
+        <footer className="agenda__brand" data-reveal style={{ '--reveal-delay': '280ms' }}>
+          <a
+            className="cta cta--outline cta--md agenda__cta"
+            href={TICKETS_VIP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="cta__label">{t.nav.tickets}</span>
+          </a>
+          <p className="agenda__meta">
+            <span>{street}</span>
+            <span>INFO &amp; BOOKINGS · {CONTACT.phoneDisplay}</span>
+          </p>
+        </footer>
       </div>
     </section>
   )

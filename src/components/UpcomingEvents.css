@@ -1,421 +1,109 @@
 .agenda.section {
-  /* Ground from base.css texture rule — Intro above keeps its own velvet. */
-  background: transparent;
+  background: var(--black);
   color: var(--stone);
-  /* Intro above, marquee directly below, both on black. The programme is
-     bracketed by the two rather than fenced off from them, so it opens and
-     closes on less than a full section's worth of padding. */
-  padding-block: clamp(3.25rem, 10vw, 5.5rem) clamp(3.75rem, 11vw, 6.5rem);
+  padding-block: clamp(4.5rem, 12vw, 8rem);
 }
 
-/* ---- Head ---- */
-.agenda__head {
-  max-width: none;
-  text-align: center;
-}
-
-/* Wide tracking at a medium weight rather than tight tracking at a heavy one —
-   the same treatment the Intro headline uses, so the two read as one voice. */
 .agenda__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 6.2vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.16;
-  /* Tracking is added after the last letter too, which pulls a centred line
-     visually left. The indent gives it back. */
-  letter-spacing: 0.14em;
-  text-indent: 0.14em;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-
-/* ---- Carousel of flyers (mobile swipe) / row (desktop) ---- */
-.agenda__carousel {
-  margin-top: clamp(3rem, 6vw, 5rem);
-  max-width: 22rem;
-}
-
-.agenda__viewport {
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  /* Hide the scrollbar; the dots are the position cue. */
-  scrollbar-width: none;
-}
-
-.agenda__viewport::-webkit-scrollbar {
-  display: none;
-}
-
-.agenda__track {
-  display: flex;
-  list-style: none;
   margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 10vw, 5.25rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.1em;
+  text-indent: 0.1em;
+  text-transform: uppercase;
+}
+
+.agenda__grid {
+  list-style: none;
+  margin: clamp(2.75rem, 7vw, 4.5rem) 0 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
 }
 
-.agenda__item {
-  flex: 0 0 100%;
-  min-width: 0;
-  padding-inline: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* -------------------------------------------------------------------------
- * The flyer
- *
- * A printed card, not a list row: dark ground, hairline edge, wordmark
- * centred, the date set large in the display face. Everything that moves on
- * hover moves slightly — a flyer that bounces stops looking printed.
- * ---------------------------------------------------------------------- */
-.flyer {
-  position: relative;
+.agenda__card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(1.5rem, 3vw, 2.25rem);
-  aspect-ratio: 3 / 4;
-  padding: clamp(1.15rem, 2vw, 1.75rem);
+  height: 100%;
   overflow: hidden;
-  isolation: isolate;
+  border-radius: 22px;
   background: var(--ink);
-  border: 1px solid var(--stone-12);
-  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   transition:
-    border-color var(--t-base) var(--ease),
-    translate var(--t-base) var(--ease-out),
-    box-shadow var(--t-base) var(--ease-out);
+    transform var(--t-slow) var(--ease-out),
+    box-shadow var(--t-slow) var(--ease-out);
 }
 
-/* Bordeaux breathed in behind the wordmark. Sparse use of the accent, as the
-   palette intends — it reads as stage light, not as a coloured panel. */
-.flyer__glow {
-  position: absolute;
-  inset: -20% -10% auto -10%;
-  z-index: -2;
-  height: 78%;
-  pointer-events: none;
-  background: radial-gradient(60% 60% at 50% 40%, var(--bordeaux-70) 0%, rgba(90, 24, 32, 0) 72%);
-  opacity: 0.5;
-  transition: opacity var(--t-slow) var(--ease-out);
-}
-
-.flyer__grain {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: var(--tex-dark);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
-}
-
-/* A single pass of light across the card on hover. */
-.flyer__sheen {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    rgba(231, 225, 214, 0) 38%,
-    rgba(231, 225, 214, 0.07) 50%,
-    rgba(231, 225, 214, 0) 62%
-  );
-  translate: -120% 0;
-}
-
-/* ---- Top row ---- */
-.flyer__top {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.flyer__tag {
-  color: var(--stone-55);
-}
-
-.flyer__weekday {
-  color: var(--bordeaux);
-  filter: brightness(2);
-}
-
-/* ---- Wordmark ---- */
-.flyer__mark {
-  position: relative;
-  display: grid;
-  place-items: center;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.flyer__mark img {
-  width: min(66%, 13rem);
-  height: auto;
-  opacity: 0.94;
-  transition:
-    scale var(--t-slow) var(--ease-out),
-    opacity var(--t-base) var(--ease);
-}
-
-/* ---- Date + title ---- */
-.flyer__foot {
-  position: relative;
-  display: grid;
-  gap: 0.55rem;
-}
-
-.flyer__date time {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-
-.flyer__day {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.5rem, 4.6vw, 3.5rem);
-  line-height: 0.82;
-  letter-spacing: -0.02em;
-  color: var(--stone);
-}
-
-/* Soften the day figure so the date reads as TBA without dropping the layout. */
-.flyer__day--blur {
-  filter: blur(0.42em);
-  user-select: none;
-  opacity: 0.85;
-}
-
-.flyer__month {
-  display: grid;
-  gap: 0.3rem;
-  font-size: var(--fs-label);
-  font-weight: var(--w-bold);
-  letter-spacing: var(--tr-label);
-  line-height: 1;
-  color: var(--stone-70);
-}
-
-.flyer__year {
-  color: var(--stone-40);
-}
-
-.flyer__title {
-  font-family: var(--font-display);
-  font-size: clamp(0.9375rem, 1.5vw, 1.125rem);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--stone);
-  overflow-wrap: anywhere;
-}
-
-/* ---- Action (visual label only — the flyer itself is the control) ---- */
-.flyer__action {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  width: fit-content;
-  margin-top: 0.35rem;
-  padding-block: 0.35rem;
-  font-size: var(--fs-label);
-  font-weight: var(--w-bold);
-  letter-spacing: var(--tr-label);
-  text-transform: uppercase;
-  color: var(--stone-55);
-  transition: color var(--t-base) var(--ease);
-  pointer-events: none;
-}
-
-.flyer__action-label {
-  position: relative;
-}
-
-.flyer__action-label::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.28em;
-  height: 1px;
-  background: currentColor;
-  scale: 0 1;
-  transform-origin: left;
-  transition: scale var(--t-base) var(--ease-out);
-}
-
-.flyer:focus-visible {
+.agenda__card:focus-visible {
   outline: 1px solid var(--stone-55);
-  outline-offset: 4px;
+  outline-offset: 6px;
 }
 
-.flyer__arrow {
-  width: 1.35rem;
-  height: auto;
-  transition: translate var(--t-base) var(--ease-out);
+.agenda__media {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--black);
 }
 
-/* ---- Hover ---- */
-@media (hover: hover) {
-  .flyer:hover {
-    border-color: var(--stone-40);
-    translate: 0 -4px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
-  }
-
-  .flyer:hover .flyer__glow {
-    opacity: 0.95;
-  }
-
-  .flyer:hover .flyer__mark img {
-    scale: 1.04;
-    opacity: 1;
-  }
-
-  .flyer:hover .flyer__action {
-    color: var(--stone);
-  }
-
-  .flyer:hover .flyer__action-label::after {
-    scale: 1 1;
-  }
-
-  .flyer:hover .flyer__arrow {
-    translate: 4px 0;
-  }
-
-  .flyer:hover .flyer__sheen {
-    translate: 120% 0;
-    transition: translate 1.1s var(--ease-out);
-  }
+.agenda__media img,
+.agenda__media-empty {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* ---- Dots ---- */
-.agenda__dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.55rem;
-  margin-top: clamp(1.25rem, 3vw, 1.75rem);
+.agenda__media-empty {
+  background: var(--ink);
 }
 
-.agenda__dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  padding: 0;
-  border-radius: 50%;
-  background: var(--stone-22);
-  transition:
-    background var(--t-base) var(--ease),
-    scale var(--t-base) var(--ease-out);
-}
-
-.agenda__dot[aria-selected='true'] {
-  background: var(--stone);
-  scale: 1.15;
-}
-
-@media (hover: hover) {
-  .agenda__dot:hover {
-    background: var(--stone-55);
-  }
-}
-
-/* ---- Foot ---- */
-.agenda__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem 2rem;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+.agenda__brand {
+  display: grid;
+  justify-items: center;
+  margin-top: clamp(3.5rem, 9vw, 5.5rem);
   text-align: center;
 }
 
-.agenda__note {
-  font-size: var(--fs-label);
-  letter-spacing: var(--tr-label);
+.agenda__meta {
+  display: grid;
+  gap: 0.55rem;
+  margin: clamp(2.5rem, 6vw, 3.5rem) 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(0.6875rem, 1.35vw, 0.8125rem);
+  font-weight: 400;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--stone-40);
+  color: var(--stone);
 }
 
-@media (max-width: 640px) {
-  .agenda .shell {
-    padding-inline: calc(var(--gutter) + 0.55rem);
-  }
-
-  .agenda__carousel {
-    max-width: min(100%, 20rem);
-    margin-inline: auto;
-  }
-
-  /* A button that runs the full width of the screen reads as an app control.
-     Held to its own width, with the caption under it, it reads as a door. */
-  .agenda__foot {
-    flex-direction: column;
-    gap: 1rem;
+@media (min-width: 700px) {
+  .agenda__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.75rem, 3vw, 2.25rem);
   }
 }
 
-/* Desktop — head left-aligned again; flyers sit in a row. */
-@media (min-width: 901px) {
-  .agenda__head,
-  .agenda__foot {
-    text-align: left;
+@media (min-width: 1100px) {
+  .agenda__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.5rem, 2.2vw, 2.25rem);
   }
+}
 
-  .agenda__foot {
-    justify-content: flex-start;
-  }
-
-  .agenda__carousel {
-    max-width: none;
-  }
-
-  .agenda__viewport {
-    overflow: visible;
-    scroll-snap-type: none;
-  }
-
-  .agenda__track {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(1rem, 2vw, 1.75rem);
-  }
-
-  .agenda__item {
-    flex: none;
-    width: auto;
-    scroll-snap-align: none;
-  }
-
-  .agenda__dots {
-    display: none;
+@media (hover: hover) {
+  .agenda__card:hover {
+    transform: scale(1.025);
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.55);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .agenda__viewport {
-    scroll-behavior: auto;
-  }
-
-  .flyer,
-  .flyer__glow,
-  .flyer__mark img,
-  .flyer__action,
-  .flyer__action-label::after,
-  .flyer__arrow,
-  .flyer__sheen {
+  .agenda__card {
     transition: none;
   }
 }

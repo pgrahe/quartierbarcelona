@@ -240,8 +240,7 @@ html {
 .phero,
 .specs,
 .dgrid:not(.dgrid--stone),
-.contact.section,
-.agenda.section {
+.contact.section {
   background-color: #000;
   background-image: var(--tex-dark);
   background-size: cover;

@@ -11,11 +11,6 @@
  *   /politica-de-privacidad  privacy    (/en/privacy-policy, …)
  *   /aviso-legal             legal      (/en/legal-notice, …)
  *
- * While the opening clock is up, `publicRouteId` sends every route except
- * countdown / about / privacy / legal to /countdown. About is the only
- * content page linked from the chrome; the other nav labels stay visible
- * but do not navigate.
- *
  * Slugs are per language wherever the word is genuinely translated, and
  * identical wherever the label is brand English that already appears
  * untranslated on the site ("VIP EXPERIENCE", "PRIVATE EVENTS"). Because
@@ -64,20 +59,8 @@ export const ROUTES = [
 export const HOME_ROUTE = 'home'
 export const COUNTDOWN_ROUTE = 'countdown'
 
-/** The only addresses that stay reachable while the opening clock is up. */
-export const OPEN_ROUTE_IDS = new Set(['countdown', 'about', 'privacy', 'legal'])
-
 /** Pages that open on the video hero — navbar stays transparent until it scrolls past. */
 export const HERO_ROUTE_IDS = new Set(['home', 'countdown'])
-
-export function isOpenRoute(routeId) {
-  return OPEN_ROUTE_IDS.has(routeId)
-}
-
-/** Home, VIP, events — and anything unknown — resolve to the teaser. */
-export function publicRouteId(routeId) {
-  return isOpenRoute(routeId) ? routeId : COUNTDOWN_ROUTE
-}
 
 const CODES = LOCALES.map((l) => l.code)
 

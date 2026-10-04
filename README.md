@@ -33,7 +33,7 @@ is CSS transitions.
 | **Ticketing account** | `src/config/site.js` → `FOURVENUES_SLUG` (`quartier-club`) |
 | **Address (map + address line)** | `src/config/site.js` → `LOCATION` |
 | **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` / `about.coda` (×4 languages) |
-| **The programme (PRÓXIMOS EVENTOS)** | `src/config/site.js` → `EVENTS` — currently placeholder test nights |
+| **The programme (THIS WEEK)** | Google Sheet via `EVENTS_API_URL` in `src/config/site.js` — `titulo`, `fecha`, `imagen`, `fourvenues` |
 | **URLs / adding a page** | `src/router/routes.js` — one table drives navigation, hreflang, the sitemap and the build |
 | **Company details on the legal pages** | `src/config/site.js` → `COMPANY` (name, NIF, registered office) |
 | **Legal texts** | `src/i18n/translations.js` → `legal.privacy` / `legal.notice` (×4 languages) — bump `LEGAL_UPDATED` in `src/config/site.js` whenever you edit one |
@@ -42,13 +42,9 @@ Each is defined once and consumed everywhere — no duplicated strings.
 
 ### Próximos eventos
 
-`EVENTS` is a list of `{ id, date, title, tag }`. The weekday, day and month
-printed on each flyer are derived from `date` with `Intl` in the visitor's own
-language, so a night is one line and needs no translation. Empty the array and
-the section stops rendering rather than showing an empty heading.
-
-⚠️ The three entries there now are **test data** (`TEST EVENT`, September 2026).
-Replace them with the real line-up.
+The home-page THIS WEEK grid is fetched on load from the OpenSheet API
+(`EVENTS_API_URL`). Columns: `titulo`, `fecha`, `imagen`, `fourvenues`.
+An empty sheet hides the section.
 
 ---
 

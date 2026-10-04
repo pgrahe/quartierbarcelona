@@ -4,7 +4,7 @@ import { useLanguage } from './i18n/LanguageContext'
 import { useHeroPassed } from './hooks/useHeroPassed'
 import { useReveal } from './hooks/useReveal'
 import { useRoute } from './router/RouteContext'
-import { HERO_ROUTE_IDS, publicRouteId } from './router/routes'
+import { HERO_ROUTE_IDS } from './router/routes'
 import { useDocumentHead } from './seo/useDocumentHead'
 
 import Navbar from './components/Navbar'
@@ -35,7 +35,7 @@ const PAGES = {
 export default function App() {
   const { t, lang } = useLanguage()
   const { routeId } = useRoute()
-  const pageId = publicRouteId(routeId)
+  const pageId = routeId
   const hasHero = HERO_ROUTE_IDS.has(pageId)
   const mainRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -71,7 +71,7 @@ export default function App() {
     previousRoute.current = pageId
   }, [pageId])
 
-  const Page = PAGES[pageId] || CountdownPage
+  const Page = PAGES[pageId] || HomePage
 
   return (
     <>

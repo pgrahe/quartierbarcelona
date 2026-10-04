@@ -1,11 +1,8 @@
 import { RouteLink } from '../router/RouteContext'
 
-/**
- * Nav/footer item. During the countdown gate only About is a real link;
- * the rest stay in the chrome as labels.
- */
+/** Nav/footer item. Always a real link. */
 export default function ChromeNavLink({
-  live,
+  live: _live,
   to,
   hash,
   className,
@@ -15,25 +12,17 @@ export default function ChromeNavLink({
   style,
   ...rest
 }) {
-  if (live) {
-    return (
-      <RouteLink
-        to={to}
-        hash={hash}
-        className={className}
-        delay={delay}
-        onClick={onClick}
-        style={style}
-        {...rest}
-      >
-        {children}
-      </RouteLink>
-    )
-  }
-
   return (
-    <span className={className} aria-disabled="true" style={style} {...rest}>
+    <RouteLink
+      to={to}
+      hash={hash}
+      className={className}
+      delay={delay}
+      onClick={onClick}
+      style={style}
+      {...rest}
+    >
       {children}
-    </span>
+    </RouteLink>
   )
 }

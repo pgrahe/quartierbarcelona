@@ -1,7 +1,7 @@
 import { CONTACT, INSTAGRAM_URL, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { img } from '../lib/img'
-import { RouteLink, useRoute } from '../router/RouteContext'
+import { RouteLink } from '../router/RouteContext'
 import { useTickets } from '../tickets/TicketsContext'
 import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
@@ -9,14 +9,12 @@ import './Footer.css'
 
 export default function Footer() {
   const { t } = useLanguage()
-  const { routeId } = useRoute()
   const { openTickets } = useTickets()
   const year = new Date().getFullYear()
-  const showTickets = routeId !== 'countdown'
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about, live: true },
+    { key: 'about', to: 'about', label: t.nav.about },
     { key: 'vip', to: 'vip', label: t.nav.vipExperience },
     { key: 'events', to: 'events', label: t.nav.privateEvents },
     { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
@@ -36,7 +34,6 @@ export default function Footer() {
               {links.map((l) => (
                 <ChromeNavLink
                   key={l.key}
-                  live={l.live}
                   to={l.to}
                   hash={l.hash}
                   className="foot__link"
@@ -44,21 +41,19 @@ export default function Footer() {
                   {l.label}
                 </ChromeNavLink>
               ))}
-              {showTickets && (
-                <a
-                  href={TICKETS_VIP_URL}
-                  className="foot__link foot__link--accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-                    e.preventDefault()
-                    openTickets()
-                  }}
-                >
-                  {t.nav.tickets}
-                </a>
-              )}
+              <a
+                href={TICKETS_VIP_URL}
+                className="foot__link foot__link--accent"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+                  e.preventDefault()
+                  openTickets()
+                }}
+              >
+                {t.nav.tickets}
+              </a>
             </nav>
 
             <div className="foot__col">

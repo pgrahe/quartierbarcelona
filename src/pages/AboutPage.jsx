@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <About eyebrow={page.sectionEyebrow} />
       <BrandMoment />
-      <Explore exclude="about" linked={false} />
+      <Explore exclude="about" />
     </>
   )
 }

@@ -1,11 +1,13 @@
 ---
 name: countdown
-description: Maintain the /countdown teaser landing — video hero with opening clock, photo marquee, contact and location, no tickets CTA in the chrome. Use when working on /countdown, the opening countdown, OpeningCountdown, CountdownPage, or the 15 October clock.
+description: Maintain the /countdown teaser page — video hero with opening clock, photo marquee, contact and location. Use when working on /countdown, OpeningCountdown, CountdownPage, or the 15 October clock. The rest of the site is live and must stay reachable.
 ---
 
 # /countdown
 
-Teaser landing. Not in the main nav. Same slug in every language.
+Standalone teaser page. Same slug in every language. **Not** the site homepage and **not** a gate.
+
+The live site is `/` (and `/en/`, `/fr/`, `/de/`). All routes, nav links, Explore cards and ticket CTAs stay functional.
 
 ## Page composition
 
@@ -22,7 +24,6 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 
 - Reuse `Hero`. Do not fork the video, slogan rotation or mobile intro.
 - Clock sits **above** the rotating slogan; both sit **lower** than the home hero (`.hero--countdown`).
-- No `TicketsCta` in the hero bar, the navbar or the mobile menu on this route.
 - Opening instant is `OPENING_AT` in `src/config/site.js` (15 October 2026, midnight Europe/Madrid). Change only there.
 
 ## Clock
@@ -35,17 +36,5 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 - `HERO_ROUTE_IDS` must include `countdown` so the navbar stays transparent over the film
 - SEO block in `src/seo/meta.js` for every language
 - Prerender preloads the same hero posters as home
-
-## Opening gate
-
-While the clock is up, only `countdown`, `about`, `privacy` and `legal` stay reachable.
-
-- `publicRouteId()` in `src/router/routes.js` is the single switch — home, VIP, events and unknown URLs resolve to countdown
-- Navbar, footer and hamburger list every route; only About is a real link (`ChromeNavLink`)
-- On `/sobre-nosotros`, Explore (`SIGUE EXPLORANDO`) is visible and not linked (`linked={false}`)
-- `RouteLink` and the language switcher go through that helper, so footer / nav / logo / Contact (`#contacto`) land on `/countdown` except About
-- `RouteProvider` `replaceState`s a typed or bookmarked gated URL to `/countdown` (keeps `#contacto`)
-- `vercel.json` has matching temporary redirects for production
-- Sitemap lists only the open routes
-
-Privacy and legal notice stay as they are. Do not send those to `/countdown`.
+- Do **not** redirect `/`, VIP, events or other pages to `/countdown`
+- Do **not** add `vercel.json` redirects back to `/countdown`

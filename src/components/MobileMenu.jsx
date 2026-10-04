@@ -21,7 +21,7 @@ export default function MobileMenu({ open, onClose }) {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about, live: true },
+    { key: 'about', to: 'about', label: t.nav.about },
     { key: 'vip', to: 'vip', label: t.nav.vipExperience },
     { key: 'events', to: 'events', label: t.nav.privateEvents },
     { key: 'contact', to: 'home', hash: 'contacto', label: t.nav.contact },
@@ -101,11 +101,10 @@ export default function MobileMenu({ open, onClose }) {
           {links.map((l, i) => (
             <ChromeNavLink
               key={l.key}
-              live={l.live}
               to={l.to}
               hash={l.hash}
               className="mmenu__link"
-              data-active={!l.hash && l.live && l.to === routeId}
+              data-active={!l.hash && l.to === routeId}
               delay={260}
               style={{ '--i': i }}
               onClick={onClose}
@@ -116,9 +115,7 @@ export default function MobileMenu({ open, onClose }) {
         </nav>
 
         <div className="mmenu__foot">
-          {routeId !== 'countdown' && (
-            <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} />
-          )}
+          <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} />
           <hr className="rule mmenu__rule" />
           <LanguageSelector size="md" className="mmenu__langs" />
         </div>

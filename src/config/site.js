@@ -180,26 +180,13 @@ export function mapDirectionsUrl() {
 }
 
 /* -------------------------------------------------------------------------
- * PRÓXIMOS EVENTOS — the flyer cards on the home page.
+ * PRÓXIMOS EVENTOS — THIS WEEK on the home page.
  *
- * ⚠️ PLACEHOLDER LINE-UP. Replace with the real programme when Fourvenues
- * publishes each night. Until then the CTA opens the calendar listing inside
- * the on-site ticketing overlay (not the Fourvenues site).
- *
- * Each entry is:
- *   id     stable key, never shown
- *   date   ISO date, YYYY-MM-DD. Weekday / day / month are derived with Intl.
- *   title  the night's name — brand, shown as written, not translated
- *   age    required age, printed top-left on the flyer (e.g. '+20')
- *   blurDay optional — softens the day numeral when the exact date is TBA
- *   slug   optional Fourvenues event path; when set, the overlay can deep-link
- *          to that night. Left off → calendar listing.
- *
- * Empty the array and the whole section stops rendering.
+ * Live feed of the Quartier tab in the programme spreadsheet.
+ * Columns: titulo, fecha, imagen, fourvenues.
  * ---------------------------------------------------------------------- */
-export const EVENTS = [
-  { id: 'opening', date: '2026-09-25', title: 'OPENING', age: '+20', blurDay: true },
-]
+export const EVENTS_API_URL =
+  'https://opensheet.elk.sh/1byU3EP3cnbbBZ9PoVlFLBKj-CrPx4JgB2Zu7VLeSFgs/Quartier'
 
 /**
  * Opening night the /countdown page counts down to.

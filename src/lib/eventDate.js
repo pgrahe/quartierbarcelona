@@ -36,3 +36,37 @@ export function formatEventDate(iso, lang = 'es') {
     full: part({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
   }
 }
+
+const ORDINALS = {
+  1: 'ST',
+  2: 'ND',
+  3: 'RD',
+  21: 'ST',
+  22: 'ND',
+  23: 'RD',
+  31: 'ST',
+}
+
+/** Compact poster date: THU. 15TH in English, JUE. 15 elsewhere. */
+export function formatPosterDate(iso, lang = 'es') {
+  const date = formatEventDate(iso, lang)
+  if (!date) return null
+
+  const dayNum = Number(date.day)
+  const dayLabel = lang === 'en' ? `${dayNum}${ORDINALS[dayNum] || 'TH'}` : String(dayNum)
+
+  return {
+    ...date,
+    compact: `${date.weekday}. ${dayLabel}`,
+  }
+}
+
+/** Calendar day in Europe/Madrid as YYYY-MM-DD — used to drop past nights. */
+export function todayIsoMadrid(now = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Madrid',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(now)
+}

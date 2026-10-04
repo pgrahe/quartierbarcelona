@@ -13,9 +13,6 @@ import './Navbar.css'
  * `mix-blend-mode: difference` so they read black on light grounds and white
  * on dark ones — no solid bar. On mobile the chrome only appears once the
  * hero has scrolled past (`solid`); the hero keeps its own logo + CTA until then.
- *
- * Every destination is listed. During the countdown only About is a real
- * link; the rest stay visible and do not navigate.
  */
 export default function Navbar({ solid, menuOpen, onToggleMenu }) {
   const { t } = useLanguage()
@@ -23,7 +20,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
   const links = [
     { key: 'home', to: 'home', label: t.nav.home },
-    { key: 'about', to: 'about', label: t.nav.about, live: true },
+    { key: 'about', to: 'about', label: t.nav.about },
     { key: 'vip', to: 'vip', label: t.nav.vipExperienceShort },
     // Short label here only: the full one overflows the bar around 900–1024px.
     { key: 'events', to: 'events', label: t.nav.privateEventsShort },
@@ -41,11 +38,10 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
           {links.map((l) => (
             <ChromeNavLink
               key={l.key}
-              live={l.live}
               to={l.to}
               hash={l.hash}
               className="nav__link"
-              data-active={!l.hash && l.live && l.to === routeId}
+              data-active={!l.hash && l.to === routeId}
             >
               {l.label}
             </ChromeNavLink>
@@ -54,7 +50,7 @@ export default function Navbar({ solid, menuOpen, onToggleMenu }) {
 
         <div className="nav__end">
           <LanguageSelector className="nav__langs" />
-          {routeId !== 'countdown' && <TicketsCta className="nav__cta" />}
+          <TicketsCta className="nav__cta" />
         </div>
 
         {/* Mobile only, and only once the hero is behind us. */}
