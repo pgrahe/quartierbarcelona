@@ -1,8 +1,9 @@
+import { VIP_ENABLED } from '../config/site'
 import { RouteLink } from '../router/RouteContext'
 
-/** Nav/footer item. Always a real link. */
+/** Nav/footer item. Disabled destinations render as inert text. */
 export default function ChromeNavLink({
-  live: _live,
+  live: liveProp,
   to,
   hash,
   className,
@@ -12,6 +13,16 @@ export default function ChromeNavLink({
   style,
   ...rest
 }) {
+  const live = liveProp ?? (to !== 'vip' || VIP_ENABLED)
+
+  if (!live) {
+    return (
+      <span className={className} aria-disabled="true" style={style}>
+        {children}
+      </span>
+    )
+  }
+
   return (
     <RouteLink
       to={to}

@@ -96,6 +96,12 @@
   }
 }
 
+.cta--disabled {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .cta:active {
   translate: 0 1px;
 }

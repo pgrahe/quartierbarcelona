@@ -1,3 +1,4 @@
+import { VIP_ENABLED } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { RouteLink } from '../router/RouteContext'
 import { img, imgSrcSet } from '../lib/img'
@@ -84,9 +85,11 @@ export default function Explore({ exclude, linked = true }) {
         </div>
 
         <ul className="explore__list" data-count={cards.length}>
-          {cards.map((card, i) => (
+          {cards.map((card, i) => {
+            const cardLinked = linked && (card.route !== 'vip' || VIP_ENABLED)
+            return (
             <li key={card.route} className="explore__item" data-reveal style={{ '--reveal-delay': `${i * 70}ms` }}>
-              <article className="ecard" data-linked={linked}>
+              <article className="ecard" data-linked={cardLinked}>
                 <figure className="ecard__figure">
                   <img
                     src={card.src}
@@ -106,7 +109,7 @@ export default function Explore({ exclude, linked = true }) {
                   </p>
 
                   <h3 className="ecard__title">
-                    {linked ? (
+                    {cardLinked ? (
                       <RouteLink to={card.route} className="ecard__link">
                         {t.nav[card.navKey]}
                       </RouteLink>
@@ -125,7 +128,8 @@ export default function Explore({ exclude, linked = true }) {
                 </p>
               </article>
             </li>
-          ))}
+            )
+          })}
         </ul>
       </div>
     </section>

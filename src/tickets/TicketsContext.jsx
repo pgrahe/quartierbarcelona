@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { TICKETS_ENABLED } from '../config/site'
 
 /**
  * One piece of shared state: whether the ticketing overlay is open.
@@ -12,7 +13,10 @@ const TicketsContext = createContext(null)
 export function TicketsProvider({ children }) {
   const [open, setOpen] = useState(false)
 
-  const openTickets = useCallback(() => setOpen(true), [])
+  const openTickets = useCallback(() => {
+    if (!TICKETS_ENABLED) return
+    setOpen(true)
+  }, [])
   const closeTickets = useCallback(() => setOpen(false), [])
 
   const value = useMemo(() => ({ open, openTickets, closeTickets }), [open, openTickets, closeTickets])

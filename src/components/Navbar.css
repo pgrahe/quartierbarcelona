@@ -105,6 +105,7 @@
 
 .nav__link[aria-disabled='true'] {
   cursor: default;
+  opacity: 0.38;
 }
 
 .nav__link[data-active='true']::after {

@@ -1,8 +1,8 @@
-import { CONTACT, LOCATION, TICKETS_VIP_URL } from '../config/site'
+import { CONTACT, LOCATION, TICKETS_ENABLED } from '../config/site'
 import { useEvents } from '../hooks/useEvents'
 import { useLanguage } from '../i18n/LanguageContext'
 import { formatEventDate } from '../lib/eventDate'
-import './TicketsCta.css'
+import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
 
 /**
@@ -33,7 +33,7 @@ function EventCard({ event, lang, labels }) {
     </div>
   )
 
-  if (event.href) {
+  if (TICKETS_ENABLED && event.href) {
     return (
       <a
         className="agenda__card"
@@ -81,14 +81,7 @@ export default function UpcomingEvents() {
         )}
 
         <footer className="agenda__brand" data-reveal style={{ '--reveal-delay': '280ms' }}>
-          <a
-            className="cta cta--outline cta--md agenda__cta"
-            href={TICKETS_VIP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="cta__label">{t.nav.tickets}</span>
-          </a>
+          <TicketsCta variant="outline" size="md" className="agenda__cta" />
           <p className="agenda__meta">
             <span>{street}</span>
             <span>INFO &amp; BOOKINGS · {CONTACT.phoneDisplay}</span>

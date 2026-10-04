@@ -67,6 +67,7 @@
 
 .mmenu__link[aria-disabled='true'] {
   cursor: default;
+  opacity: 0.38;
 }
 
 .mmenu__link[aria-disabled='true']:active {

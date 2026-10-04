@@ -30,6 +30,13 @@ export function useDocumentHead(lang, routeId) {
       if (el) el.setAttribute(attr, value)
     }
 
+    set(
+      'meta[name="robots"]',
+      'content',
+      routeId === 'countdown'
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    )
     set('meta[name="description"]', 'content', seo.description)
     set('meta[property="og:title"]', 'content', seo.title)
     set('meta[property="og:description"]', 'content', seo.description)

@@ -1,4 +1,4 @@
-import { TICKETS_VIP_URL } from '../config/site'
+import { TICKETS_ENABLED, TICKETS_VIP_URL } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useTickets } from '../tickets/TicketsContext'
 import './TicketsCta.css'
@@ -28,6 +28,16 @@ export default function TicketsCta({
 }) {
   const { t } = useLanguage()
   const { openTickets } = useTickets()
+  const classNames = `cta cta--${variant} cta--${size} ${className}`.trim()
+  const text = label || t.nav.tickets
+
+  if (!TICKETS_ENABLED) {
+    return (
+      <span className={`${classNames} cta--disabled`} aria-disabled="true">
+        <span className="cta__label">{text}</span>
+      </span>
+    )
+  }
 
   const handleClick = (e) => {
     // Let the browser handle modified clicks — those mean "somewhere else".
@@ -43,9 +53,9 @@ export default function TicketsCta({
       onClick={handleClick}
       target="_blank"
       rel="noopener noreferrer"
-      className={`cta cta--${variant} cta--${size} ${className}`.trim()}
+      className={classNames}
     >
-      <span className="cta__label">{label || t.nav.tickets}</span>
+      <span className="cta__label">{text}</span>
     </a>
   )
 }

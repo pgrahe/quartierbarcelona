@@ -61,6 +61,13 @@
   color: var(--stone);
 }
 
+.foot__link--disabled,
+.foot__link[aria-disabled='true'] {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .foot__social {
   display: inline-flex;
   align-items: center;

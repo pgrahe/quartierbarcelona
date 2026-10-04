@@ -95,7 +95,11 @@ function headFor(locale, routeId, url) {
 
   const tags = [
     `    <meta name="description" content="${esc(seo.description)}" />`,
-    `    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
+    `    <meta name="robots" content="${
+      routeId === 'countdown'
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    }" />`,
     `    <link rel="canonical" href="${url}" />`,
     ...alternatesFor(routeId),
     ``,
@@ -171,6 +175,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${pages
+  .filter(({ routeId }) => routeId !== 'countdown')
   .map(
     ({ locale, routeId, path: urlPath }) => `  <url>
     <loc>${absoluteUrl(urlPath)}</loc>

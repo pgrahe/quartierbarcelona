@@ -64,6 +64,12 @@ export const OG_IMAGE = '/img/og-quartier-barcelona.jpg?v=4'
  * script is only fetched the first time someone actually opens it.
  * ---------------------------------------------------------------------- */
 
+/** Flip to true on launch day to turn every tickets CTA back on. */
+export const TICKETS_ENABLED = false
+
+/** Flip to true on launch day to open VIP Experience again. */
+export const VIP_ENABLED = false
+
 /** Fourvenues account slug. Drives the embedded calendar. */
 export const FOURVENUES_SLUG = 'quartier-club'
 

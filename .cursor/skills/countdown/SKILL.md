@@ -38,3 +38,4 @@ Footer comes from `App`. Do not add agenda, VIP, private events or intro.
 - Prerender preloads the same hero posters as home
 - Do **not** redirect `/`, VIP, events or other pages to `/countdown`
 - Do **not** add `vercel.json` redirects back to `/countdown`
+- Countdown is `noindex` and omitted from the sitemap so it cannot replace `/` in Google again

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
+import { VIP_ENABLED } from '../config/site'
 import {
   HERO_ROUTE_IDS,
   HOME_ROUTE,
@@ -56,7 +57,17 @@ export function RouteProvider({ children, initialPath }) {
     }
   }, [])
 
-  const { routeId, lang } = useMemo(() => routeFromPath(path), [path])
+  const { routeId: rawRouteId, lang } = useMemo(() => routeFromPath(path), [path])
+  const routeId = !VIP_ENABLED && rawRouteId === 'vip' ? HOME_ROUTE : rawRouteId
+
+  useEffect(() => {
+    if (VIP_ENABLED || rawRouteId !== 'vip') return
+    const home = pathFor(HOME_ROUTE, lang)
+    if (typeof window === 'undefined') return
+    if (window.location.pathname === home) return
+    window.history.replaceState({ path: home }, '', home)
+    setPath(home)
+  }, [rawRouteId, lang])
 
   /* A URL that arrives with a hash — shared, bookmarked, or typed — has to be
      honoured once, on mount. The browser's own anchor handling runs against an
