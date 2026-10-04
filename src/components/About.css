@@ -1,8 +1,7 @@
 .about {
   position: relative;
   isolation: isolate;
-  /* Transparent so `.tex` is the visible ground. */
-  background: transparent;
+  background: var(--black);
   color: var(--stone);
   overflow: visible;
   /* Page opens here (no PageHero) — clear the fixed nav. */
