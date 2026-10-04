@@ -1,3 +1,4 @@
+import { AGENDA_ENABLED } from '../config/site'
 import Hero from '../components/Hero'
 import Intro from '../components/Intro'
 import UpcomingEvents from '../components/UpcomingEvents'
@@ -27,7 +28,7 @@ export default function HomePage() {
     <>
       <Hero />
       <Intro />
-      <UpcomingEvents />
+      {AGENDA_ENABLED && <UpcomingEvents />}
       <BrandMoment />
       <VipExperience />
       <PrivateEvents />

@@ -70,6 +70,9 @@ export const TICKETS_ENABLED = false
 /** Flip to true on launch day to open VIP Experience again. */
 export const VIP_ENABLED = false
 
+/** Flip to true on launch day to show THIS WEEK again. */
+export const AGENDA_ENABLED = false
+
 /** Fourvenues account slug. Drives the embedded calendar. */
 export const FOURVENUES_SLUG = 'quartier-club'
 
