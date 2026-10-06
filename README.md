@@ -33,7 +33,7 @@ is CSS transitions.
 | **Ticketing account** | `src/config/site.js` → `FOURVENUES_SLUG` (`quartier-club`) |
 | **Address (map + address line)** | `src/config/site.js` → `LOCATION` |
 | **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` / `about.coda` (×4 languages) |
-| **The programme (THIS WEEK)** | Google Sheet via `EVENTS_API_URL` in `src/config/site.js` — `titulo`, `fecha`, `imagen`, `fourvenues` |
+| **The programme (THIS WEEK)** | Fourvenues Integrations API via `/api/events`. Set `FOURVENUES_API_KEY` in Vercel (and `.env.local` for `npm run dev`) |
 | **URLs / adding a page** | `src/router/routes.js` — one table drives navigation, hreflang, the sitemap and the build |
 | **Company details on the legal pages** | `src/config/site.js` → `COMPANY` (name, NIF, registered office) |
 | **Legal texts** | `src/i18n/translations.js` → `legal.privacy` / `legal.notice` (×4 languages) — bump `LEGAL_UPDATED` in `src/config/site.js` whenever you edit one |
@@ -42,9 +42,10 @@ Each is defined once and consumed everywhere — no duplicated strings.
 
 ### Próximos eventos
 
-The home-page THIS WEEK grid is fetched on load from the OpenSheet API
-(`EVENTS_API_URL`). Columns: `titulo`, `fecha`, `imagen`, `fourvenues`.
-An empty sheet hides the section.
+The home-page THIS WEEK grid is fetched on load from `/api/events`, a
+server proxy that lists upcoming Quartier nights from Fourvenues
+(`flyer`, `name`, `date`, `url`). The API key never reaches the browser.
+An empty response hides the grid.
 
 ---
 

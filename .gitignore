@@ -4,6 +4,7 @@ dist
 dist-ssr
 .cache
 .DS_Store
+.env
 *.local
 .claude
 Fotos and assets

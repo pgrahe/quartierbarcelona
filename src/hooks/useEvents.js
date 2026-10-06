@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { fetchEvents } from '../lib/eventsApi'
 
 /**
- * Loads the programme on mount from the OpenSheet API.
+ * Loads the programme on mount from /api/events (Fourvenues, server-side).
  */
 export function useEvents() {
   const [events, setEvents] = useState([])

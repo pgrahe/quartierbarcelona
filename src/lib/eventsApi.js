@@ -1,12 +1,10 @@
-import { EVENTS_API_URL } from '../config/site'
-
 /**
- * Programme from the public OpenSheet feed of the Quartier spreadsheet.
- * Rows are never hardcoded — an empty sheet is an empty list.
+ * Programme from /api/events — Fourvenues via the server proxy.
+ * The API key never reaches the browser. An empty list hides the grid.
  */
 
 export async function fetchEvents() {
-  const response = await fetch(EVENTS_API_URL)
+  const response = await fetch('/api/events')
   if (!response.ok) {
     throw new Error(`Events API ${response.status}`)
   }
@@ -18,62 +16,25 @@ export async function fetchEvents() {
 }
 
 function normalizeEvent(row, index) {
-  const title = String(row?.titulo ?? '').trim()
-  const image = resolveImage(String(row?.imagen ?? '').trim())
-  const href = String(row?.fourvenues ?? '').trim()
-  const fecha = String(row?.fecha ?? '').trim()
+  const title = String(row?.title ?? '').trim()
+  const image = resolveImage(String(row?.image ?? '').trim())
+  const href = String(row?.href ?? '').trim()
+  const fecha = String(row?.fecha ?? row?.date ?? '').trim()
+  const date = String(row?.date ?? '').trim() || toIsoDate(fecha)
   if (!title && !image) return null
 
-  const iso = toIsoDate(fecha)
-
   return {
-    id: [iso, slug(title) || `event-${index + 1}`].filter(Boolean).join('-'),
+    id: String(row?.id ?? '').trim() || [date, slug(title) || `event-${index + 1}`].filter(Boolean).join('-'),
     title,
     fecha,
-    date: iso,
+    date,
     image,
     href,
   }
 }
 
-const MONTHS = {
-  jan: '01',
-  ene: '01',
-  feb: '02',
-  mar: '03',
-  apr: '04',
-  abr: '04',
-  may: '05',
-  jun: '06',
-  jul: '07',
-  aug: '08',
-  ago: '08',
-  sep: '09',
-  sept: '09',
-  oct: '10',
-  nov: '11',
-  dec: '12',
-  dic: '12',
-}
-
 function toIsoDate(value) {
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value
-
-  const dmy = value.match(/^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/)
-  if (dmy) {
-    const [, day, month, year] = dmy
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-  }
-
-  const named = value.match(/^(\d{1,2})\s+([a-záéíóúñ]+)\s*(\d{4})?$/i)
-  if (named) {
-    const month = MONTHS[named[2].slice(0, 4).toLowerCase()] || MONTHS[named[2].slice(0, 3).toLowerCase()]
-    if (month) {
-      const year = named[3] || String(new Date().getFullYear())
-      return `${year}-${month}-${named[1].padStart(2, '0')}`
-    }
-  }
-
   return ''
 }
 

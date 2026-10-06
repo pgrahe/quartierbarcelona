@@ -6,10 +6,9 @@ import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
 
 /**
- * THIS WEEK — cards from the OpenSheet API.
+ * THIS WEEK — cards from /api/events (Fourvenues flyers).
  *
- * Desktop 4 / tablet 2 / mobile 1. Each row is titulo, fecha, imagen,
- * fourvenues. Nothing is hardcoded.
+ * Desktop 4 / tablet 2 / mobile 1. Each card is flyer + optional tickets URL.
  */
 
 function EventCard({ event, lang, labels }) {

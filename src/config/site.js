@@ -191,11 +191,9 @@ export function mapDirectionsUrl() {
 /* -------------------------------------------------------------------------
  * PRÓXIMOS EVENTOS — THIS WEEK on the home page.
  *
- * Live feed of the Quartier tab in the programme spreadsheet.
- * Columns: titulo, fecha, imagen, fourvenues.
+ * Live from Fourvenues (`GET /integrations/events/`) via `/api/events`.
+ * The API key is FOURVENUES_API_KEY on the server — never in this file.
  * ---------------------------------------------------------------------- */
-export const EVENTS_API_URL =
-  'https://opensheet.elk.sh/1byU3EP3cnbbBZ9PoVlFLBKj-CrPx4JgB2Zu7VLeSFgs/Quartier'
 
 /**
  * Opening night the /countdown page counts down to.

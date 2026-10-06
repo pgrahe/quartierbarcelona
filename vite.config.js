@@ -3,7 +3,7 @@ import { copyFile, mkdir, readFile, readdir, stat, unlink, writeFile } from 'nod
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
 const execFileAsync = promisify(execFile)
@@ -262,25 +262,58 @@ function emailLogoPlugin() {
   }
 }
 
-export default defineConfig({
-  plugins: [pinAssetsPlugin(), emailLogoPlugin(), react()],
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-dom/client', 'leaflet'],
-  },
-  server: {
-    host: true,
-    port: 5173,
-    strictPort: true,
-    // Original photos / hero video live on iCloud Desktop; stat/read on those
-    // paths blocks the dev server until macOS hydrates the file from the cloud.
-    watch: {
-      ignored: [
-        '**/Fotos and assets/**',
-        '**/public/**',
-        '**/dist/**',
-        '**/dist-ssr/**',
-      ],
+function eventsApiPlugin(env) {
+  return {
+    name: 'events-api',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (req.url?.split('?')[0] !== '/api/events') {
+          next()
+          return
+        }
+        if (req.method !== 'GET' && req.method !== 'HEAD') {
+          res.statusCode = 405
+          res.end()
+          return
+        }
+        try {
+          const { loadFourvenuesEvents } = await import('./src/lib/fourvenuesEvents.js')
+          const events = await loadFourvenuesEvents(env)
+          res.statusCode = 200
+          res.setHeader('Content-Type', 'application/json; charset=utf-8')
+          res.end(JSON.stringify(events))
+        } catch {
+          res.statusCode = 502
+          res.setHeader('Content-Type', 'application/json; charset=utf-8')
+          res.end('[]')
+        }
+      })
     },
-  },
-  build: { assetsInlineLimit: 2048 },
+  }
+}
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, root, '')
+  return {
+    plugins: [pinAssetsPlugin(), emailLogoPlugin(), eventsApiPlugin(env), react()],
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-dom/client', 'leaflet'],
+    },
+    server: {
+      host: true,
+      port: 5173,
+      strictPort: true,
+      // Original photos / hero video live on iCloud Desktop; stat/read on those
+      // paths blocks the dev server until macOS hydrates the file from the cloud.
+      watch: {
+        ignored: [
+          '**/Fotos and assets/**',
+          '**/public/**',
+          '**/dist/**',
+          '**/dist-ssr/**',
+        ],
+      },
+    },
+    build: { assetsInlineLimit: 2048 },
+  }
 })
