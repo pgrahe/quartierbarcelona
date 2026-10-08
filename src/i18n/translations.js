@@ -132,7 +132,7 @@ export const translations = {
     },
     agenda: {
       eyebrow: 'AGENDA',
-      title: 'THIS WEEK',
+      title: 'OPENING SERIES',
       note: 'Aforo limitado. Acceso sujeto a admisión.',
       cta: 'VER TODA LA AGENDA',
       cardCta: 'TICKETS Y MESAS VIP',
@@ -505,7 +505,7 @@ export const translations = {
     },
     agenda: {
       eyebrow: 'WHAT’S ON',
-      title: 'THIS WEEK',
+      title: 'OPENING SERIES',
       note: 'Limited capacity. Admission at the door’s discretion.',
       cta: 'SEE THE FULL CALENDAR',
       cardCta: 'TICKETS & VIP TABLES',
@@ -864,7 +864,7 @@ export const translations = {
     },
     agenda: {
       eyebrow: 'AGENDA',
-      title: 'THIS WEEK',
+      title: 'OPENING SERIES',
       note: 'Capacité limitée. Accès soumis à l’admission.',
       cta: 'VOIR TOUT L’AGENDA',
       cardCta: 'TICKETS ET TABLES VIP',
@@ -1221,7 +1221,7 @@ export const translations = {
     },
     agenda: {
       eyebrow: 'PROGRAMM',
-      title: 'THIS WEEK',
+      title: 'OPENING SERIES',
       note: 'Begrenzte Kapazität. Einlass nach Ermessen.',
       cta: 'GESAMTES PROGRAMM ANSEHEN',
       cardCta: 'TICKETS UND VIP-TISCHE',
