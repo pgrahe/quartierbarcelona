@@ -6,6 +6,8 @@
  * FOURVENUES_API_KEY_CHANNEL → Channel Manager API (all promoters on the channel: Velvet, Derby, …)
  */
 
+import { liveEvents } from './eventLive.js'
+
 const INTEGRATIONS_BASE = 'https://api.fourvenues.com/integrations'
 const CHANNEL_BASE = 'https://channels-service.fourvenues.com'
 const WINDOW_DAYS = 56
@@ -27,7 +29,7 @@ export async function loadFourvenuesEvents(env = process.env) {
     loadChannelEvents(env, start, end).catch(() => []),
   ])
 
-  return mergeEvents(integration, channel)
+  return liveEvents(mergeEvents(integration, channel))
 }
 
 async function loadIntegrationEvents(env, start, end) {
@@ -53,7 +55,7 @@ async function loadIntegrationEvents(env, start, end) {
       if (id && seen.has(id)) continue
       if (id) seen.add(id)
       const normalized = normalizeIntegrationEvent(row)
-      if (normalized && normalized.date >= start) events.push(normalized)
+      if (normalized) events.push(normalized)
     }
     if (batch.length < PAGE_SIZE) break
   }
@@ -75,9 +77,7 @@ async function loadChannelEvents(env, start, end) {
     if (id) seen.add(id)
     const resolvedOrg = org || orgById.get(String(row?.organization_id ?? ''))
     const normalized = normalizeChannelEvent(row, resolvedOrg)
-    if (!normalized) return
-    if (normalized.date && normalized.date < start) return
-    events.push(normalized)
+    if (normalized) events.push(normalized)
   }
 
   await paginateChannelEvents(apiKey, { start, end }, (row) => collect(row))
@@ -210,6 +210,8 @@ function normalizeIntegrationEvent(row) {
     title,
     fecha: date,
     date,
+    startsAt: toIsoDateTime(row?.start) || toIsoDateTime(row?.start_date),
+    endsAt: toIsoDateTime(row?.end) || toIsoDateTime(row?.end_date),
     image,
     href,
   }
@@ -241,6 +243,8 @@ function normalizeChannelEvent(row, org) {
     title,
     fecha: date,
     date,
+    startsAt: toIsoDateTime(row?.start_date) || toIsoDateTime(row?.start) || toIsoDateTime(row?.display_date),
+    endsAt: toIsoDateTime(row?.end_date) || toIsoDateTime(row?.end),
     image,
     href,
   }
@@ -263,11 +267,21 @@ function mergeEvents(...lists) {
   return events
 }
 
+function toIsoDateTime(value) {
+  if (value == null || value === '') return ''
+  if (typeof value === 'number' || /^\d+$/.test(String(value).trim())) {
+    const n = Number(value)
+    if (!Number.isFinite(n) || n <= 0) return ''
+    const ms = n > 1e12 ? n : n * 1000
+    return new Date(ms).toISOString()
+  }
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString()
+}
+
 function unixToIso(unix) {
-  const n = Number(unix)
-  if (!Number.isFinite(n) || n <= 0) return ''
-  const ms = n > 1e12 ? n : n * 1000
-  return madridIsoDate(new Date(ms))
+  const iso = toIsoDateTime(unix)
+  return iso ? madridIsoDate(new Date(iso)) : ''
 }
 
 function isoToMadridDate(value) {

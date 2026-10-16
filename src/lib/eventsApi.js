@@ -1,7 +1,10 @@
 /**
  * Programme from /api/events — Fourvenues via the server proxy.
  * The API key never reaches the browser. An empty list hides the grid.
+ * Finished nights drop off; the next one becomes first.
  */
+
+import { liveEvents } from './eventLive'
 
 export async function fetchEvents() {
   const response = await fetch('/api/events')
@@ -12,7 +15,7 @@ export async function fetchEvents() {
   const rows = await response.json()
   if (!Array.isArray(rows)) return []
 
-  return rows.map(normalizeEvent).filter(Boolean)
+  return liveEvents(rows.map(normalizeEvent).filter(Boolean))
 }
 
 function normalizeEvent(row, index) {
@@ -28,6 +31,8 @@ function normalizeEvent(row, index) {
     title,
     fecha,
     date,
+    startsAt: String(row?.startsAt ?? '').trim(),
+    endsAt: String(row?.endsAt ?? '').trim(),
     image,
     href,
   }

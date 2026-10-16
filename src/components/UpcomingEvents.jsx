@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { CONTACT, LOCATION, TICKETS_ENABLED } from '../config/site'
 import { useEvents } from '../hooks/useEvents'
 import { useLanguage } from '../i18n/LanguageContext'
@@ -5,11 +6,72 @@ import { formatEventDate } from '../lib/eventDate'
 import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
 
+const AUTOPLAY_MS = 5000
+const RESUME_MS = 8000
+
 /**
- * THIS WEEK — cards from /api/events (Fourvenues flyers).
+ * OPENING SERIES — flyers from /api/events.
  *
- * Desktop 4 / tablet 2 / mobile 1. Each card is flyer + optional tickets URL.
+ * Mobile carousel, one flyer per screen. Desktop carousel, as many as fit.
+ * The first card is the night that has not finished yet.
  */
+
+function FlyerCarousel({ events, lang, labels }) {
+  const trackRef = useRef(null)
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track || events.length < 2) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let resumeAt = 0
+
+    const stride = () => {
+      const slide = track.querySelector('.agenda__slide')
+      if (!slide) return track.clientWidth
+      const gap = Number.parseFloat(getComputedStyle(track).gap) || 0
+      return slide.getBoundingClientRect().width + gap
+    }
+
+    const advance = () => {
+      if (document.hidden || Date.now() < resumeAt) return
+      const step = stride()
+      const max = track.scrollWidth - track.clientWidth
+      const atEnd = track.scrollLeft >= max - 8
+      track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + step, behavior: 'smooth' })
+    }
+
+    const pause = () => {
+      resumeAt = Date.now() + RESUME_MS
+    }
+
+    const timer = window.setInterval(advance, AUTOPLAY_MS)
+    track.addEventListener('pointerdown', pause)
+    track.addEventListener('wheel', pause, { passive: true })
+    track.addEventListener('keydown', pause)
+    track.addEventListener('touchstart', pause, { passive: true })
+
+    return () => {
+      window.clearInterval(timer)
+      track.removeEventListener('pointerdown', pause)
+      track.removeEventListener('wheel', pause)
+      track.removeEventListener('keydown', pause)
+      track.removeEventListener('touchstart', pause)
+    }
+  }, [events.length])
+
+  return (
+    <div className="agenda__viewport" data-reveal style={{ '--reveal-delay': '160ms' }}>
+      <ul ref={trackRef} className="agenda__carousel">
+        {events.map((event) => (
+          <li key={event.id} className="agenda__slide">
+            <EventCard event={event} lang={lang} labels={labels} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 function EventCard({ event, lang, labels }) {
   const spoken = event.date ? formatEventDate(event.date, lang) : null
@@ -70,13 +132,7 @@ export default function UpcomingEvents() {
         </h2>
 
         {events.length > 0 && (
-          <ul className="agenda__grid" data-reveal style={{ '--reveal-delay': '160ms' }}>
-            {events.map((event) => (
-              <li key={event.id}>
-                <EventCard event={event} lang={lang} labels={a} />
-              </li>
-            ))}
-          </ul>
+          <FlyerCarousel events={events} lang={lang} labels={a} />
         )}
 
         <footer className="agenda__brand" data-reveal style={{ '--reveal-delay': '280ms' }}>
