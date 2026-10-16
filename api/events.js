@@ -1,7 +1,8 @@
 import { loadFourvenuesEvents } from '../src/lib/fourvenuesEvents.js'
 
 /**
- * Production proxy: the Fourvenues key never leaves the server.
+ * Production proxy: Fourvenues keys never leave the server.
+ * Integrations + Channel Manager are merged in loadFourvenuesEvents.
  * Locally the same path is served by the Vite middleware in vite.config.js.
  */
 export default async function handler(req, res) {

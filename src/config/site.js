@@ -191,8 +191,8 @@ export function mapDirectionsUrl() {
 /* -------------------------------------------------------------------------
  * PRÓXIMOS EVENTOS — THIS WEEK on the home page.
  *
- * Live from Fourvenues (`GET /integrations/events/`) via `/api/events`.
- * The API key is FOURVENUES_API_KEY on the server — never in this file.
+ * Live from Fourvenues via `/api/events` (Integrations + Channel Manager).
+ * Keys: FOURVENUES_API_KEY and FOURVENUES_API_KEY_CHANNEL — never in this file.
  * ---------------------------------------------------------------------- */
 
 /**

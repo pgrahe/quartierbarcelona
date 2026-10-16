@@ -33,7 +33,7 @@ is CSS transitions.
 | **Ticketing account** | `src/config/site.js` → `FOURVENUES_SLUG` (`quartier-club`) |
 | **Address (map + address line)** | `src/config/site.js` → `LOCATION` |
 | **"Sobre nosotros" copy** | `src/i18n/translations.js` → `about.body` / `about.closing` / `about.coda` (×4 languages) |
-| **The programme (THIS WEEK)** | Fourvenues Integrations API via `/api/events`. Set `FOURVENUES_API_KEY` in Vercel (and `.env.local` for `npm run dev`) |
+| **The programme (OPENING SERIES)** | Fourvenues via `/api/events` (Integrations + Channel Manager). Set `FOURVENUES_API_KEY` and `FOURVENUES_API_KEY_CHANNEL` in Vercel (and `.env.local` for `npm run dev`) |
 | **URLs / adding a page** | `src/router/routes.js` — one table drives navigation, hreflang, the sitemap and the build |
 | **Company details on the legal pages** | `src/config/site.js` → `COMPANY` (name, NIF, registered office) |
 | **Legal texts** | `src/i18n/translations.js` → `legal.privacy` / `legal.notice` (×4 languages) — bump `LEGAL_UPDATED` in `src/config/site.js` whenever you edit one |
@@ -42,10 +42,11 @@ Each is defined once and consumed everywhere — no duplicated strings.
 
 ### Próximos eventos
 
-The home-page THIS WEEK grid is fetched on load from `/api/events`, a
-server proxy that lists upcoming Quartier nights from Fourvenues
-(`flyer`, `name`, `date`, `url`). The API key never reaches the browser.
-An empty response hides the grid.
+The home-page OPENING SERIES grid is fetched on load from `/api/events`,
+a server proxy that merges upcoming nights from Fourvenues Integrations
+and the Channel Manager (Quartier, Velvet, Derby and any other promoter
+on the channel). The API keys never reach the browser. An empty response
+hides the grid.
 
 ---
 
