@@ -31,6 +31,12 @@ export const SEO = {
         'Una nueva etapa de la noche de Barcelona. La historia del espacio, la identidad que la continúa y el club renovado de Pedralbes.',
       ogImageAlt: 'Una noche en Quartier Barcelona, club en Pedralbes',
     },
+    tickets: {
+      title: 'Tickets y mesas VIP | Quartier Barcelona',
+      description:
+        'Compra entradas y reserva mesas VIP en Quartier Barcelona. Calendario de noches en Pedralbes: opening series, sábados y eventos especiales.',
+      ogImageAlt: 'Tickets y mesas VIP en Quartier Barcelona',
+    },
     vip: {
       title: 'VIP Experience | Mesas y reservados | Quartier Barcelona',
       description:
@@ -75,6 +81,12 @@ export const SEO = {
       description:
         'A new chapter in Barcelona nightlife. The story of the space, the identity that carries it on, and the fully renovated club in Pedralbes.',
       ogImageAlt: 'A night at Quartier Barcelona, a club in Pedralbes',
+    },
+    tickets: {
+      title: 'Tickets & VIP tables | Quartier Barcelona',
+      description:
+        'Buy tickets and book VIP tables at Quartier Barcelona. Night calendar in Pedralbes: opening series, Saturdays and special events.',
+      ogImageAlt: 'Tickets and VIP tables at Quartier Barcelona',
     },
     vip: {
       title: 'VIP Experience | Tables & booths | Quartier Barcelona',
@@ -121,6 +133,12 @@ export const SEO = {
         'Une nouvelle étape de la nuit barcelonaise. L’histoire du lieu, l’identité qui la poursuit et le club entièrement rénové de Pedralbes.',
       ogImageAlt: 'Une nuit au Quartier Barcelona, club à Pedralbes',
     },
+    tickets: {
+      title: 'Billets et tables VIP | Quartier Barcelona',
+      description:
+        'Achetez vos billets et réservez une table VIP au Quartier Barcelona. Calendrier des nuits à Pedralbes : opening series, samedis et soirées spéciales.',
+      ogImageAlt: 'Billets et tables VIP au Quartier Barcelona',
+    },
     vip: {
       title: 'VIP Experience | Tables et carrés VIP | Quartier Barcelona',
       description:
@@ -165,6 +183,12 @@ export const SEO = {
       description:
         'Ein neues Kapitel im Nachtleben Barcelonas. Die Geschichte des Ortes, die Identität, die sie fortschreibt, und der erneuerte Club in Pedralbes.',
       ogImageAlt: 'Eine Nacht im Quartier Barcelona, Club in Pedralbes',
+    },
+    tickets: {
+      title: 'Tickets und VIP-Tische | Quartier Barcelona',
+      description:
+        'Tickets kaufen und VIP-Tische im Quartier Barcelona reservieren. Nachtkalender in Pedralbes: Opening Series, samstags und Specials.',
+      ogImageAlt: 'Tickets und VIP-Tische im Quartier Barcelona',
     },
     vip: {
       title: 'VIP Experience | Tische und Lounges | Quartier Barcelona',

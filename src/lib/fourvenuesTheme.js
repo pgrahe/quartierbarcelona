@@ -1,8 +1,8 @@
 const FOURVENUES_HOST = /(^|\.)fourvenues\.com$/i
 
 /**
- * Fourvenues iframe checkout defaults to light. The calendar overlay already
- * forces dark via `?theme=dark`; flyer links need the same flag.
+ * Fourvenues iframe checkout defaults to light. /tickets and flyer links
+ * force dark via `?theme=dark`.
  */
 export function withFourvenuesDarkTheme(url) {
   if (!url) return ''

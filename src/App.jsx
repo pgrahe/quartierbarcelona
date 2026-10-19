@@ -10,11 +10,11 @@ import { useDocumentHead } from './seo/useDocumentHead'
 import Navbar from './components/Navbar'
 import MobileMenu from './components/MobileMenu'
 import Footer from './components/Footer'
-import TicketsOverlay from './tickets/TicketsOverlay'
 
 import HomePage from './pages/HomePage'
 import CountdownPage from './pages/CountdownPage'
 import AboutPage from './pages/AboutPage'
+import TicketsPage from './pages/TicketsPage'
 import VipPage from './pages/VipPage'
 import EventsPage from './pages/EventsPage'
 import PrivacyPage from './pages/PrivacyPage'
@@ -26,6 +26,7 @@ const PAGES = {
   home: HomePage,
   countdown: CountdownPage,
   about: AboutPage,
+  tickets: TicketsPage,
   vip: VipPage,
   events: EventsPage,
   privacy: PrivacyPage,
@@ -71,6 +72,18 @@ export default function App() {
     previousRoute.current = pageId
   }, [pageId])
 
+  if (pageId === 'tickets') {
+    return (
+      <>
+        <a className="skip-link" href="#main">
+          {t.nav.skipToContent}
+        </a>
+        <TicketsPage />
+        <Analytics />
+      </>
+    )
+  }
+
   const Page = PAGES[pageId] || HomePage
 
   return (
@@ -95,8 +108,6 @@ export default function App() {
       </main>
 
       <Footer />
-
-      <TicketsOverlay />
       <Analytics />
     </>
   )

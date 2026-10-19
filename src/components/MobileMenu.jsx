@@ -115,7 +115,7 @@ export default function MobileMenu({ open, onClose }) {
         </nav>
 
         <div className="mmenu__foot">
-          <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} />
+          <TicketsCta variant="outline" size="md" className="mmenu__cta" onClick={onClose} delay={260} />
           <hr className="rule mmenu__rule" />
           <LanguageSelector size="md" className="mmenu__langs" />
         </div>

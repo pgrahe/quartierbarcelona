@@ -6,6 +6,7 @@
  *   /                        home       (also /en/  /fr/  /de/)
  *   /countdown               countdown  (same slug in every language)
  *   /sobre-nosotros          about      (/en/about, /fr/a-propos, /de/ueber-uns)
+ *   /tickets                 tickets    (same slug in every language — brand)
  *   /vip-experience          vip        (same slug in every language — brand)
  *   /private-events          events     (same slug in every language — brand)
  *   /politica-de-privacidad  privacy    (/en/privacy-policy, …)
@@ -29,6 +30,10 @@ export const ROUTES = [
   {
     id: 'about',
     slugs: { es: 'sobre-nosotros', en: 'about', fr: 'a-propos', de: 'ueber-uns' },
+  },
+  {
+    id: 'tickets',
+    slugs: { es: 'tickets', en: 'tickets', fr: 'tickets', de: 'tickets' },
   },
   {
     id: 'vip',

@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
-import { VIP_ENABLED } from '../config/site'
+import { TICKETS_ENABLED, VIP_ENABLED } from '../config/site'
+import { isSiteHash } from '../lib/siteHash'
 import {
   HERO_ROUTE_IDS,
   HOME_ROUTE,
@@ -16,7 +17,7 @@ import { navOffset, scrollToSection, scrollToSectionWhenReady } from '../lib/scr
  * router never has to fetch, match patterns or code-split — it only has to
  * answer one question ("which page is this pathname?") and swap the page
  * component when a link is clicked, so navigation stays instant and the
- * ticketing overlay, the language state and the fixed navbar survive it.
+ * tickets page chrome, the language state and the fixed navbar survive it.
  *
  * pushState does not fire an event, so navigations are announced on a custom
  * one. Both this provider and LanguageProvider listen for it, which keeps
@@ -58,10 +59,15 @@ export function RouteProvider({ children, initialPath }) {
   }, [])
 
   const { routeId: rawRouteId, lang } = useMemo(() => routeFromPath(path), [path])
-  const routeId = !VIP_ENABLED && rawRouteId === 'vip' ? HOME_ROUTE : rawRouteId
+  const routeId =
+    (!VIP_ENABLED && rawRouteId === 'vip') || (!TICKETS_ENABLED && rawRouteId === 'tickets')
+      ? HOME_ROUTE
+      : rawRouteId
 
   useEffect(() => {
-    if (VIP_ENABLED || rawRouteId !== 'vip') return
+    const gated =
+      (!VIP_ENABLED && rawRouteId === 'vip') || (!TICKETS_ENABLED && rawRouteId === 'tickets')
+    if (!gated) return
     const home = pathFor(HOME_ROUTE, lang)
     if (typeof window === 'undefined') return
     if (window.location.pathname === home) return
@@ -74,7 +80,7 @@ export function RouteProvider({ children, initialPath }) {
      empty #root: the section it is looking for is rendered a moment later. */
   useEffect(() => {
     const hash = window.location.hash.slice(1)
-    if (hash) scrollToSectionWhenReady(hash, { offset: navOffset(), behavior: 'auto' })
+    if (isSiteHash(hash)) scrollToSectionWhenReady(hash, { offset: navOffset(), behavior: 'auto' })
   }, [])
 
   /* Landing on a section of another page.
@@ -86,7 +92,10 @@ export function RouteProvider({ children, initialPath }) {
    * jump reliable rather than a race against React's scheduler. */
   useEffect(() => {
     const hash = pendingHash.current
-    if (!hash) return
+    if (!hash || !isSiteHash(hash)) {
+      pendingHash.current = null
+      return
+    }
     pendingHash.current = null
     scrollToSectionWhenReady(hash, { offset: navOffset(), behavior: 'auto' })
   }, [path])

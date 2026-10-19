@@ -1,7 +1,6 @@
 import { renderToString } from 'react-dom/server'
 import { LanguageProvider } from './i18n/LanguageContext'
 import { RouteProvider } from './router/RouteContext'
-import { TicketsProvider } from './tickets/TicketsContext'
 import App from './App'
 
 /* Re-exported so scripts/prerender.mjs has a single SSR bundle to import and
@@ -30,9 +29,7 @@ export function render(lang, path) {
   return renderToString(
     <LanguageProvider initialLanguage={lang}>
       <RouteProvider initialPath={path}>
-        <TicketsProvider>
-          <App />
-        </TicketsProvider>
+        <App />
       </RouteProvider>
     </LanguageProvider>,
   )

@@ -4,7 +4,6 @@ import {
   OG_IMAGE,
   SITE_URL,
   SOCIAL,
-  TICKETS_VIP_URL,
   absoluteUrl,
   localeFor,
 } from '../config/site'
@@ -64,7 +63,7 @@ export function buildJsonLd(code, routeId = 'home') {
     // The ticketing platform is a genuine action available on the site.
     potentialAction: {
       '@type': 'ReserveAction',
-      target: { '@type': 'EntryPoint', urlTemplate: TICKETS_VIP_URL },
+      target: { '@type': 'EntryPoint', urlTemplate: absoluteUrl(pathFor('tickets', code)) },
       name: 'Tickets & VIP tables',
     },
   }

@@ -199,6 +199,7 @@ fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap)
 const robots = `# Quartier Barcelona
 User-agent: *
 Allow: /
+Disallow: /tickets-frame.html
 
 Sitemap: ${SITE_URL}/sitemap.xml
 `

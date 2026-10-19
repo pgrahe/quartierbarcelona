@@ -58,10 +58,10 @@ export const OG_IMAGE = '/img/og-quartier-barcelona.jpg?v=4'
 /* -------------------------------------------------------------------------
  * Ticketing — Fourvenues
  *
- * Clicking "TICKETS Y MESAS VIP" opens the event calendar in a full-screen
- * overlay on this site rather than sending the visitor away. The overlay
- * embeds Fourvenues' official widget, which is loaded lazily — the third-party
- * script is only fetched the first time someone actually opens it.
+ * "TICKETS Y MESAS VIP" goes to /tickets, which iframes Fourvenues' checkout
+ * frame directly. Their official parent script writes location.hash on this
+ * site; isolating the frame keeps /tickets stable when someone opens an
+ * event and goes back to the calendar.
  * ---------------------------------------------------------------------- */
 
 /** Flip to true on launch day to turn every tickets CTA back on. */
@@ -79,9 +79,8 @@ export const FOURVENUES_SLUG = 'quartier-club'
 export const FOURVENUES_EMBED_SRC = `https://www.fourvenues.com/assets/iframe/${FOURVENUES_SLUG}/calendar@?theme=dark`
 
 /**
- * Public Fourvenues page. Used as the CTA's real `href`, so cmd/middle-click
- * and "open in new tab" still work, and as the escape hatch inside the
- * overlay if someone would rather use the full site.
+ * Public Fourvenues page. Escape hatch on /tickets if someone would rather
+ * use the full site.
  */
 export const TICKETS_VIP_URL = `https://site.fourvenues.com/es/${FOURVENUES_SLUG}`
 

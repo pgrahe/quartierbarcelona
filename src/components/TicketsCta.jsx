@@ -1,6 +1,6 @@
-import { TICKETS_ENABLED, TICKETS_VIP_URL } from '../config/site'
+import { TICKETS_ENABLED } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
-import { useTickets } from '../tickets/TicketsContext'
+import { RouteLink } from '../router/RouteContext'
 import './TicketsCta.css'
 
 /**
@@ -8,10 +8,8 @@ import './TicketsCta.css'
  * mobile menu, contact, footer — renders this, so behaviour and destination
  * are defined in exactly one place.
  *
- * It stays a real <a> pointing at the public Fourvenues page: cmd-click,
- * middle-click and "open in new tab" keep working, and it still functions
- * without JavaScript. A plain left-click is intercepted and opens the
- * in-page ticketing overlay instead.
+ * It stays a real <a> to /tickets: cmd-click, middle-click and "open in new
+ * tab" keep working, and it still functions without JavaScript.
  *
  * `variant`: 'solid' (ghost on dark — stone hairline) | 'outline' (ghost on dark / filled on stone)
  * `size`:    'sm' (chrome) | 'md' (menu / contact)
@@ -25,9 +23,9 @@ export default function TicketsCta({
   className = '',
   label,
   onClick,
+  delay = 0,
 }) {
   const { t } = useLanguage()
-  const { openTickets } = useTickets()
   const classNames = `cta cta--${variant} cta--${size} ${className}`.trim()
   const text = label || t.nav.tickets
 
@@ -39,23 +37,9 @@ export default function TicketsCta({
     )
   }
 
-  const handleClick = (e) => {
-    // Let the browser handle modified clicks — those mean "somewhere else".
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
-    e.preventDefault()
-    onClick?.(e)
-    openTickets()
-  }
-
   return (
-    <a
-      href={TICKETS_VIP_URL}
-      onClick={handleClick}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={classNames}
-    >
+    <RouteLink to="tickets" className={classNames} onClick={onClick} delay={delay}>
       <span className="cta__label">{text}</span>
-    </a>
+    </RouteLink>
   )
 }

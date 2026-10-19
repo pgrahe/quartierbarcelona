@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Tickets</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #0a0a0a;
+        overflow: auto;
+      }
+      #fourvenues-iframe {
+        width: 100%;
+      }
+      #fourvenues-iframe iframe {
+        display: block;
+        width: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fourvenues-iframe"></div>
+    <script>
+      (function () {
+        function isCorrupt(hash) {
+          return /themedark|\?theme|[?&]/.test(hash) || (/calendar@/.test(hash) && /events\//.test(hash))
+        }
+
+        function sanitize() {
+          var hash = location.hash.slice(1)
+          if (!hash || !isCorrupt(hash)) return
+          var eventMatch = hash.match(/(events\/[a-z0-9-]+)/i)
+          history.replaceState(null, '', location.pathname + (eventMatch ? '#' + eventMatch[1] : ''))
+          location.reload()
+        }
+
+        window.addEventListener('hashchange', sanitize)
+        sanitize()
+
+        window.addEventListener('message', function (event) {
+          var data = event.data
+          if (typeof data === 'string') {
+            try {
+              data = JSON.parse(data)
+            } catch (err) {
+              return
+            }
+          }
+          if (!data || data.key !== 'addHeight' || !data.height) return
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ key: 'quartier-tickets-height', height: data.height }, '*')
+          }
+        })
+      })()
+    </script>
+    <script src="https://www.fourvenues.com/assets/iframe/quartier-club/calendar@?theme=dark" async></script>
+  </body>
+</html>

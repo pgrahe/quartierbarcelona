@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { DEFAULT_LANGUAGE, LANGUAGES, translations } from './translations'
 import { LOCALES } from '../config/site'
+import { isSiteHash } from '../lib/siteHash'
 import { NAV_EVENT, pushPath } from '../router/RouteContext'
 import { pathFor, routeFromPath } from '../router/routes'
 
@@ -63,7 +64,8 @@ export function LanguageProvider({ children, initialLanguage }) {
     const { routeId } = routeFromPath(window.location.pathname)
     const next = pathFor(routeId, code)
     if (window.location.pathname !== next) {
-      pushPath(next + window.location.hash)
+      const hash = window.location.hash.slice(1)
+      pushPath(isSiteHash(hash) ? `${next}#${hash}` : next)
     }
   }, [])
 

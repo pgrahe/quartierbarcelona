@@ -5,22 +5,8 @@
   display: flex;
   flex-direction: column;
   background: var(--black);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity var(--t-base) var(--ease),
-    visibility 0s linear var(--t-base);
 }
 
-.tickets[data-open='true'] {
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity var(--t-base) var(--ease),
-    visibility 0s;
-}
-
-/* ---- Bar ---- */
 .tickets__bar {
   display: flex;
   align-items: center;
@@ -28,6 +14,11 @@
   flex: 0 0 auto;
   padding: calc(1.15rem + env(safe-area-inset-top)) var(--gutter) 1.15rem;
   border-bottom: 1px solid var(--stone-12);
+}
+
+.tickets__logo-link {
+  display: block;
+  flex: 0 0 auto;
 }
 
 .tickets__logo {
@@ -75,32 +66,40 @@
   }
 }
 
-/* ---- Scroll area ---- */
 .tickets__scroll {
   flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   padding: clamp(1rem, 3vw, 2.5rem) var(--gutter) calc(2.5rem + env(safe-area-inset-bottom));
 }
 
-/* Fourvenues calendar runs in dark theme (`?theme=dark` on the embed).
-   Sheet stays near-black so the widget doesn't sit on a light plate. */
 .tickets__sheet {
+  flex: 1 1 auto;
   max-width: 1120px;
+  width: 100%;
   margin-inline: auto;
   padding: clamp(0.5rem, 1.6vw, 1.25rem);
   background: #0a0a0a;
   border-radius: var(--radius);
+  min-height: 0;
+  overflow: hidden;
 }
 
-.tickets__sheet iframe {
+.tickets__frame {
   display: block;
   width: 100%;
+  height: 100%;
+  min-height: min(72vh, 920px);
   border: 0;
+  background: #0a0a0a;
 }
 
 .tickets__fallback {
+  flex: 0 0 auto;
   max-width: 1120px;
   margin: 1.5rem auto 0;
   text-align: center;
@@ -125,7 +124,6 @@
 }
 
 @media (max-width: 600px) {
-  /* The bar keeps the logo and the close control; the label would crowd them. */
   .tickets__title {
     display: none;
   }
@@ -140,7 +138,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tickets,
   .tickets__close-x {
     transition: none;
   }

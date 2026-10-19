@@ -1,15 +1,13 @@
-import { CONTACT, INSTAGRAM_URL, TICKETS_ENABLED, TICKETS_VIP_URL } from '../config/site'
+import { CONTACT, INSTAGRAM_URL, TICKETS_ENABLED } from '../config/site'
 import { useLanguage } from '../i18n/LanguageContext'
 import { img } from '../lib/img'
 import { RouteLink } from '../router/RouteContext'
-import { useTickets } from '../tickets/TicketsContext'
 import ChromeNavLink from './ChromeNavLink'
 import LanguageSelector from './LanguageSelector'
 import './Footer.css'
 
 export default function Footer() {
   const { t } = useLanguage()
-  const { openTickets } = useTickets()
   const year = new Date().getFullYear()
 
   const links = [
@@ -42,19 +40,9 @@ export default function Footer() {
                 </ChromeNavLink>
               ))}
               {TICKETS_ENABLED ? (
-                <a
-                  href={TICKETS_VIP_URL}
-                  className="foot__link foot__link--accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => {
-                    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-                    e.preventDefault()
-                    openTickets()
-                  }}
-                >
+                <RouteLink to="tickets" className="foot__link foot__link--accent">
                   {t.nav.tickets}
-                </a>
+                </RouteLink>
               ) : (
                 <span className="foot__link foot__link--accent foot__link--disabled" aria-disabled="true">
                   {t.nav.tickets}
