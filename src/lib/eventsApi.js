@@ -5,6 +5,7 @@
  */
 
 import { liveEvents } from './eventLive'
+import { withFourvenuesDarkTheme } from './fourvenuesTheme'
 
 export async function fetchEvents() {
   const response = await fetch('/api/events')
@@ -21,7 +22,7 @@ export async function fetchEvents() {
 function normalizeEvent(row, index) {
   const title = String(row?.title ?? '').trim()
   const image = resolveImage(String(row?.image ?? '').trim())
-  const href = String(row?.href ?? '').trim()
+  const href = withFourvenuesDarkTheme(String(row?.href ?? '').trim())
   const fecha = String(row?.fecha ?? row?.date ?? '').trim()
   const date = String(row?.date ?? '').trim() || toIsoDate(fecha)
   if (!title && !image) return null

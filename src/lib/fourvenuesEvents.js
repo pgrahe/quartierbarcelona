@@ -7,6 +7,7 @@
  */
 
 import { liveEvents } from './eventLive.js'
+import { withFourvenuesDarkTheme } from './fourvenuesTheme.js'
 
 const INTEGRATIONS_BASE = 'https://api.fourvenues.com/integrations'
 const CHANNEL_BASE = 'https://channels-service.fourvenues.com'
@@ -201,7 +202,10 @@ function normalizeIntegrationEvent(row) {
 
   const title = String(row?.name ?? row?.title ?? '').trim()
   const image = resolveImage(String(row?.flyer ?? row?.image ?? '').trim())
-  const href = String(row?.url ?? '').trim()
+  const href = fourvenuesTicketHref({
+    iframeUrl: row?.iframe?.tag_url,
+    publicUrl: row?.url,
+  })
   const date = unixToIso(row?.date) || unixToIso(row?.start) || isoToMadridDate(row?.start_date)
   if (!title && !image) return null
 
@@ -229,14 +233,13 @@ function normalizeChannelEvent(row, org) {
     unixToIso(row?.start)
   if (!title && !image) return null
 
-  const orgSlug = String(org?.slug ?? row?.organization_slug ?? '').trim()
-  const code = String(row?.code ?? '').trim()
-  const eventSlug = String(row?.slug ?? '').trim()
-  const iframeUrl = String(row?.iframe?.tag_url ?? row?.url ?? '').trim()
-  const href =
-    (iframeUrl.startsWith('http') ? iframeUrl : '') ||
-    (orgSlug && code ? `https://www.fourvenues.com/${orgSlug}/${code}` : '') ||
-    (orgSlug && eventSlug ? `https://www.fourvenues.com/${orgSlug}/events/${eventSlug}` : '')
+  const href = fourvenuesTicketHref({
+    iframeUrl: row?.iframe?.tag_url,
+    publicUrl: row?.url,
+    orgSlug: org?.slug ?? row?.organization_slug,
+    code: row?.code,
+    eventSlug: row?.slug,
+  })
 
   return {
     id: String(row?._id ?? '').trim() || [date, slug(title)].filter(Boolean).join('-'),
@@ -305,6 +308,22 @@ function madridIsoDate(date = new Date()) {
 function addDaysIso(iso, days) {
   const [year, month, day] = iso.split('-').map(Number)
   return new Date(Date.UTC(year, month - 1, day + days)).toISOString().slice(0, 10)
+}
+
+function fourvenuesTicketHref({ iframeUrl, publicUrl, orgSlug, code, eventSlug }) {
+  const org = String(orgSlug ?? '').trim()
+  const eventCode = String(code ?? '').trim()
+  const slugPath = String(eventSlug ?? '').trim()
+  const iframe = String(iframeUrl ?? '').trim()
+  const published = String(publicUrl ?? '').trim()
+
+  const raw =
+    (iframe.startsWith('http') ? iframe : '') ||
+    (published.startsWith('http') ? published : '') ||
+    (org && eventCode ? `https://www.fourvenues.com/${org}/${eventCode}` : '') ||
+    (org && slugPath ? `https://www.fourvenues.com/${org}/events/${slugPath}` : '')
+
+  return withFourvenuesDarkTheme(raw)
 }
 
 function resolveImage(url) {
