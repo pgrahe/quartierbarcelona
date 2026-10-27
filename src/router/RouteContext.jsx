@@ -29,10 +29,21 @@ export const NAV_EVENT = 'quartier:navigate'
 /** Change the address bar and tell everyone who cares. */
 export function pushPath(url) {
   const [path] = url.split('#')
-  if (window.location.pathname + window.location.hash !== url) {
+  const current = window.location.pathname + window.location.search + window.location.hash
+  if (current !== url) {
     window.history.pushState({ path }, '', url)
   }
   window.dispatchEvent(new CustomEvent(NAV_EVENT, { detail: { path } }))
+}
+
+function formatSearch(search) {
+  if (!search) return ''
+  if (typeof search === 'string') {
+    const value = search.replace(/^\?/, '')
+    return value ? `?${value}` : ''
+  }
+  const params = new URLSearchParams(search).toString()
+  return params ? `?${params}` : ''
 }
 
 const RouteContext = createContext(null)
@@ -109,8 +120,10 @@ export function RouteProvider({ children, initialPath }) {
    * cannot exist yet, so that one waits for the new page to mount.
    */
   const navigate = useCallback(
-    (to, { hash } = {}) => {
-      const samePage = window.location.pathname === to
+    (to, { hash, search } = {}) => {
+      const query = formatSearch(search)
+      const next = `${to}${query}`
+      const samePage = window.location.pathname === to && window.location.search === query
 
       if (samePage) {
         if (hash) scrollToSection(hash, { offset: navOffset() })
@@ -128,7 +141,7 @@ export function RouteProvider({ children, initialPath }) {
       if (hash) pendingHash.current = hash
       else window.scrollTo({ top: 0, behavior: 'auto' })
 
-      pushPath(hash ? `${to}#${hash}` : to)
+      pushPath(hash ? `${next}#${hash}` : next)
     },
     [],
   )
@@ -168,17 +181,18 @@ export function useRoute() {
  * a panel that is still on screen — and while that panel is open the body is
  * scroll-locked, so an immediate scroll would be clamped to nothing anyway.
  */
-export function RouteLink({ to, hash, lang, delay = 0, className, children, onClick, ...rest }) {
+export function RouteLink({ to, hash, search, lang, delay = 0, className, children, onClick, ...rest }) {
   const route = useRoute()
   const target = pathFor(to, lang || route.lang)
-  const href = hash ? `${target}#${hash}` : target
+  const query = formatSearch(search)
+  const href = `${target}${query}${hash ? `#${hash}` : ''}`
 
   const handleClick = (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
     e.preventDefault()
     onClick?.(e)
-    if (delay) window.setTimeout(() => route.navigate(target, { hash }), delay)
-    else route.navigate(target, { hash })
+    if (delay) window.setTimeout(() => route.navigate(target, { hash, search }), delay)
+    else route.navigate(target, { hash, search })
   }
 
   return (

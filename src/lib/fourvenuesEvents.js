@@ -7,7 +7,7 @@
  */
 
 import { liveEvents } from './eventLive.js'
-import { withFourvenuesDarkTheme } from './fourvenuesTheme.js'
+import { canonicalizeFourvenuesUrl, fourvenuesEmbedHash, sanitizeEmbedHash } from './fourvenuesTheme.js'
 
 const INTEGRATIONS_BASE = 'https://api.fourvenues.com/integrations'
 const CHANNEL_BASE = 'https://channels-service.fourvenues.com'
@@ -202,9 +202,12 @@ function normalizeIntegrationEvent(row) {
 
   const title = String(row?.name ?? row?.title ?? '').trim()
   const image = resolveImage(String(row?.flyer ?? row?.image ?? '').trim())
-  const href = fourvenuesTicketHref({
+  const { href, embed } = fourvenuesTicketHref({
     iframeUrl: row?.iframe?.tag_url,
     publicUrl: row?.url,
+    orgSlug: row?.organization?.slug ?? row?.organization_slug,
+    code: row?.code,
+    eventSlug: row?.slug,
   })
   const date = unixToIso(row?.date) || unixToIso(row?.start) || isoToMadridDate(row?.start_date)
   if (!title && !image) return null
@@ -218,6 +221,7 @@ function normalizeIntegrationEvent(row) {
     endsAt: toIsoDateTime(row?.end) || toIsoDateTime(row?.end_date),
     image,
     href,
+    embed,
   }
 }
 
@@ -233,7 +237,7 @@ function normalizeChannelEvent(row, org) {
     unixToIso(row?.start)
   if (!title && !image) return null
 
-  const href = fourvenuesTicketHref({
+  const { href, embed } = fourvenuesTicketHref({
     iframeUrl: row?.iframe?.tag_url,
     publicUrl: row?.url,
     orgSlug: org?.slug ?? row?.organization_slug,
@@ -250,6 +254,7 @@ function normalizeChannelEvent(row, org) {
     endsAt: toIsoDateTime(row?.end_date) || toIsoDateTime(row?.end),
     image,
     href,
+    embed,
   }
 }
 
@@ -317,13 +322,21 @@ function fourvenuesTicketHref({ iframeUrl, publicUrl, orgSlug, code, eventSlug }
   const iframe = String(iframeUrl ?? '').trim()
   const published = String(publicUrl ?? '').trim()
 
-  const raw =
-    (iframe.startsWith('http') ? iframe : '') ||
-    (published.startsWith('http') ? published : '') ||
+  const constructed =
     (org && eventCode ? `https://www.fourvenues.com/${org}/${eventCode}` : '') ||
     (org && slugPath ? `https://www.fourvenues.com/${org}/events/${slugPath}` : '')
 
-  return withFourvenuesDarkTheme(raw)
+  const href = canonicalizeFourvenuesUrl(
+    (published.startsWith('http') ? published : '') || constructed || iframe,
+  )
+  const fromIframe = iframe.startsWith('http') ? fourvenuesEmbedHash(iframe) : ''
+  const embed =
+    (fromIframe.includes('/') ? fromIframe : '') ||
+    sanitizeEmbedHash(slugPath ? `events/${slugPath}` : '') ||
+    fromIframe ||
+    fourvenuesEmbedHash(href)
+
+  return { href, embed }
 }
 
 function resolveImage(url) {

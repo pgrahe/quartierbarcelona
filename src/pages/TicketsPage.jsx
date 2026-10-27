@@ -1,11 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { TICKETS_VIP_URL } from '../config/site'
 import { img } from '../lib/img'
 import { useLanguage } from '../i18n/LanguageContext'
 import { isSiteHash } from '../lib/siteHash'
-import { RouteLink, useRoute } from '../router/RouteContext'
+import { sanitizeEmbedHash } from '../lib/fourvenuesTheme'
+import { NAV_EVENT, RouteLink, useRoute } from '../router/RouteContext'
 import { pathFor } from '../router/routes'
 import '../tickets/TicketsPage.css'
+
+function ticketsFrameSrc() {
+  if (typeof window === 'undefined') return '/tickets-frame.html'
+  const embed = sanitizeEmbedHash(new URLSearchParams(window.location.search).get('e'))
+  return embed ? `/tickets-frame.html#${embed}` : '/tickets-frame.html'
+}
 
 /**
  * /tickets — Fourvenues calendar on our chrome.
@@ -18,6 +25,7 @@ import '../tickets/TicketsPage.css'
 export default function TicketsPage() {
   const { t, lang } = useLanguage()
   const { navigate } = useRoute()
+  const [frameSrc, setFrameSrc] = useState(ticketsFrameSrc)
 
   useEffect(() => {
     document.body.classList.add('is-locked')
@@ -25,12 +33,25 @@ export default function TicketsPage() {
   }, [])
 
   useEffect(() => {
+    const syncFrame = () => setFrameSrc(ticketsFrameSrc())
+    window.addEventListener(NAV_EVENT, syncFrame)
+    window.addEventListener('popstate', syncFrame)
+    return () => {
+      window.removeEventListener(NAV_EVENT, syncFrame)
+      window.removeEventListener('popstate', syncFrame)
+    }
+  }, [])
+
+  useEffect(() => {
     const stripForeignUrl = () => {
       const hash = window.location.hash.slice(1)
       const search = new URLSearchParams(window.location.search)
+      const event = sanitizeEmbedHash(search.get('e'))
       const foreignHash = Boolean(hash) && !isSiteHash(hash)
       if (!foreignHash && !search.has('theme')) return
-      window.history.replaceState(null, '', window.location.pathname)
+      const next = event ? `${window.location.pathname}?e=${encodeURIComponent(event)}` : window.location.pathname
+      window.history.replaceState(null, '', next)
+      setFrameSrc(ticketsFrameSrc())
     }
 
     stripForeignUrl()
@@ -83,9 +104,10 @@ export default function TicketsPage() {
       <div className="tickets__scroll">
         <div className="tickets__sheet">
           <iframe
+            key={frameSrc}
             className="tickets__frame"
             title={t.nav.tickets}
-            src="/tickets-frame.html"
+            src={frameSrc}
             allow="payment; clipboard-write"
           />
         </div>

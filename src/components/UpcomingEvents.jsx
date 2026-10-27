@@ -3,6 +3,7 @@ import { CONTACT, LOCATION, TICKETS_ENABLED } from '../config/site'
 import { useEvents } from '../hooks/useEvents'
 import { useLanguage } from '../i18n/LanguageContext'
 import { formatEventDate } from '../lib/eventDate'
+import { RouteLink } from '../router/RouteContext'
 import TicketsCta from './TicketsCta'
 import './UpcomingEvents.css'
 
@@ -93,6 +94,19 @@ function EventCard({ event, lang, labels }) {
       )}
     </div>
   )
+
+  if (TICKETS_ENABLED && event.embed) {
+    return (
+      <RouteLink
+        to="tickets"
+        search={{ e: event.embed }}
+        className="agenda__card"
+        aria-label={accessibleName}
+      >
+        {body}
+      </RouteLink>
+    )
+  }
 
   if (TICKETS_ENABLED && event.href) {
     return (

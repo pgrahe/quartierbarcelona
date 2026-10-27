@@ -5,7 +5,7 @@
  */
 
 import { liveEvents } from './eventLive'
-import { withFourvenuesDarkTheme } from './fourvenuesTheme'
+import { canonicalizeFourvenuesUrl, fourvenuesEmbedHash, sanitizeEmbedHash } from './fourvenuesTheme'
 
 export async function fetchEvents() {
   const response = await fetch('/api/events')
@@ -22,7 +22,8 @@ export async function fetchEvents() {
 function normalizeEvent(row, index) {
   const title = String(row?.title ?? '').trim()
   const image = resolveImage(String(row?.image ?? '').trim())
-  const href = withFourvenuesDarkTheme(String(row?.href ?? '').trim())
+  const href = canonicalizeFourvenuesUrl(String(row?.href ?? '').trim())
+  const embed = sanitizeEmbedHash(row?.embed) || fourvenuesEmbedHash(href)
   const fecha = String(row?.fecha ?? row?.date ?? '').trim()
   const date = String(row?.date ?? '').trim() || toIsoDate(fecha)
   if (!title && !image) return null
@@ -36,6 +37,7 @@ function normalizeEvent(row, index) {
     endsAt: String(row?.endsAt ?? '').trim(),
     image,
     href,
+    embed,
   }
 }
 
