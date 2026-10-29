@@ -1,31 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { TICKETS_VIP_URL } from '../config/site'
 import { img } from '../lib/img'
 import { useLanguage } from '../i18n/LanguageContext'
 import { isSiteHash } from '../lib/siteHash'
 import { sanitizeEmbedHash } from '../lib/fourvenuesTheme'
-import { NAV_EVENT, RouteLink, useRoute } from '../router/RouteContext'
+import { RouteLink, useRoute } from '../router/RouteContext'
 import { pathFor } from '../router/routes'
 import '../tickets/TicketsPage.css'
 
 function ticketsFrameSrc() {
   if (typeof window === 'undefined') return '/tickets-frame.html'
-  const embed = sanitizeEmbedHash(new URLSearchParams(window.location.search).get('e'))
+  const embed =
+    sanitizeEmbedHash(new URLSearchParams(window.location.search).get('e')) ||
+    sanitizeEmbedHash(window.location.hash.slice(1))
   return embed ? `/tickets-frame.html#${embed}` : '/tickets-frame.html'
+}
+
+function readMessage(raw) {
+  if (!raw) return null
+  if (typeof raw === 'string') {
+    try {
+      return JSON.parse(raw)
+    } catch {
+      return null
+    }
+  }
+  return typeof raw === 'object' ? raw : null
 }
 
 /**
  * /tickets — Fourvenues calendar on our chrome.
  *
- * Their official embed script writes `location.hash` on whatever page hosts
- * it. Opening an event and going back then mangles that URL (`?themedark/…`)
- * and reloads the widget from it. The script therefore runs inside
- * `/tickets-frame.html`, so `/tickets` never changes.
+ * The widget runs in /tickets-frame.html so its hash stays off this URL.
+ * Do not remount that iframe on hash changes: that sent people back to the
+ * calendar every time they opened an event.
  */
 export default function TicketsPage() {
   const { t, lang } = useLanguage()
   const { navigate } = useRoute()
-  const [frameSrc, setFrameSrc] = useState(ticketsFrameSrc)
+  const scrollRef = useRef(null)
+  const frameRef = useRef(null)
+  const [frameSrc] = useState(ticketsFrameSrc)
 
   useEffect(() => {
     document.body.classList.add('is-locked')
@@ -33,30 +48,20 @@ export default function TicketsPage() {
   }, [])
 
   useEffect(() => {
-    const syncFrame = () => setFrameSrc(ticketsFrameSrc())
-    window.addEventListener(NAV_EVENT, syncFrame)
-    window.addEventListener('popstate', syncFrame)
-    return () => {
-      window.removeEventListener(NAV_EVENT, syncFrame)
-      window.removeEventListener('popstate', syncFrame)
-    }
-  }, [])
-
-  useEffect(() => {
-    const stripForeignUrl = () => {
+    const stripLeakedHash = () => {
       const hash = window.location.hash.slice(1)
       const search = new URLSearchParams(window.location.search)
+      if ((!hash || isSiteHash(hash)) && !search.has('theme')) return
       const event = sanitizeEmbedHash(search.get('e'))
-      const foreignHash = Boolean(hash) && !isSiteHash(hash)
-      if (!foreignHash && !search.has('theme')) return
-      const next = event ? `${window.location.pathname}?e=${encodeURIComponent(event)}` : window.location.pathname
+      const next = event
+        ? `${window.location.pathname}?e=${encodeURIComponent(event)}`
+        : window.location.pathname
       window.history.replaceState(null, '', next)
-      setFrameSrc(ticketsFrameSrc())
     }
 
-    stripForeignUrl()
-    window.addEventListener('hashchange', stripForeignUrl)
-    return () => window.removeEventListener('hashchange', stripForeignUrl)
+    stripLeakedHash()
+    window.addEventListener('hashchange', stripLeakedHash)
+    return () => window.removeEventListener('hashchange', stripLeakedHash)
   }, [])
 
   useEffect(() => {
@@ -70,10 +75,18 @@ export default function TicketsPage() {
 
   useEffect(() => {
     const onMessage = (event) => {
-      if (event.data?.key !== 'quartier-tickets-height' || !event.data.height) return
-      const frame = document.querySelector('.tickets__frame')
-      if (frame) frame.style.height = event.data.height
+      const data = readMessage(event.data)
+      if (!data) return
+
+      if (data.key === 'quartier-tickets-height' && data.height && frameRef.current) {
+        frameRef.current.style.height = data.height
+      }
+
+      if (data.key === 'quartier-tickets-scroll' && scrollRef.current) {
+        scrollRef.current.scrollBy({ top: data.deltaY || 0, left: 0, behavior: 'instant' })
+      }
     }
+
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
   }, [])
@@ -101,10 +114,10 @@ export default function TicketsPage() {
         </RouteLink>
       </header>
 
-      <div className="tickets__scroll">
+      <div className="tickets__scroll" ref={scrollRef}>
         <div className="tickets__sheet">
           <iframe
-            key={frameSrc}
+            ref={frameRef}
             className="tickets__frame"
             title={t.nav.tickets}
             src={frameSrc}
