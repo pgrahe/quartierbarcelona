@@ -11,7 +11,7 @@ const AUTOPLAY_MS = 5000
 const RESUME_MS = 8000
 
 /**
- * OPENING SERIES — flyers from /api/events.
+ * THIS WEEK — flyers from /api/events.
  *
  * Mobile carousel, one flyer per screen. Desktop carousel, as many as fit.
  * The first card is the night that has not finished yet.
