@@ -19,6 +19,7 @@
         display: block;
         width: 100%;
         border: 0;
+        background: #0a0a0a;
       }
     </style>
   </head>
@@ -26,6 +27,9 @@
     <div id="fourvenues-iframe"></div>
     <script>
       (function () {
+        var RESTORE = 'quartier-tickets-restore'
+        var sawEvent = false
+
         function payload(data) {
           if (!data) return null
           if (typeof data === 'string') {
@@ -44,6 +48,59 @@
           }
         }
 
+        function isCorrupt(hash) {
+          return /themedark|\?|%3F|&theme/i.test(hash) || (/calendar@/.test(hash) && /events\//.test(hash))
+        }
+
+        function isEventRoute(route) {
+          return /(^|\/)events\//.test(route || '')
+        }
+
+        /* Their script writes ?theme=dark onto this page. The widget then
+           glues that query into the hash on the way back to the calendar
+           and paints a blank grey frame. Keep theme off this document. */
+        var replaceState = history.replaceState
+        history.replaceState = function (state, title, url) {
+          if (typeof url === 'string') {
+            try {
+              var next = new URL(url, location.href)
+              if (next.searchParams.has('theme')) {
+                next.searchParams.delete('theme')
+                url = next.pathname + next.search + next.hash
+              }
+            } catch (err) {}
+          }
+          return replaceState.call(history, state, title, url)
+        }
+
+        /* Swapping the inner iframe src leaves Fourvenues blank. Reload this
+           frame document only, after the hash is clean, so the widget boots
+           back on the calendar. /tickets itself does not reload. */
+        function showCalendar() {
+          if (sessionStorage.getItem(RESTORE) === '1') return
+          sessionStorage.setItem(RESTORE, '1')
+          sawEvent = false
+          replaceState.call(history, null, '', location.pathname)
+          location.reload()
+        }
+
+        function onRoute() {
+          var hash = decodeURIComponent(location.hash.slice(1))
+          if (isCorrupt(hash)) {
+            var event = hash.match(/events\/[a-z0-9-]+/i)
+            var clean = event && !/calendar@/.test(hash) ? event[0] : ''
+            replaceState.call(history, null, '', location.pathname + (clean ? '#' + clean : ''))
+            hash = clean
+          }
+          if (isEventRoute(hash)) {
+            sawEvent = true
+            return
+          }
+          if (sawEvent) showCalendar()
+        }
+
+        window.addEventListener('hashchange', onRoute)
+
         window.addEventListener('message', function (event) {
           var data = payload(event.data)
           if (!data) return
@@ -53,7 +110,15 @@
           if (data.key === 'forwardScroll') {
             tellParent({ key: 'quartier-tickets-scroll', deltaY: data.deltaY || 0 })
           }
+          if (data.key === 'navigate' && data.segments) {
+            var route = data.segments.slice(2).join('/')
+            if (isEventRoute(route)) sawEvent = true
+            else if (sawEvent) showCalendar()
+          }
         })
+
+        sessionStorage.removeItem(RESTORE)
+        if (isEventRoute(decodeURIComponent(location.hash.slice(1)))) sawEvent = true
       })()
     </script>
     <script src="https://www.fourvenues.com/assets/iframe/quartier-club/calendar@?theme=dark" async></script>
