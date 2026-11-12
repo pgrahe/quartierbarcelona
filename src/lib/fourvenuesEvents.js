@@ -332,11 +332,22 @@ function fourvenuesTicketHref({ iframeUrl, publicUrl, orgSlug, code, eventSlug }
   const fromIframe = iframe.startsWith('http') ? fourvenuesEmbedHash(iframe) : ''
   const embed =
     (fromIframe.includes('/') ? fromIframe : '') ||
-    sanitizeEmbedHash(slugPath ? `events/${slugPath}` : '') ||
+    sanitizeEmbedHash(slugPath ? `events/${eventPath(slugPath, eventCode)}` : '') ||
     fromIframe ||
     fourvenuesEmbedHash(href)
 
   return { href, embed }
+}
+
+/**
+ * The widget only resolves events by `<slug>-<code>`
+ * (`quartier-saturdays-07-11-2026-1X06`). The API hands back the bare slug,
+ * which boots the embed into an empty grey frame.
+ */
+function eventPath(slugPath, eventCode) {
+  if (!eventCode) return slugPath
+  const suffix = `-${eventCode}`.toLowerCase()
+  return slugPath.toLowerCase().endsWith(suffix) ? slugPath : `${slugPath}-${eventCode}`
 }
 
 function resolveImage(url) {

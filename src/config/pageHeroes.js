@@ -47,6 +47,6 @@ export const PAGE_HEROES = {
 
 /** The home page's LCP is the hero video's poster frame, not a page header. */
 export const HERO_POSTERS = {
-  desktop: '/video/hero-poster.jpg?v=6',
-  mobile: '/video/hero-poster-vertical.jpg?v=6',
+  desktop: '/video/hero-poster.jpg?v=7',
+  mobile: '/video/hero-poster-vertical.jpg?v=7',
 }

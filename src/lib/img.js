@@ -5,7 +5,7 @@
  * serving cached 404s for the original paths. Bumping this forces a new URL
  * everywhere at once. Increment when replacing a widely cached image set.
  */
-export const IMG_V = '5'
+export const IMG_V = '6'
 
 /** Appends the shared cache-bust query to a public image path. */
 export function img(path) {

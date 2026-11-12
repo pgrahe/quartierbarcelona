@@ -46,11 +46,12 @@ const LOGO_FADE_MS = 900
 /** Mobile gets the vertical cut; desktop the landscape 1080. Chosen in JS
  *  because `<source media>` is unreliable.
  *
- *  Both files are trimmed to start 2.3s into the source. The clip opens on a
- *  near-static wide shot of the street, so the first seconds read as frozen
- *  even once playing. 2.3s is a scene cut into the dancefloor — deliberately
- *  not 2.0s, where the frame is blown out (luminance ~230/255) and the hero
- *  would flash near-white a moment after load.
+ *  Source: "2026_11.08 AMERICANOS @ QUARTIER" (vertical 1080x1920, 25fps).
+ *  Both files are cut at 16.48s — the clip closes on a black card with the
+ *  QUARTIER wordmark that starts fading in at 16.52s, and a hero loop must
+ *  never land on black. The landscape file is a centre 16:9 crop of the
+ *  vertical source (there is no landscape master), which is the same framing
+ *  object-fit: cover would show anyway.
  *
  *  The mobile file stays at the source's native 1080x1920. An earlier pass cut
  *  it to 900x1600/crf33 to speed up loading, which was a mistake: a phone
@@ -61,11 +62,11 @@ const LOGO_FADE_MS = 900
  *  Load time is bought back from `heroSrc()` being resolved on first render
  *  (see below), not from starving the encode.
  *
- *  `?v=6` busts caches still holding the old encodes. */
-const HERO_DESKTOP = '/video/hero-1080.mp4?v=6'
-const HERO_MOBILE = '/video/hero-vertical.mp4?v=6'
-const POSTER_DESKTOP = '/video/hero-poster.jpg?v=6'
-const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=6'
+ *  `?v=7` busts caches still holding the old encodes. */
+const HERO_DESKTOP = '/video/hero-1080.mp4?v=7'
+const HERO_MOBILE = '/video/hero-vertical.mp4?v=7'
+const POSTER_DESKTOP = '/video/hero-poster.jpg?v=7'
+const POSTER_MOBILE = '/video/hero-poster-vertical.jpg?v=7'
 
 function isMobileHero() {
   return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches

@@ -127,7 +127,7 @@ export const translations = {
     brand: {
       caption: 'LA NOCHE, A NUESTRA MANERA',
       imageAlt: 'Ambiente nocturno en la pista de Quartier Barcelona',
-      imageAlt2: 'Grupo de amigos en una noche en Quartier Barcelona',
+      imageAlt2: 'Amigas bailando en la pista de Quartier Barcelona',
       imageAlt3: 'Invitada celebrando en Quartier Barcelona',
     },
     agenda: {
@@ -158,7 +158,7 @@ export const translations = {
       body:
         'Reserva tu mesa en la mejor zona de la sala y vive la noche desde dentro. Servicio dedicado, botella en mesa y el mejor ángulo de Quartier.',
       note: 'Mesas limitadas y sujetas a disponibilidad.',
-      imageAlt: 'Grupo de amigos celebrando en una mesa VIP de Quartier Barcelona',
+      imageAlt: 'Servicio de botella con cubitera de champagne entre el público de Quartier Barcelona',
       imageAlt2: 'Botellas con luces de bengala servidas en la pista de Quartier Barcelona',
       // Only rendered on /vip-experience — the detail list under the pitch.
       detailsTitle: 'QUÉ INCLUYE',
@@ -171,9 +171,9 @@ export const translations = {
     },
     nightStack: {
       caption: 'LA NOCHE EN QUARTIER',
-      imageAlt: 'Amigos sonriendo en una noche en Quartier Barcelona',
-      imageAlt2: 'Grupo celebrando juntos en Quartier Barcelona',
-      imageAlt3: 'Invitadas en la pista de Quartier Barcelona',
+      imageAlt: 'Botellas de vodka y champagne sobre la cubitera de una mesa VIP de Quartier Barcelona',
+      imageAlt2: 'Camarero llevando una botella de vodka en un ganso iluminado en Quartier Barcelona',
+      imageAlt3: 'Cubitera con champagne y vodka en una mesa VIP de Quartier Barcelona',
     },
     photoMarquee: {
       caption: 'AMBIENTE QUARTIER',
@@ -500,7 +500,7 @@ export const translations = {
     brand: {
       caption: 'THE NIGHT, OUR WAY',
       imageAlt: 'Night atmosphere on the Quartier Barcelona dancefloor',
-      imageAlt2: 'Friends together on a night at Quartier Barcelona',
+      imageAlt2: 'Friends dancing on the dancefloor at Quartier Barcelona',
       imageAlt3: 'Guest celebrating at Quartier Barcelona',
     },
     agenda: {
@@ -529,7 +529,7 @@ export const translations = {
       body:
         'Book your table in the best part of the room and take the night from the inside. Dedicated service, bottle service and the best view of Quartier.',
       note: 'Tables are limited and subject to availability.',
-      imageAlt: 'Friends celebrating at a VIP table at Quartier Barcelona',
+      imageAlt: 'Bottle service with a champagne ice bucket carried through the crowd at Quartier Barcelona',
       imageAlt2: 'Bottle service with sparklers on the Quartier Barcelona dancefloor',
       detailsTitle: 'WHAT IS INCLUDED',
       details: [
@@ -541,9 +541,9 @@ export const translations = {
     },
     nightStack: {
       caption: 'THE NIGHT AT QUARTIER',
-      imageAlt: 'Friends smiling on a night at Quartier Barcelona',
-      imageAlt2: 'Group celebrating together at Quartier Barcelona',
-      imageAlt3: 'Guests on the Quartier Barcelona dancefloor',
+      imageAlt: 'Vodka and champagne bottles over the ice bucket at a VIP table at Quartier Barcelona',
+      imageAlt2: 'Waiter carrying a vodka bottle on an illuminated goose at Quartier Barcelona',
+      imageAlt3: 'Ice bucket with champagne and vodka at a VIP table at Quartier Barcelona',
     },
     photoMarquee: {
       caption: 'QUARTIER ATMOSPHERE',
@@ -859,7 +859,7 @@ export const translations = {
     brand: {
       caption: 'LA NUIT, À NOTRE FAÇON',
       imageAlt: 'Ambiance nocturne sur la piste du Quartier Barcelona',
-      imageAlt2: 'Groupe d’amis lors d’une nuit au Quartier Barcelona',
+      imageAlt2: 'Des amies qui dansent sur la piste du Quartier Barcelona',
       imageAlt3: 'Invitée célébrant au Quartier Barcelona',
     },
     agenda: {
@@ -888,7 +888,7 @@ export const translations = {
       body:
         'Réservez votre table dans le meilleur coin de la salle et vivez la nuit de l’intérieur. Service dédié, bouteilles en table et le plus bel angle du Quartier.',
       note: 'Tables en nombre limité, selon disponibilité.',
-      imageAlt: 'Des amis qui font la fête à une table VIP du Quartier Barcelona',
+      imageAlt: 'Service de bouteilles avec un seau à champagne porté dans la foule du Quartier Barcelona',
       imageAlt2: 'Service de bouteilles avec cierges magiques sur la piste du Quartier Barcelona',
       detailsTitle: 'CE QUI EST INCLUS',
       details: [
@@ -900,9 +900,9 @@ export const translations = {
     },
     nightStack: {
       caption: 'LA NUIT AU QUARTIER',
-      imageAlt: 'Des amis qui sourient lors d’une nuit au Quartier Barcelona',
-      imageAlt2: 'Groupe qui célèbre ensemble au Quartier Barcelona',
-      imageAlt3: 'Invitées sur la piste du Quartier Barcelona',
+      imageAlt: 'Bouteilles de vodka et de champagne au-dessus du seau d’une table VIP du Quartier Barcelona',
+      imageAlt2: 'Serveur portant une bouteille de vodka sur une oie lumineuse au Quartier Barcelona',
+      imageAlt3: 'Seau à glace avec champagne et vodka sur une table VIP du Quartier Barcelona',
     },
     photoMarquee: {
       caption: 'AMBIANCE QUARTIER',
@@ -1216,7 +1216,7 @@ export const translations = {
     brand: {
       caption: 'DIE NACHT, AUF UNSERE ART',
       imageAlt: 'Nachtatmosphäre auf der Tanzfläche des Quartier Barcelona',
-      imageAlt2: 'Freundesgruppe an einem Abend im Quartier Barcelona',
+      imageAlt2: 'Freundinnen tanzen auf der Tanzfläche im Quartier Barcelona',
       imageAlt3: 'Gast feiert im Quartier Barcelona',
     },
     agenda: {
@@ -1245,7 +1245,7 @@ export const translations = {
       body:
         'Reservieren Sie Ihren Tisch im besten Bereich des Clubs und erleben Sie die Nacht von innen. Eigener Service, Flaschenservice und der beste Blick über Quartier.',
       note: 'Begrenzte Tischanzahl, nach Verfügbarkeit.',
-      imageAlt: 'Freunde feiern an einem VIP-Tisch im Quartier Barcelona',
+      imageAlt: 'Flaschenservice mit Champagnerkühler mitten in der Menge im Quartier Barcelona',
       imageAlt2: 'Flaschenservice mit Wunderkerzen auf der Tanzfläche des Quartier Barcelona',
       detailsTitle: 'WAS ENTHALTEN IST',
       details: [
@@ -1257,9 +1257,9 @@ export const translations = {
     },
     nightStack: {
       caption: 'DIE NACHT IM QUARTIER',
-      imageAlt: 'Freunde lächeln an einem Abend im Quartier Barcelona',
-      imageAlt2: 'Gruppe feiert gemeinsam im Quartier Barcelona',
-      imageAlt3: 'Gäste auf der Tanzfläche des Quartier Barcelona',
+      imageAlt: 'Wodka- und Champagnerflaschen über dem Eiskühler an einem VIP-Tisch im Quartier Barcelona',
+      imageAlt2: 'Kellner trägt eine Wodkaflasche auf einer leuchtenden Gans im Quartier Barcelona',
+      imageAlt3: 'Eiskühler mit Champagner und Wodka an einem VIP-Tisch im Quartier Barcelona',
     },
     photoMarquee: {
       caption: 'QUARTIER ATMOSPHÄRE',
