@@ -1,0 +1,301 @@
+/* -------------------------------------------------------------------------
+ * Sala3D — interactive model of the room
+ * ---------------------------------------------------------------------- */
+.sala3d {
+  color: var(--stone);
+}
+
+.sala3d__head {
+  display: grid;
+  gap: 1rem;
+  max-width: 52rem;
+}
+
+.sala3d__eyebrow {
+  color: var(--gold);
+}
+
+.sala3d__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-title);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.sala3d__body {
+  max-width: var(--measure);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--stone-70);
+}
+
+.sala3d__frame {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* ---- Stage ---- */
+.sala3d__stage {
+  position: relative;
+  height: clamp(420px, 68vh, 760px);
+  overflow: hidden;
+  background: #0a0a0a;
+  border: 1px solid var(--stone-12);
+  /* The canvas only claims touch gestures once the visitor taps "Explorar". */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sala3d__canvas,
+.sala3d__canvas canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sala3d__stage.is-active .sala3d__canvas canvas {
+  cursor: grab;
+}
+
+.sala3d__stage.is-active .sala3d__canvas canvas:active {
+  cursor: grabbing;
+}
+
+/* Table numbers — HTML buttons over the canvas: crisp text, big tap targets. */
+.sala3d__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.sala3d__stage.is-active .sala3d__labels {
+  opacity: 1;
+}
+
+.sala3d__pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--stone-70);
+  background: var(--black-80);
+  color: var(--stone);
+  font: var(--w-bold) 0.75rem/1 var(--font-body);
+  pointer-events: none;
+  will-change: transform;
+  transition:
+    background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+/* An invisible halo makes the 30px pin a ~44px tap target. */
+.sala3d__pin::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+}
+
+.sala3d__stage.is-active .sala3d__pin {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.sala3d__pin:hover,
+.sala3d__pin.is-selected {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--black);
+}
+
+/* ---- Veil + start button ---- */
+.sala3d__veil {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55));
+}
+
+.sala3d__start {
+  padding: 1rem 1.9rem;
+  border: 1px solid var(--stone-70);
+  border-radius: 999px;
+  background: var(--stone-90);
+  color: var(--black);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-nav);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--t-base) var(--ease), color var(--t-base) var(--ease);
+}
+
+.sala3d__start:hover:not(:disabled) {
+  background: var(--gold);
+}
+
+.sala3d__start:disabled {
+  cursor: progress;
+  background: var(--black-60);
+  color: var(--stone-70);
+}
+
+.sala3d__status {
+  max-width: 28ch;
+  text-align: center;
+  color: var(--stone-70);
+  font-size: var(--fs-body);
+}
+
+/* ---- Selected table card ---- */
+.sala3d__card {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 30rem;
+  padding: 1rem 1rem 1rem 1.25rem;
+  background: rgba(10, 10, 10, 0.92);
+  border: 1px solid var(--stone-22);
+  backdrop-filter: blur(6px);
+}
+
+.sala3d__card-zone {
+  color: var(--gold);
+}
+
+.sala3d__card-table {
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  line-height: 1;
+}
+
+.sala3d__card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sala3d__close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--stone-22);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--stone);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sala3d__close:hover {
+  border-color: var(--stone-70);
+}
+
+/* ---- View buttons ---- */
+.sala3d__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 1rem;
+}
+
+.sala3d__views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sala3d__view {
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--stone-22);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--stone-90);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-nav);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+
+.sala3d__view:hover:not(:disabled) {
+  border-color: var(--stone-70);
+}
+
+.sala3d__view[aria-pressed='true'] {
+  background: var(--stone);
+  border-color: var(--stone);
+  color: var(--black);
+}
+
+.sala3d__view:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sala3d__hint {
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  color: var(--stone-55);
+}
+
+.sala3d__note {
+  margin-top: 1.5rem;
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--stone-40);
+}
+
+@media (max-width: 640px) {
+  .sala3d__stage {
+    height: min(58vh, 440px);
+  }
+
+  .sala3d__pin {
+    width: 22px;
+    height: 22px;
+    font-size: 0.625rem;
+  }
+
+  .sala3d__pin::after {
+    inset: -8px;
+  }
+
+  .sala3d__views {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .sala3d__view {
+    padding-inline: 0.5rem;
+  }
+
+  .sala3d__card {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+}
