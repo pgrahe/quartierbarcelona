@@ -32,6 +32,7 @@ import {
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { createLedScreen } from './ledScreen.js'
 
 const BG = 0x0a0a0a
 const BORDEAUX = new Color('#7a2230')
@@ -135,6 +136,7 @@ export function createViewer(container, { modelUrl, onProgress, onReady, onSelec
   let raf = 0
   let disposed = false
   let showUpper = true
+  let led = null
   const size = { w: 1, h: 1 }
 
   /* ---------------------------------------------------------------- render loop (on demand) */
@@ -377,6 +379,8 @@ export function createViewer(container, { modelUrl, onProgress, onReady, onSelec
       tables.sort((a, b) => a.number - b.number)
       scene.add(root)
       root.updateMatrixWorld(true)
+      // looping Quartier banner on the LED screen behind the DJ
+      led = createLedScreen({ root, scene, container, cutaways, request, reducedMotion })
 
       bounds = new Box3().setFromObject(root)
       bounds.expandByScalar(-1.5)
@@ -412,6 +416,7 @@ export function createViewer(container, { modelUrl, onProgress, onReady, onSelec
     },
     dispose() {
       disposed = true
+      led?.dispose()
       cancelAnimationFrame(raf)
       ro.disconnect()
       controls.dispose()
