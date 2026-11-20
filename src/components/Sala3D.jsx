@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 import TicketsCta from './TicketsCta'
 import './Sala3D.css'
 
-const MODEL_URL = '/models/quartier-sala.glb?v=23'
+const MODEL_URL = '/models/quartier-sala.glb?v=52'
 const VIEW_IDS = ['overview', 'floor', 'mezzanine', 'ground']
 
 function hasWebGL() {
