@@ -50,7 +50,9 @@ export default function App() {
      entrance, and a second fade over the top of it reads as a stutter. */
   const previousRoute = useRef(pageId)
   const [animatePage, setAnimatePage] = useState(false)
-  useReveal(mainRef)
+  /* The tickets page renders without <main>; re-arm the observer when it
+     comes back, or nothing on the site would reveal after visiting it. */
+  useReveal(mainRef, { active: pageId !== 'tickets' })
   useDocumentHead(lang, pageId)
 
   const closeMenu = useCallback(() => setMenuOpen(false), [])

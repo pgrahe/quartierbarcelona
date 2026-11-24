@@ -11,8 +11,16 @@ import { useEffect } from 'react'
 /* threshold 0 + a negative bottom margin rather than a ratio: an element
    taller than the viewport can never reach a meaningful ratio, so the margin
    is what actually controls when the reveal fires. */
-export function useReveal(rootRef, { threshold = 0, rootMargin = '0px 0px -12% 0px' } = {}) {
+/* `active` must flip whenever the root node comes and goes. The ref object is
+   stable, so without it the effect would never re-run: a page rendered
+   without the root (the tickets page has no <main>) leaves the observer
+   unarmed, and every page visited afterwards stays at opacity 0. */
+export function useReveal(
+  rootRef,
+  { threshold = 0, rootMargin = '0px 0px -12% 0px', active = true } = {},
+) {
   useEffect(() => {
+    if (!active) return
     const root = rootRef.current
     if (!root) return
 
@@ -57,5 +65,5 @@ export function useReveal(rootRef, { threshold = 0, rootMargin = '0px 0px -12% 0
       io.disconnect()
       mo.disconnect()
     }
-  }, [rootRef, threshold, rootMargin])
+  }, [rootRef, threshold, rootMargin, active])
 }
