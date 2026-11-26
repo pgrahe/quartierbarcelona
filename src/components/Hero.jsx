@@ -38,6 +38,9 @@ const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffec
  * Timings are Sutton's shape, slowed down: .8s→1.2s, .4s→.5s delay, and a
  * 2.5s→4.6s cycle so each phrase is allowed to land.
  */
+/* TEMPORARY — Cova 28 NOV afterparty button under the slogan. */
+const EVENT_CTA_URL = 'https://tickivo.com/101968/club-dabke-saint-levant-official-afterparty-barcelona'
+
 const ROTATION_MS = 4600
 const ENTER_DELAY_MS = 550
 const LOGO_HOLD_MS = 2000
@@ -351,6 +354,19 @@ export default function Hero({ variant = 'home' }) {
               </span>
             </span>
           </h1>
+
+          {/* TEMPORARY — Cova 28 NOV afterparty. Remove after the event. */}
+          {!isCountdown && (
+            <a
+              className="cta cta--solid cta--sm hero__event"
+              data-entered={entered}
+              href={EVENT_CTA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="cta__label">COVA 28 NOV</span>
+            </a>
+          )}
         </div>
       </div>
     </section>

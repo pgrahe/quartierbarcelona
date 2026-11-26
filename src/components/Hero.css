@@ -271,6 +271,23 @@
   transition-delay: var(--hero-delay);
 }
 
+/* ---- TEMPORARY: Cova 28 NOV event button under the slogan ---- */
+.hero__event {
+  margin-top: clamp(1.25rem, 3.2vh, 2rem);
+  opacity: 0;
+  translate: 0 0.6rem;
+  transition:
+    opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.35s,
+    translate 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.35s,
+    color var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
+}
+
+.hero__event[data-entered='true'] {
+  opacity: 1;
+  translate: 0 0;
+}
+
 /* -------------------------------------------------------------------------
  * Mobile
  * ---------------------------------------------------------------------- */
@@ -366,7 +383,8 @@
   .hero__brand,
   .hero__clock,
   .hero__copy,
-  .hero__slogan {
+  .hero__slogan,
+  .hero__event {
     transition: none !important;
   }
 
