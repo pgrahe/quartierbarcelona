@@ -1,5 +1,6 @@
 import { useLanguage } from '../i18n/LanguageContext'
 import { img, imgSrcSet } from '../lib/img'
+import { RouteLink } from '../router/RouteContext'
 import TicketsCta from './TicketsCta'
 import './VipExperience.css'
 
@@ -60,7 +61,14 @@ export default function VipExperience({ eyebrow, pageStart = false }) {
           </p>
 
           <div className="vip__cta-row" data-reveal style={{ '--reveal-delay': '80ms' }}>
-            <TicketsCta variant="outline" size="md" className="vip__cta" />
+            <div className="vip__ctas">
+              <TicketsCta variant="outline" size="md" className="vip__cta" />
+              {/* On /vip-experience this is a same-page jump to the model below;
+                  from the home it opens the VIP page at the model. */}
+              <RouteLink to="vip" hash="sala-3d" className="cta cta--outline cta--md vip__cta">
+                <span className="cta__label">{vip.mapCta}</span>
+              </RouteLink>
+            </div>
             <p className="vip__note">{vip.note}</p>
           </div>
         </div>

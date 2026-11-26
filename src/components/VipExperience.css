@@ -66,6 +66,15 @@
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
+/* Tickets + 3D map side by side; they wrap onto two lines when the column is
+   too narrow. Centred like the row on mobile, left-aligned on desktop. */
+.vip__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
 /* Stone at 70%, not black at 62%. Measured against the brightest point of
    the gilt ramp — the worst case for light type — 55% only reaches 3.75:1
    and 70% reaches 5.05:1. It still reads as a caption rather than as body
@@ -133,6 +142,10 @@
 
   .vip__cta-row {
     justify-items: start;
+  }
+
+  .vip__ctas {
+    justify-content: flex-start;
   }
 
   .vip__plate {

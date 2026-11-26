@@ -186,6 +186,7 @@ export const translations = {
       body:
         'Reserva tu mesa en la mejor zona de la sala y vive la noche desde dentro. Servicio dedicado, botella en mesa y el mejor ángulo de Quartier.',
       note: 'Mesas limitadas y sujetas a disponibilidad.',
+      mapCta: 'Ver zona VIP 3D',
       imageAlt: 'Servicio de botella con cubitera de champagne entre el público de Quartier Barcelona',
       imageAlt2: 'Botellas con luces de bengala servidas en la pista de Quartier Barcelona',
       // Only rendered on /vip-experience — the detail list under the pitch.
@@ -585,6 +586,7 @@ export const translations = {
       body:
         'Book your table in the best part of the room and take the night from the inside. Dedicated service, bottle service and the best view of Quartier.',
       note: 'Tables are limited and subject to availability.',
+      mapCta: 'See the VIP area in 3D',
       imageAlt: 'Bottle service with a champagne ice bucket carried through the crowd at Quartier Barcelona',
       imageAlt2: 'Bottle service with sparklers on the Quartier Barcelona dancefloor',
       detailsTitle: 'WHAT IS INCLUDED',
@@ -972,6 +974,7 @@ export const translations = {
       body:
         'Réservez votre table dans le meilleur coin de la salle et vivez la nuit de l’intérieur. Service dédié, bouteilles en table et le plus bel angle du Quartier.',
       note: 'Tables en nombre limité, selon disponibilité.',
+      mapCta: 'Voir l’espace VIP en 3D',
       imageAlt: 'Service de bouteilles avec un seau à champagne porté dans la foule du Quartier Barcelona',
       imageAlt2: 'Service de bouteilles avec cierges magiques sur la piste du Quartier Barcelona',
       detailsTitle: 'CE QUI EST INCLUS',
@@ -1357,6 +1360,7 @@ export const translations = {
       body:
         'Reservieren Sie Ihren Tisch im besten Bereich des Clubs und erleben Sie die Nacht von innen. Eigener Service, Flaschenservice und der beste Blick über Quartier.',
       note: 'Begrenzte Tischanzahl, nach Verfügbarkeit.',
+      mapCta: 'VIP-Bereich in 3D ansehen',
       imageAlt: 'Flaschenservice mit Champagnerkühler mitten in der Menge im Quartier Barcelona',
       imageAlt2: 'Flaschenservice mit Wunderkerzen auf der Tanzfläche des Quartier Barcelona',
       detailsTitle: 'WAS ENTHALTEN IST',
